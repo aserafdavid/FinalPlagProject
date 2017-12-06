@@ -1,10 +1,13 @@
 ﻿  main.cpp
   Logger.cpp
   fileManager.cpp
-c:\users\david-pc\documents\visual studio 2015\projects\alg\alg\filemanager.cpp(54): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\david-pc\documents\visual studio 2015\projects\alg\alg\filemanager.cpp(66): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\david-pc\documents\visual studio 2015\projects\alg\alg\filemanager.cpp(82): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\david-pc\documents\finalplagproject\alg\filemanager.cpp(68): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\david-pc\documents\finalplagproject\alg\filemanager.cpp(83): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\david-pc\documents\finalplagproject\alg\filemanager.cpp(105): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\david-pc\documents\finalplagproject\alg\filemanager.cpp(131): warning C4102: 'std': unreferenced label
+c:\users\david-pc\documents\finalplagproject\alg\filemanager.cpp(133): warning C4101: 'lineString': unreferenced local variable
   Algorithms.cpp
   Generating Code...
-  alg.vcxproj -> C:\Users\david-pc\documents\visual studio 2015\Projects\alg\x64\Debug\alg.exe
-  alg.vcxproj -> C:\Users\david-pc\documents\visual studio 2015\Projects\alg\x64\Debug\alg.pdb (Full PDB)
+  LINK : C:\Users\david-pc\Documents\FinalPlagProject\x64\Debug\alg.exe not found or not built by the last incremental link; performing full link
+  alg.vcxproj -> C:\Users\david-pc\Documents\FinalPlagProject\x64\Debug\alg.exe
+  alg.vcxproj -> C:\Users\david-pc\Documents\FinalPlagProject\x64\Debug\alg.pdb (Full PDB)
