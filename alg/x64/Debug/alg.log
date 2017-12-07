@@ -1,13 +1,8 @@
-﻿  main.cpp
-  Logger.cpp
-  fileManager.cpp
-c:\users\david-pc\documents\finalplagproject\alg\filemanager.cpp(68): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\david-pc\documents\finalplagproject\alg\filemanager.cpp(83): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\david-pc\documents\finalplagproject\alg\filemanager.cpp(105): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\david-pc\documents\finalplagproject\alg\filemanager.cpp(131): warning C4102: 'std': unreferenced label
-c:\users\david-pc\documents\finalplagproject\alg\filemanager.cpp(133): warning C4101: 'lineString': unreferenced local variable
-  Algorithms.cpp
+﻿  fileManager.cpp
+c:\users\david-pc\documents\finalplagproject\alg\filemanager.cpp : fatal error C1041: cannot open program database 'C:\Users\david-pc\Documents\FinalPlagProject\alg\x64\Debug\vc140.idb'; if multiple CL.EXE write to the same .PDB file, please use /FS
   Generating Code...
-  LINK : C:\Users\david-pc\Documents\FinalPlagProject\x64\Debug\alg.exe not found or not built by the last incremental link; performing full link
-  alg.vcxproj -> C:\Users\david-pc\Documents\FinalPlagProject\x64\Debug\alg.exe
-  alg.vcxproj -> C:\Users\david-pc\Documents\FinalPlagProject\x64\Debug\alg.pdb (Full PDB)
+cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
+  Compiling...
+  main.cpp
+c:\users\david-pc\documents\finalplagproject\alg\main.cpp : fatal error C1041: cannot open program database 'C:\Users\david-pc\Documents\FinalPlagProject\alg\x64\Debug\vc140.idb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+  Generating Code...

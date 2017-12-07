@@ -11,6 +11,7 @@ class fileManager
 {
 	
 public:
+	//static bool isFileWithoutStopWordsListCreated;
 	fileManager(string fileNameInput,string stopWordFilePATH);
 	void readFile(int segSize);
 	fileManager::fileManager();
