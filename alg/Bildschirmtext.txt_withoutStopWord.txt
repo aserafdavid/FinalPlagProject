@@ -1,4 +1,4 @@
-[pp 38-40:  Article from DIE ZEIT, 30 November 1984, by Thomas von Randow]
+[pppp 38-40:  Article from DIE ZEIT, 30 November 1984, by Thomas von Randow]
 Bildschirmtext:  A Blow Against the System
 A Computer Club Discovers Breaches of Security in the Bundespost's BTX Program
 "Whoever hooks up to the BTX system in the next two to three years should be

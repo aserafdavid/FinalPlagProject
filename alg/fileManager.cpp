@@ -5,6 +5,7 @@
 fileManager::fileManager()
 {
 	//isFileWithoutStopWordsListCreated = false;
+	
 	CLogger::GetLogger()->Log("file Manager Created ");
 }
 
@@ -44,10 +45,7 @@ fileManager::fileManager(string fileNamePATH ,string stopWordFilePATH)
 
 		if (!stopWordList.empty())/*remove stopwords  from file*/
 		{
-
-			fileManager::RemoveStopWordList(fileNamePATH);
-			//isFileWithoutStopWordsListCreated = true;
-			
+			fileManager::RemoveStopWordList(fileNamePATH);	
 		}
 
 		CLogger::GetLogger()->Log("Stop words list file created succesfully");
@@ -71,10 +69,6 @@ void fileManager::readFile(int segSize)
 	while (!inputFile.eof())
 	{
 		counter++;
-		if (counter == 3)
-		{
-			cout << "stop here";
-		}
 		std::getline(inputFile, reader);
 		//inputFile >> reader;
 		size = reader.size();
@@ -99,6 +93,7 @@ void fileManager::readFile(int segSize)
 					currentBlockSize = segSize;// -block.size();
 					
 				}
+				/*Leftover Inserting*/
 				block += reader.substr(0, size);
 				currentBlockSize -= size;
 				textBlocks.push_back(block);
@@ -133,6 +128,9 @@ void fileManager::createAnagramMatrix(int NgramSize)
 		{
 
 			tempNGram = Curr_Block.substr(jBlockOffset, NgramSize);
+			if (! (std::find(dictionary.begin(), dictionary.end(), tempNGram) != dictionary.end()))
+				dictionary.push_back(tempNGram);
+			
 			raw.push_back(tempNGram);
 			jBlockOffset++;
 		}
@@ -149,6 +147,13 @@ void removeSubstrs(string& s, string& p) {
 		s.erase(i, n);
 }
 
+
+//*arma::Mat<int> Create_CFM(vector <string> NgramSeg)
+//{
+	
+//	arma::Mat<int> *CFM_Mat = new arma::Mat<int>(4, 4);
+//	return CFM_Mat;
+//}
 
 void fileManager::RemoveStopWordList(string fileNamePATH)
 {

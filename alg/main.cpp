@@ -14,7 +14,7 @@ int main(int argc, const char **argv) {
 	fileManager fm("Bildschirmtext.txt", "StopWords.txt");
 	fm.readFile(40);
 	fm.createAnagramMatrix(3);
-
+	
 
 	//// Initialize the random generator
 	//arma::arma_rng::set_seed_random();
