@@ -1,6 +1,5 @@
 #include "fileManager.h"
 #include <direct.h>
-//#include "Utilities.h"
 #include <windows.h>
 
 #define NEW_FILE_NAME_AFTER_STOP_WORDS_REM "_withoutStopWord.txt"
@@ -107,7 +106,7 @@ void fileManager::readFile(int segSize)
 
 }
 
-bool dirExists(const std::string& dirName_in)
+static bool dirExists(const std::string& dirName_in)
 {
 	DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
 	if (ftyp == INVALID_FILE_ATTRIBUTES)
@@ -120,13 +119,22 @@ bool dirExists(const std::string& dirName_in)
 }
 	
 
+/*Double "Slash" for example ""c:\\CFM's\\*.txt"" */
+static void DeleteAllFilesInFolder(string path)
+{
+	std::string command = "del /Q ";
+	system(command.append(path).c_str());
+}
 static arma::mat Create_CFM(const vector <string> NgramSeg, vector <string>* dictionary)
 {
 	static int counter = 0;
 
 	if (!dirExists("/CFM's"))
 		mkdir("/CFM's");
-	arma::mat segCFM(NgramSeg.size(), dictionary->size());
+	else
+		DeleteAllFilesInFolder("c:\\CFM's\\*.txt");
+
+	arma::mat segCFM( dictionary->size(), NgramSeg.size());
 	segCFM.fill(0);
 	for (int i = 0; i < NgramSeg.size(); i++)
 	{
@@ -139,20 +147,20 @@ static arma::mat Create_CFM(const vector <string> NgramSeg, vector <string>* dic
 		}
 		if (i == 0)
 		{
-			segCFM(i,pos)++;
+			segCFM(pos,i)++;
 		}
 		else {
 			
 			segCFM.col(i) = segCFM.col(i - 1);/*copy last coloumn to the current one*/
-			segCFM(i, pos)++;
+			segCFM(pos,i)++;
 
 		}
 	}
 	string filename = "/CFM's/segCFM" + std::to_string(counter) + ".txt";
 	segCFM.save(filename, arma::arma_ascii);
 	//segCFM.load(filename);
-	arma::mat G;
-	G.load(filename);
+	//arma::mat G;
+	//G.load(filename);
 
 	return segCFM;
 
@@ -232,9 +240,6 @@ void fileManager::CreateAllCFMsMatrixes()
 		Create_CFM(NSeg, &dictionary);
 	}
 }
-
-
-
 
 fileManager::~fileManager()
 {
