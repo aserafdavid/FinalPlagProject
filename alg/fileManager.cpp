@@ -1,11 +1,12 @@
 #include "fileManager.h"
+#include <direct.h>
+//#include "Utilities.h"
+#include <windows.h>
 
 #define NEW_FILE_NAME_AFTER_STOP_WORDS_REM "_withoutStopWord.txt"
 
 fileManager::fileManager()
 {
-	//isFileWithoutStopWordsListCreated = false;
-	
 	CLogger::GetLogger()->Log("file Manager Created ");
 }
 
@@ -63,55 +64,99 @@ fileManager::fileManager(string fileNamePATH ,string stopWordFilePATH)
 void fileManager::readFile(int segSize)
 {
 	string reader, block;
-	int size;
+	int readerSize;
 	int currentBlockSize = segSize;
-	int counter=0;
+	int counter = 0;
 	while (!inputFile.eof())
 	{
 		counter++;
-		std::getline(inputFile, reader);
-		//inputFile >> reader;
-		size = reader.size();
+		if (reader.size() == 0)
+			std::getline(inputFile, reader);
+
+		readerSize = reader.size();
 		if (reader.empty())
 			continue;
-		try {
-			if (currentBlockSize > size)
-			{
-				block += reader;
-				currentBlockSize -= size;
-			}
-			else {
-				/*insert  according to free size left */
-				size = reader.size();
-				while (size > segSize)
-				{
-					block += reader.substr(0, currentBlockSize);
-					textBlocks.push_back(block);
-					block.erase();
-					size -= currentBlockSize;
-					reader.erase(0, currentBlockSize);
-					currentBlockSize = segSize;// -block.size();
-					
-				}
-				/*Leftover Inserting*/
-				block += reader.substr(0, size);
-				currentBlockSize -= size;
-				textBlocks.push_back(block);
-				block.erase();
 
-			}
-			
-			
+
+		if (currentBlockSize > readerSize)
+		{/*All reader should be inserted into block*/
+			block += reader;
+			currentBlockSize -= readerSize;
+			reader.erase(0, readerSize);
 		}
-		catch (exception e)
-		{
-			CLogger::GetLogger()->Log("Excepton were cought wile reading file at the %d cycle in the loop", counter);
-			return;
+		else {
+			/*Insert according to currentBlockSize reader size wouldn't bw empty after*/
+			block += reader.substr(0, currentBlockSize);
+			textBlocks.push_back(block);
+			block.erase();
+			readerSize -= currentBlockSize;
+			reader.erase(0, currentBlockSize);
+			currentBlockSize = segSize;
+
 		}
 	}
+	/*Test All Blocks Size fo*/
+	for each (string block in textBlocks)
+	{
+		if (block.size() != segSize)
+		{
+			CLogger::GetLogger()->Log("The Creation of he Blocks are unaccurate ,There is atleast one block that is size is diffrent from segSize ->check readFile() function");
+		}
+	}
+
+
 }
 
+bool dirExists(const std::string& dirName_in)
+{
+	DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
+	if (ftyp == INVALID_FILE_ATTRIBUTES)
+		return false;  //something is wrong with your path!
 
+	if (ftyp & FILE_ATTRIBUTE_DIRECTORY)
+		return true;   // this is a directory!
+
+	return false;    // this is not a directory!
+}
+	
+
+static arma::mat Create_CFM(const vector <string> NgramSeg, vector <string>* dictionary)
+{
+	static int counter = 0;
+
+	if (!dirExists("/CFM's"))
+		mkdir("/CFM's");
+	arma::mat segCFM(NgramSeg.size(), dictionary->size());
+	segCFM.fill(0);
+	for (int i = 0; i < NgramSeg.size(); i++)
+	{
+		//size_t pos = NgramSeg[i] - dictionary->begin();
+		auto  pos = find(dictionary->begin(), dictionary->end(), NgramSeg[i]) - dictionary->begin();
+		if (pos >= dictionary->size())
+		{
+			CLogger::GetLogger()->Log("There is an Ngram that exist in seg and doesn't exist in dictionary. found in Create_CFM()--> aborting");
+			exit(1);
+		}
+		if (i == 0)
+		{
+			segCFM(i,pos)++;
+		}
+		else {
+			
+			segCFM.col(i) = segCFM.col(i - 1);/*copy last coloumn to the current one*/
+			segCFM(i, pos)++;
+
+		}
+	}
+	string filename = "/CFM's/segCFM" + std::to_string(counter) + ".txt";
+	segCFM.save(filename, arma::arma_ascii);
+	//segCFM.load(filename);
+	arma::mat G;
+	G.load(filename);
+
+	return segCFM;
+
+}
 
 void fileManager::createAnagramMatrix(int NgramSize)
 {
@@ -119,8 +164,9 @@ void fileManager::createAnagramMatrix(int NgramSize)
 	int segSeize, jBlockOffset, iBlock = 0;
 	string Curr_Block, tempNGram;
 	vector <string> raw;
-	while (!textBlocks[iBlock].empty())
+	for (int i = 0; i < textBlocks.size(); i++)// (!textBlocks[iBlock].empty())
 	{
+
 		Curr_Block = textBlocks[iBlock++];
 		segSeize = Curr_Block.size();
 		jBlockOffset = 0;
@@ -138,29 +184,20 @@ void fileManager::createAnagramMatrix(int NgramSize)
 		Ngrams.push_back(raw);
 		raw.clear();
 	}
-	CLogger::GetLogger()->Log("Block were Splited into Ngrams - createAnagramMatrix() Finshed");
+	CLogger::GetLogger()->Log("Block were Splited into Ngrams - createAnagramMatrix() Finished Succesfully");
 }
 
-void removeSubstrs(string& s, string& p) {
+static void removeSubstrs(string& s, string& p) {
 	string::size_type n = p.length();
-	for (string::size_type i = s.find(p) ; i != string::npos ; i = s.find(p))
+	for (string::size_type i = s.find(p); i != string::npos; i = s.find(p))
 		s.erase(i, n);
 }
-
-
-//*arma::Mat<int> Create_CFM(vector <string> NgramSeg)
-//{
-	
-//	arma::Mat<int> *CFM_Mat = new arma::Mat<int>(4, 4);
-//	return CFM_Mat;
-//}
 
 void fileManager::RemoveStopWordList(string fileNamePATH)
 {
 	std::ifstream readStream;
-	std:ofstream writeStream(fileNamePATH + NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
+	ofstream writeStream(fileNamePATH + NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
 	std::string lineData;
-	char * lineString;
 	std::vector<char*> fileData;
 	readStream.open(fileNamePATH);
 
@@ -186,6 +223,14 @@ void fileManager::RemoveStopWordList(string fileNamePATH)
 	readStream.close();
 	writeStream.close();
 
+}
+
+void fileManager::CreateAllCFMsMatrixes()
+{
+	for each(vector<string> NSeg in Ngrams)
+	{
+		Create_CFM(NSeg, &dictionary);
+	}
 }
 
 

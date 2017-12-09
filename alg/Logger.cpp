@@ -1,5 +1,6 @@
 #include "Logger.h"
-#include"Utilities.h"
+#include "Utilities.h"
+
 const string CLogger::m_sFileName = "Log.txt";
 CLogger* CLogger::m_pThis = NULL;
 ofstream CLogger::m_Logfile;

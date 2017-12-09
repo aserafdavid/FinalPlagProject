@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cstdarg>
 #include <string>
+
 using namespace std;
 
 #define LOGGER CLogger::GetLogger()

@@ -1,12 +1,12 @@
 #pragma once
-#include <armadillo>
+//#include <armadillo>
 #include <iostream>
 #include "string.h"
 #include <fstream>
 #include <vector>
 #include "Logger.h"
-
-
+#include <armadillo>
+//#include "Utilities"
 using namespace std;
 
 class fileManager
@@ -20,7 +20,7 @@ public:
 	~fileManager();
 	void createAnagramMatrix(int NgramSize);
 	void RemoveStopWordList(string fileNamePATH);
-	//arma::Mat<int> Create_CFM(vector <string> NgramSeg);
+	void CreateAllCFMsMatrixes();
 	
 
 private:
