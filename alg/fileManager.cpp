@@ -9,14 +9,14 @@ fileManager::fileManager()
 	CLogger::GetLogger()->Log("file Manager Created ");
 }
 
-/*The c'tor gets the  full path  to the file as a string  and have the ability 
+/*The c'tor gets the  full path  to the file as a string  and have the ability
 to read the file ,split to anagram and create the matrixes*/
-fileManager::fileManager(string fileNamePATH ,string stopWordFilePATH)
+fileManager::fileManager(string fileNamePATH, string stopWordFilePATH)
 {
-	
+
 	CLogger::GetLogger()->Log("Open input file for reading");
 	inputFile.open(fileNamePATH);
-	if (! inputFile.is_open())
+	if (!inputFile.is_open())
 	{
 		CLogger::GetLogger()->Log("Cannot open input file");
 		exit(1);
@@ -45,7 +45,7 @@ fileManager::fileManager(string fileNamePATH ,string stopWordFilePATH)
 
 		if (!stopWordList.empty())/*remove stopwords  from file*/
 		{
-			fileManager::RemoveStopWordList(fileNamePATH);	
+			fileManager::RemoveStopWordList(fileNamePATH);
 		}
 
 		CLogger::GetLogger()->Log("Stop words list file created succesfully");
@@ -72,7 +72,7 @@ void fileManager::readFile(int segSize)
 		if (reader.size() == 0)
 			std::getline(inputFile, reader);
 
-		readerSize = reader.size();
+		readerSize =(int) reader.size();
 		if (reader.empty())
 			continue;
 
@@ -117,7 +117,7 @@ static bool dirExists(const std::string& dirName_in)
 
 	return false;    // this is not a directory!
 }
-	
+
 
 /*Double "Slash" for example ""c:\\CFM's\\*.txt"" */
 static void DeleteAllFilesInFolder(string path)
@@ -125,6 +125,7 @@ static void DeleteAllFilesInFolder(string path)
 	std::string command = "del /Q ";
 	system(command.append(path).c_str());
 }
+
 static arma::mat Create_CFM(const vector <string> NgramSeg, vector <string>* dictionary)
 {
 	static int counter = 0;
@@ -134,25 +135,25 @@ static arma::mat Create_CFM(const vector <string> NgramSeg, vector <string>* dic
 	else
 		DeleteAllFilesInFolder("c:\\CFM's\\*.txt");
 
-	arma::mat segCFM( dictionary->size(), NgramSeg.size());
+	arma::mat segCFM(dictionary->size(), NgramSeg.size());
 	segCFM.fill(0);
 	for (int i = 0; i < NgramSeg.size(); i++)
 	{
 		//size_t pos = NgramSeg[i] - dictionary->begin();
 		auto  pos = find(dictionary->begin(), dictionary->end(), NgramSeg[i]) - dictionary->begin();
-		if (pos >= dictionary->size())
+		if (pos >= (int)dictionary->size())
 		{
 			CLogger::GetLogger()->Log("There is an Ngram that exist in seg and doesn't exist in dictionary. found in Create_CFM()--> aborting");
 			exit(1);
 		}
 		if (i == 0)
 		{
-			segCFM(pos,i)++;
+			segCFM(pos, i)++;
 		}
 		else {
-			
+
 			segCFM.col(i) = segCFM.col(i - 1);/*copy last coloumn to the current one*/
-			segCFM(pos,i)++;
+			segCFM(pos, i)++;
 
 		}
 	}
@@ -176,15 +177,15 @@ void fileManager::createAnagramMatrix(int NgramSize)
 	{
 
 		Curr_Block = textBlocks[iBlock++];
-		segSeize = Curr_Block.size();
+		segSeize =(int) Curr_Block.size();
 		jBlockOffset = 0;
 		while (Curr_Block[jBlockOffset] && Curr_Block[jBlockOffset + NgramSize])
 		{
 
 			tempNGram = Curr_Block.substr(jBlockOffset, NgramSize);
-			if (! (std::find(dictionary.begin(), dictionary.end(), tempNGram) != dictionary.end()))
+			if (!(std::find(dictionary.begin(), dictionary.end(), tempNGram) != dictionary.end()))
 				dictionary.push_back(tempNGram);
-			
+
 			raw.push_back(tempNGram);
 			jBlockOffset++;
 		}
@@ -223,11 +224,11 @@ void fileManager::RemoveStopWordList(string fileNamePATH)
 			{
 				removeSubstrs(lineData, stopWordList[i]);
 			}
-			writeStream << lineData <<	endl;
+			writeStream << lineData << endl;
 		}
 	}
 
-	CLogger::GetLogger()->Log ( "A new File Created ,named %s%s ",fileNamePATH, NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
+	CLogger::GetLogger()->Log("A new File Created ,named %s%s ", fileNamePATH, NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
 	readStream.close();
 	writeStream.close();
 
@@ -235,6 +236,8 @@ void fileManager::RemoveStopWordList(string fileNamePATH)
 
 void fileManager::CreateAllCFMsMatrixes()
 {
+	static int count;
+	arma::mat CFMS;
 	for each(vector<string> NSeg in Ngrams)
 	{
 		Create_CFM(NSeg, &dictionary);
