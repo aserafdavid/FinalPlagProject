@@ -1,0 +1,4 @@
+﻿1>------ Build started: Project: PlagiarismDetection, Configuration: Debug x64 ------
+1>  PlagiarismDetection.vcxproj -> C:\Users\david-pc\Documents\FinalPlagProject\x64\Debug\PlagiarismDetection.exe
+1>  PlagiarismDetection.vcxproj -> C:\Users\david-pc\Documents\FinalPlagProject\x64\Debug\PlagiarismDetection.pdb (Full PDB)
+========== Build: 1 succeeded, 0 failed, 1 up-to-date, 0 skipped ==========
