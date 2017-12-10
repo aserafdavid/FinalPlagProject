@@ -1,8 +1,8 @@
 #include <iostream>
 #include <armadillo>
 #include "fileManager.h"
-#include "main.h"
-#include "Algorithms.h"
+
+//#include "Algorithms.h"
 
 using namespace std;
 using namespace arma;

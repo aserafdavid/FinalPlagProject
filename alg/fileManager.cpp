@@ -1,3 +1,4 @@
+
 #include "fileManager.h"
 #include <direct.h>
 #include <windows.h>
@@ -157,7 +158,7 @@ static arma::mat Create_CFM(const vector <string> NgramSeg, vector <string>* dic
 
 		}
 	}
-	string filename = "/CFM's/segCFM" + std::to_string(counter) + ".txt";
+	string filename = "/CFM's/segCFM" + std::to_string(counter++) + ".txt";
 	segCFM.save(filename, arma::arma_ascii);
 	//segCFM.load(filename);
 	//arma::mat G;

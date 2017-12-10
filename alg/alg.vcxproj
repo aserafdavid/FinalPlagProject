@@ -147,6 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Natvis Include="arma.natvis" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="Algorithms.cpp" />
     <ClCompile Include="fileManager.cpp" />
     <ClCompile Include="Logger.cpp" />

@@ -1,4 +1,7 @@
 #pragma once
+#ifndef FILE_MANAGER_H
+#define FILE_MANAGER_H
+
 //#include <armadillo>
 #include <iostream>
 #include "string.h"
@@ -35,3 +38,4 @@ private:
 	
 };
 
+#endif

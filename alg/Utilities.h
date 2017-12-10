@@ -3,7 +3,6 @@
 #define UTILITIES_H
 
 //#include <string>
-#include "Logger.h"
 #include <time.h>
 #include <armadillo>
 
