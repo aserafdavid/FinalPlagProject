@@ -120,6 +120,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\armadillo\include\armadillo_bits;..\armadillo\include;..\mkl\include;%(AdditionalIncludeDirectories</AdditionalIncludeDirectories>
+      <UndefinePreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE</UndefinePreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

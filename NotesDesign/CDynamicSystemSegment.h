@@ -20,17 +20,21 @@ public:
 	CDynamicSystemSegment( string SegmentData, int NgramSize, vector<string>& vDictionary);
 	~CDynamicSystemSegment();
 
+
+
 	string& GetSegmentTmFileName(void);
 	void SetSegmentTmFileName(string& FileName);
 	double GetApproximationError(void);
 	void SetApproximationError(double ApproximationError);
-
+	
 protected:
 
 private:
 	// TM = Transition Matrix between SP_i to SP_i+1
 	string  msSegmentTmFileName; // instead mat
+	string msSegmentData;
 	double	mfApproximationError;
+	void DivideIntoNgrams();
 };
 #endif
 

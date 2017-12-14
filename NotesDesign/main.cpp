@@ -1,14 +1,14 @@
 #include <iostream>
 #include <armadillo>
-
+#include "CText.h"
 
 using namespace std;
 using namespace arma;
 
 int main(int argc, const char **argv) {
 
-
-
+	if(Setinfrastructure())
+		CText ct("Bildschirmtext.txt", "StopWords.txt");
 	//fileManager fm("Bildschirmtext.txt", "StopWords.txt");
 	//fm.readFile(40);
 	//fm.createAnagramMatrix(4);

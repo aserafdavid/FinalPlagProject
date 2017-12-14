@@ -11,6 +11,7 @@ CText::CText(string InputFileName, string stopWordFilePATH, int SegmentSize, int
 		// save stopWordFilePATH to mfStopWordFile
 		mfInputFile = InputFileName;
 		mfStopWordFile = stopWordFilePATH;
+		readStopWordFile();
 		RemoveStopWordList();
 		DivideTextIntoSegments();
 
@@ -39,9 +40,10 @@ CText::CText(string InputFileName, string stopWordFilePATH, int SegmentSize, int
 void CText::readStopWordFile(void)
 {
 	ifstream StopWordFile;
+	
 	if (!mfInputFile.empty())
 	{
-		StopWordFile.open(mfInputFile);
+		StopWordFile.open(mfStopWordFile);
 		if (!StopWordFile.is_open())
 		{
 			CLogger::GetLogger()->Log("Error While trying ot read stopWords list");
@@ -126,7 +128,7 @@ void CText::RemoveStopWordList(void)
 			}
 		}
 
-		CLogger::GetLogger()->Log("A new File Created ,named %s%s ", mfInputFile, NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
+		CLogger::GetLogger()->Log("A new File Created ,named %s%s ", mfInputFile.c_str(), NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
 		readStream.close();
 		writeStream.close();
 
@@ -161,42 +163,47 @@ void CText::DivideTextIntoSegments(void)
 		int counter = 0;
 		ifstream inputFile(mfInputFileWithoutstopWord);
 		if (!inputFile.is_open())
-			while (!inputFile.eof())
-			{
-				counter++;
-				if (reader.size() == 0)
-					std::getline(inputFile, reader);
+		{
+			CLogger::GetLogger()->Log("Cant open mfInputFileWithoutstopWord in DivideTextIntoSegments()-exit(1)");
+			exit(1);
+		}
+		while (!inputFile.eof())
+		{
+			counter++;
+			if (reader.size() == 0)
+				std::getline(inputFile, reader);
 
-				readerSize = (int)reader.size();
-				if (reader.empty())
-					continue;
+			readerSize = (int)reader.size();
+			if (reader.empty())
+				continue;
 
 
-				if (currentBlockSize > readerSize)
-				{/*All reader should be inserted into block*/
-					block += reader;
-					currentBlockSize -= readerSize;
-					reader.erase(0, readerSize);
-				}
-				else {
-					/*Insert according to currentBlockSize reader size wouldn't bw empty after*/
-					block += reader.substr(0, currentBlockSize);
-					CDynamicSystemSegment TempSeg(block, miNgramSize, mvDictionary);
-					mvSegments.push_back(TempSeg);
-					block.erase();
-					readerSize -= currentBlockSize;
-					reader.erase(0, currentBlockSize);
-					currentBlockSize = miSegmentSize;
-
-				}
+			if (currentBlockSize > readerSize)
+			{/*All reader should be inserted into block*/
+				block += reader;
+				currentBlockSize -= readerSize;
+				reader.erase(0, readerSize);
 			}
+			else {
+				/*Insert according to currentBlockSize reader size wouldn't bw empty after*/
+				block += reader.substr(0, currentBlockSize);
+				CDynamicSystemSegment TempSeg(block, miNgramSize, mvDictionary);
+				mvSegments.push_back(TempSeg);
+				block.erase();
+				readerSize -= currentBlockSize;
+				reader.erase(0, currentBlockSize);
+				currentBlockSize = miSegmentSize;
+
+			}
+		}
 		///*Test- All Blocks Size */
 		//for each (CDynamicSystemSegment block in mvSegments)
 		//{
-		//	if (block.size() != miSegmentSize)
-		//	{
-		//		CLogger::GetLogger()->Log("The Creation of he Blocks are unaccurate ,There is atleast one block that is size is diffrent from segSize ->check readFile() function");
-		//	}
+			//block.DivideIntoNgrams();
+			//if (block.miSegSize != miSegmentSize)
+			//{
+			//	CLogger::GetLogger()->Log("The Creation of he Blocks are unaccurate ,There is atleast one block that is size is diffrent from segSize ->check readFile() function");
+			//}
 		//}
 
 		inputFile.close();

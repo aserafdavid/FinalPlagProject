@@ -22,20 +22,26 @@ public:
 	~CSegment() noexcept(false);
 	
 	void BuildSegmentCFM(vector<string>& vDictionary);
-
+	vector<string> CSegment::ReadNgramDataFromFile();
 	ofstream* GetSegmentSPfile(void);
-
+	int miSegSize;
 
 protected:
-
-	ofstream mfSegmentCFMfile; // instead mat
+	virtual  bool SaveNgramDataToFile();
+	
+	//virtual  bool LoadData(void);
+	ifstream mfSegmentCFMfile; // instead mat
 	ofstream* mfSegmentSPfile; // instead mat
+	vector<string> mvSegmentNgrams;
 	int miNgramSize;
 	int miSegmentSize;
-	const vector<string> mvDictionary;
+	vector<string> mvDictionary;
+
 private:
 	string msSegmentData;
+	string mfSegmentNgramsfilePath;
 	ofstream mfSegmentNgramsfile; // instead vector
+	
 	void BuildSegmentSP(ofstream& mfSegmentCFMfile);
 };
 #endif

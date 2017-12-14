@@ -1,0 +1,128 @@
+[ppppp 38-40:  Article from DIE ZEIT, 30 November 1984, by Thomas von Randow]
+Bildschirmtext:  A Blow Against the System
+A Computer Club Discovers Breaches of Security in the Bundespost's BTX Program
+"Whoever hooks up to the BTX system in the next two to three years should be
+punished for stupidity."  This withering assessment of the Bundespost's new
+service, Bildschirmtext, could be heard last week at the eighth conference of
+data protection specialists in Cologne--from an authoritative source.  It was
+spoken by the chairman of the Association for Data Protection (GDD), the
+conference host, after he heard the comments of a computer entthusiast.  With
+wit and a relaxed patter, Herwart ("Wau") Holland of Hamburg's "Chaos Computer
+Club" (CCC) explained how he and his 23-year-old fellow club member, Steffen
+WernSy, had managed to take the Bildschirmtext service for a ride.
+Iteasier to get a winning six-digit combination in the lottery than to
+illegally acquire the password of a BTX subscriber, Bildschirmtext experts at
+the Bundespost had boasted.  But thatexactly what the computer chaotics did
+straight away.  An error, in professional circles called a bug, in the system's
+computer program made it as simple as child's play for the hackers.  Many
+Bildschirmtext users had already noticed that there was something wrong with
+the program.
+Suppliers compose full-screen images with information about what they have to
+offer--merchandise from the mail-order catalogue, vacations, account statements
+for bank customers, or simply letters to friends.  These "pages" can then be
+called in by (authorized) BTX subscribers, and responses to the relevant
+questions--concerning a flight booking or a money transfer, for example--can be
+input at home on the keyboard of the BTX auxiliary unit.
+However, space on a television screenlimited, and the BTX page can hold
+only 1,626 characters.  So that the designer knows during editing how many
+characters he has left on the page, this numberindicated at the bottom edge
+of the screen.  Until recently, however, this number was wrong--programmers are
+notoriously poor at mental arithmetic.  The page was full before the number of
+available characters reached zero.  For this reason, many suppliers experienced
+a chaotic overflow of characters, something that shouldhappen.
+Suddenly, all sorts of words, numbers or incomprehensible letter sequences flit
+by on the screen.  The reason for this character salad:  The creators of the
+BTX program apparently forgot to take care of "trash disposal," i.e., to see to
+it that excess text be ignored by the program or somehow set aside.  For that
+reason, the excess characters force parts of the program writer onto the
+screen, and they are, as the Hamburg hackers discovered, sometimes telling. 
+Specifically, they sometimes reveal the very secret that a BTX subscriber must
+guard most closely, his identification code.  This passwordthe key to
+access to the system.  Although it cannot be used to plunder someone else's
+bank account, itpossible to cause a great deal of mischief.  Merchandise
+can be ordered, vacations can be booked, magazine subscriptions can be entered. 
+By agreement, the legal holder of the security codeliable for all damage
+thus incurred.
+Steffen WernSy and his colleagues--the cluba registered subscriber--caused
+masses of BTX pages to overflow and then studied the ghostly characters on the
+screen.  In so doing, they discovered "usd 70000," the password for Hamburger
+Sparkasse (Haspa).  Now they were able to carry out what they had been planning
+for some time:  an impressive demonstration of the inadequacies of
+Bildschirmtext.  They set up a "contribution page."  Suppliers may charge a
+type of protection fee or contribution for each call-in of their pages,
+although this fee cannot exceed DM 9.99.  The account of the subscriber who
+calls in the pageautomatically charged with the fee.  With the Sparkasse
+password, the hackers now called in their own page--to the tune of DM 9.97.
+The idea was for this to occur repeatedly, whichwhy a home computer was
+programmed to automatically call in the page over and over again.  It did its
+job well, and while the club members worked on other activities, the cash
+register rang every three seconds.  From Saturday at 6:00 p.m. until Sunday at
+1:00 p.m., a total of DM 135,000 was credited to the club's account, money
+which they gladly returned to Haspa.
+Long before computers were popular, American students dubbed a type of trick
+using technology a "hack."  Legendarythe hack of Captain Crunch, a student
+who took his name from a brand of breakfast cereal.  Inside the box of this
+type of cereal was a small plastic whistle, that was coincidentally tuned to
+exactly 2,600 hertz.  In the American telephone system, as Captain Crunch
+discovered, this frequency, when whistled into the microphone of the telephone
+receiver, caused a breakdown in the fee meter.
+Word of the trick with free long-distance calls soon spread; it made the cereal
+company rich and the telephone company poor.  Or at any rate, it was in a
+difficult bind.  A decision had to be made between accepting the loss, the
+amount of which was difficult to determine, and undertaking expensive technical
+changes in the continental network.  Bell decided in favor of the second
+option.
+This type of blow against a computer system represents a wonderful triumph that
+goes far beyond the financial advantage associated with it; ita liberating
+blow, which frees us for a few moments from the dominance of technology.  In
+the 1930s, small-plot gardeners in Hamburg illuminated their houses free of
+charge.  The supplier of electricity was the nearby antenna of a strong radio
+broadcaster, from which energy was diverted using a simple trap circuit to the
+lamps.  For years, this hack went undetected--and once it was finally blown
+open, it elicited a fundamental legal debate:  Are radio waves movable property
+under the meaning of the law?
+The trickster who thought up the hack with the first push-button pay phone by
+SEL just 10 years ago remained anonymous.  For this, he used a piezoelectric
+lighter.  Whoever wanted to make a free phone call simply went to a telephone
+booth with the SEL phone, inserted a five-mark piece and called his party.  But
+before all the money was used up, the lighter had to be struck near the key
+pad.  The spark from the lighter significantly disturbed the electronics and
+the phone was then forced to assume that the connection hadbeen made, and
+thus--in dubio pro comparticipte--the five-mark piece was returned.  In all pay
+phones of that type, the logic boards had to be replaced.
+For the victim, the hacknot only annoying, itgenerally an educational
+experience as well, revealing technical design flaws.  Naturally, as the degree
+of complexity of the system increases, so does the potential for damage that
+can be inflicted even with the first hack.  Thus, ita wonder that the games
+played by BTX hackers have thus far been harmless.  After all, they revealed
+the wretchedness of the Bildschirmtext design with a degree of clarity that
+leaves nothing to be desired.
+In BTX's country of origin, Great Britain, hackers made a game out of cracking
+Prince Philip's electronic mailbox.  The BTX mailboxesdefinitely oddly
+constructed.  Bildschirmtext letters that have already been mailed can be
+rewritten later by the sender.  Any mailbox can even be rendered fully
+inoperative.  In order to do so, all thatrequired--as the Hamburg Chaos
+hackers also discovered--is that the command to repeat the entire call-in be
+placed at the end of a page edit.  The page drawn up in this way then appears
+repeatedly.  It also does so in the mailbox to which itsent, the result
+being that nothing else can be retrieved from it.  Only the Bundespost knows
+how to break up this vicious cycle.
+A microcomputer can also be connected to the Bildschirmtext system.  But pity
+the poor soul who uses it to call in a crash program specialized for his type
+of machine.  That will cause the computer to crash, destroying the programs
+loaded in its memory.  The only thing that can be done thento reboot.  The
+destructive programoffered as a harmless Bildschirmtext page.  Advanced
+hackers have even set them up as time bombs.  Itonly later, once the page--
+generally headed with silly sayings--is long forgotten that the machine breaks
+down, so that generally the cause can no longer be determined.
+The Bundespost should have learned its lesson long ago, before its pride and
+joy, Bildschirmtext, was dealt a resounding blow last week by the Sparkasse
+trick.  The piecemeal adjustments that they undertook in the past after every
+announced BTX hack were apparently inadequate.  A program that needs so much
+clearing uphopelessly contaminated.
+Naturally, the Bundespost knows this, and it grieves them in particular because
+BTX had just overcome the last political hurdle on the path to being
+universally introduced.  It also hurts since therealready a dearth of
+interest in the new medium of communication.  According to predictions by the
+Ministry, BTX should have around 150,000 subscribers by now.  In reality, that
+figureonly a scant 19,000, of which 3,000suppliers.

@@ -229,7 +229,7 @@ void fileManager::RemoveStopWordList(string fileNamePATH)
 		}
 	}
 
-	CLogger::GetLogger()->Log("A new File Created ,named %s%s ", fileNamePATH, NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
+	CLogger::GetLogger()->Log("A new File Created ,named %s%s ", fileNamePATH.c_str(), NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
 	readStream.close();
 	writeStream.close();
 

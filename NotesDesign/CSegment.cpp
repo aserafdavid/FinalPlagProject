@@ -2,10 +2,12 @@
 #include "CSegment.h"
 
 
+/*in this default c'tor should create the file and update the Dictionary*/
 CSegment::CSegment(CSegment & origin)
 {
 	miNgramSize = origin.miNgramSize;
 	msSegmentData = origin.msSegmentData;
+	
 }
 
 
@@ -15,16 +17,21 @@ CSegment::CSegment(CSegment & origin)
 CSegment::CSegment(string& SegmentData, int NgramSize, vector<string>& vDictionary)
 //: msSegmentData(SegmentData)
 {
+#define NgramsFilesPath "tempFiles/SegNgrams/"
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
-		vector<string> vSegmentNgrams;
+
+
+
+		
 		/********************************/
+		miSegSize = SegmentData.size();
 		miNgramSize = NgramSize;
 		msSegmentData = SegmentData;
 
-		vSegmentNgrams.empty();
+		mvSegmentNgrams.empty();
 		int segSeize, jBlockOffset, iBlock = 0;
 		string  tempNGram;
 		vector <string> raw;
@@ -38,19 +45,52 @@ CSegment::CSegment(string& SegmentData, int NgramSize, vector<string>& vDictiona
 			if (!(std::find(vDictionary.begin(), vDictionary.end(), tempNGram) != vDictionary.end()))
 				vDictionary.push_back(tempNGram);
 
-			vSegmentNgrams.push_back(tempNGram);
+			mvSegmentNgrams.push_back(tempNGram);
 			jBlockOffset++;
 
 		}
 		CLogger::GetLogger()->Log("Block were Splited into Ngrams - createAnagramMatrix() Finished Succesfully");
+		/*TODO:write to File and save*/
+		mfSegmentNgramsfilePath = NgramsFilesPath;
+		mfSegmentNgramsfilePath.append("NgramFromSeg" + std::to_string(GetSegId()));
+		mfSegmentNgramsfile.open(mfSegmentNgramsfilePath);
 
-
+		SaveNgramDataToFile();
 		/****************************/
 	}
 	catch (CError& Err) {
 		Err.AddID("CSegment", __FUNCTION__);
 		throw Err;
 	}
+}
+
+vector<string> CSegment::ReadNgramDataFromFile(void)
+{
+	string temp;
+	vector<string> Ngrams;
+	if (!mfSegmentCFMfile.is_open())
+		mfSegmentCFMfile.open(mfSegmentNgramsfilePath);
+
+	while (!mfSegmentCFMfile.eof())
+	{
+	 //temp << mfSegmentCFMfile;
+		getline(mfSegmentCFMfile, temp);
+		Ngrams.push_back(temp);
+	}
+	return Ngrams;
+
+}
+
+bool CSegment::SaveNgramDataToFile()
+{
+	if (!mfSegmentNgramsfile.is_open())
+		return false;
+
+	/*open File for writing and generate filename*/
+
+	for each (string Ngram in mvSegmentNgrams)
+		mfSegmentNgramsfile << Ngram << endl;
+	return true;
 }
 
 CSegment::~CSegment() noexcept(false)
@@ -76,8 +116,8 @@ void CSegment::BuildSegmentCFM(vector<string>& vDictionary)
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
-
-
+	
+	
 	}
 	catch (CError& Err) {
 		Err.AddID("CSegment", __FUNCTION__);
