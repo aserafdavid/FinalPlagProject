@@ -15,6 +15,7 @@ CDynamicSystemSegment::CDynamicSystemSegment(string  SegmentData, int NgramSize,
 		miSegSize = SegmentData.size();
 		DivideIntoNgrams();
 		SaveNgramDataToFile();
+
 	}
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);
@@ -58,6 +59,8 @@ void CDynamicSystemSegment::DivideIntoNgrams()
 	
 	CLogger::GetLogger()->Log("Block were Splited into Ngrams - createAnagramMatrix() Finished Succesfully");
 }
+
+
 
 
 

@@ -64,7 +64,7 @@ CSegment::CSegment(string& SegmentData, int NgramSize, vector<string>& vDictiona
 	}
 }
 
-vector<string> CSegment::ReadNgramDataFromFile(void)
+vector<string>& CSegment::ReadNgramDataFromFile(void)
 {
 	string temp;
 	vector<string> Ngrams;
@@ -96,8 +96,22 @@ bool CSegment::SaveNgramDataToFile()
 CSegment::~CSegment()
 {
 	// לא לשכוח שחרורים של כל המטריצות
+<<<<<<< Updated upstream
 	CError Err(""); Err.AddID("CText", __FUNCTION__);
 	CLogger::GetLogger()->Log(Err.GetErrMsg());
+=======
+	try {
+		CError Err(""); Err.AddID("CText", __FUNCTION__);
+		CLogger::GetLogger()->Log(Err.GetErrMsg());
+
+
+		cout << "dss";
+	}
+	catch (CError& Err) {
+		Err.AddID("CSegment", __FUNCTION__);
+		throw Err;
+	}
+>>>>>>> Stashed changes
 }
 
 // 1) build CFM Matrix using vDictionary , save it in mfSegmentCFMfile

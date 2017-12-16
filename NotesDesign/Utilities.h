@@ -91,5 +91,43 @@ namespace
 			return false;
 		return true;
 	}
+
+
+	//TODO: Insert into Class
+	//static arma::mat Create_CFM(const vector <string> NgramSeg, vector <string>* dictionary)
+	//{
+	//	static int counter = 0;
+
+	//	arma::mat segCFM(dictionary->size(), NgramSeg.size());
+	//	segCFM.fill(0);
+	//	for (int i = 0; i < NgramSeg.size(); i++)
+	//	{
+	//		//size_t pos = NgramSeg[i] - dictionary->begin();
+	//		auto  pos = find(dictionary->begin(), dictionary->end(), NgramSeg[i]) - dictionary->begin();
+	//		if (pos >= (int)dictionary->size())
+	//		{
+	//			CLogger::GetLogger()->Log("There is an Ngram that exist in seg and doesn't exist in dictionary. found in Create_CFM()--> aborting");
+	//			exit(1);
+	//		}
+	//		if (i == 0)
+	//		{
+	//			segCFM(pos, i)++;
+	//		}
+	//		else {
+
+	//			segCFM.col(i) = segCFM.col(i - 1);/*copy last coloumn to the current one*/
+	//			segCFM(pos, i)++;
+
+	//		}
+	//	}
+	//	string filename = "/CFM's/segCFM" + std::to_string(counter++) + ".txt";
+	//	segCFM.save(filename, arma::arma_ascii);
+	//	//segCFM.load(filename);
+	//	//arma::mat G;
+	//	//G.load(filename);
+
+	//	return segCFM;
+
+	//}
 }
 #endif

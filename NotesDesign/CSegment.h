@@ -22,7 +22,7 @@ public:
 	~CSegment();
 	
 	void BuildSegmentCFM(vector<string>& vDictionary);
-	vector<string> CSegment::ReadNgramDataFromFile();
+	vector<string>& CSegment::ReadNgramDataFromFile();
 	ofstream* GetSegmentSPfile(void);
 	int miSegSize;
 

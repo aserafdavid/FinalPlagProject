@@ -1,4 +1,5 @@
 #include "CText.h"
+#include <stdlib.h>
 
 CText::CText(string InputFileName, string stopWordFilePATH, int SegmentSize, int NgramSize)
 	: miSegmentSize(SegmentSize), miNgramSize(NgramSize), mfInputFile(InputFileName), mfStopWordFile(stopWordFilePATH)
@@ -7,14 +8,20 @@ CText::CText(string InputFileName, string stopWordFilePATH, int SegmentSize, int
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
-		// save InputFileName to mfInputFile
-		// save stopWordFilePATH to mfStopWordFile
+
+		vector<string> TempNgramSeg;
 		mfInputFile = InputFileName;
 		mfStopWordFile = stopWordFilePATH;
 		readStopWordFile();
 		RemoveStopWordList();
 		DivideTextIntoSegments();
 
+		/*Create CFM for each segment according to NgramsFile*/
+		for each (CDynamicSystemSegment TempSeg in mvSegments)
+		{
+			TempNgramSeg = TempSeg.ReadNgramDataFromFile();
+
+		}
 		//in this step - all Segments NGrams created , mvDictionary is fully updated 
 		// time to build CFM and SP's for each segment by DSeg.BuildSegmentCFM(vector<string>& vDictionary);
 
@@ -151,6 +158,7 @@ void CText::DivideTextIntoSegments(void)
 
 		//string temp("asd");
 		//CSegment TempSeg(temp, 3, mvDictionary);
+		int available=0;
 		string reader, block;
 		int readerSize;
 		int currentBlockSize = miSegmentSize;
@@ -182,7 +190,8 @@ void CText::DivideTextIntoSegments(void)
 				/*Insert according to currentBlockSize reader size wouldn't bw empty after*/
 				block += reader.substr(0, currentBlockSize);
 				CDynamicSystemSegment TempSeg(block, miNgramSize, mvDictionary);
-				mvSegments.push_back(TempSeg);
+				memcpy(&mvSegments[mvSegments.size()-1], &TempSeg, sizeof(CDynamicSystemSegment));
+				//mvSegments.push_back(std::memcpy(TempSeg);
 				block.erase();
 				readerSize -= currentBlockSize;
 				reader.erase(0, currentBlockSize);
