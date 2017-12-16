@@ -10,12 +10,12 @@
 #include "Logger.h"
 #include "CError.h"
 //#include "CAlgorithms.h"
-
+#include <memory>
 
 using namespace std;
 
 /* class definition */
-class CSegment
+class CSegment 
 {
 public:
 	CSegment( CSegment& origin);
@@ -25,12 +25,12 @@ public:
 	void BuildSegmentCFMandSP(vector<string>& vDictionary);
 	vector<string>& CSegment::ReadNgramDataFromFile();
 	string& GetSegmentSPfileName(void);
-	int miSegSize;
+	size_t miSegSize;
 
 protected:
 	virtual  void SaveNgramDataToFile();
-	
-	//virtual  bool LoadData(void);
+	CSegment& getCSegment(void);
+
 	string mfSegmentCFMfileName; // instead mat - consider to delete it if not nececarry 
 	string mfSegmentSPfileName; // instead mat
 	vector<string> mvSegmentNgrams;
@@ -39,7 +39,9 @@ protected:
 	int miSegmentNumber;
 	vector<string> mvDictionary;
 
+	
 private:
+
 	string msSegmentData;
 	string mfSegmentNgramsfilePath;
 	//ofstream mfSegmentNgramsfile; // instead vector

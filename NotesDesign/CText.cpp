@@ -17,9 +17,9 @@ CText::CText(string InputFileName, string stopWordFilePATH, int SegmentSize, int
 		DivideTextIntoSegments();
 
 		/*Create CFM for each segment according to NgramsFile*/
-		for each (CDynamicSystemSegment TempSeg in mvSegments)
+		for each (auto TempSeg in mvSegments)
 		{
-			TempNgramSeg = TempSeg.ReadNgramDataFromFile();
+			TempNgramSeg = TempSeg->ReadNgramDataFromFile();
 
 		}
 		//in this step - all Segments NGrams created , mvDictionary is fully updated 
@@ -190,8 +190,13 @@ void CText::DivideTextIntoSegments(void)
 				/*Insert according to currentBlockSize reader size wouldn't bw empty after*/
 				block += reader.substr(0, currentBlockSize);
 				CDynamicSystemSegment TempSeg(block, miNgramSize, mvDictionary);
-				memcpy(&mvSegments[mvSegments.size()-1], &TempSeg, sizeof(CDynamicSystemSegment));
-				//mvSegments.push_back(std::memcpy(TempSeg);
+				//auto instance = std::make_unique<CDynamicSystemSegment>();
+				//instance = TempSeg.GetCDynamicSystemSegment();
+				//instance->GetCDynamicSystemSegment().(block, miNgramSize, mvDictionary);
+				//memcpy(&mvSegments[mvSegments.size()-1], &TempSeg, sizeof(CDynamicSystemSegment));
+				//mvSegments.push_back(TempSeg.GetCDynamicSystemSegment());
+				//std::unique_ptr<CDynamicSystemSegment> instance(new CDynamicSystemSegment(block, miNgramSize, mvDictionary));
+				mvSegments.push_back(make_shared<CDynamicSystemSegment> (block, miNgramSize, mvDictionary));
 				block.erase();
 				readerSize -= currentBlockSize;
 				reader.erase(0, currentBlockSize);

@@ -7,9 +7,7 @@
 /*in this default c'tor should create the file and update the Dictionary*/
 CSegment::CSegment(CSegment & origin)
 {
-	miNgramSize = origin.miNgramSize;
-	msSegmentData = origin.msSegmentData;
-	
+
 }
 
 //1) Create Ngrams From Segment according to NgramSize , update vDictionary accordingly.
@@ -93,23 +91,19 @@ void CSegment::SaveNgramDataToFile()
 	}
 }
 
+CSegment & CSegment::getCSegment(void)
+{
+	// TODO: insert return statement here
+	return *this;
+}
+
 CSegment::~CSegment()
 {
 	// לא לשכוח שחרורים של כל המטריצות
 
 	CError Err(""); Err.AddID("CText", __FUNCTION__);
 	CLogger::GetLogger()->Log(Err.GetErrMsg());
-	try {
-		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
-
-
-		cout << "dss";
-	}
-	catch (CError& Err) {
-		Err.AddID("CSegment", __FUNCTION__);
-		throw Err;
-	}
+	cout << "dss";
 
 }
 

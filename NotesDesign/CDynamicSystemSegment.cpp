@@ -1,8 +1,14 @@
 #include "CDynamicSystemSegment.h"
 
-/*default copy c'tor*/
-CDynamicSystemSegment::CDynamicSystemSegment(const CDynamicSystemSegment& origin) : CSegment(*this)
+CDynamicSystemSegment& CDynamicSystemSegment::GetCDynamicSystemSegment(void)
 {
+	return *this;
+}
+
+/*default copy c'tor*/
+CDynamicSystemSegment::CDynamicSystemSegment(const CDynamicSystemSegment& origin) :CSegment(*this)
+{
+	
 }
 
 
@@ -12,6 +18,10 @@ CDynamicSystemSegment::CDynamicSystemSegment(string  SegmentData, int NgramSize,
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
+
+		//auto Csave = getCSegment();
+		//mInstance = std::make_unique<CSegment>();
+		
 		miSegSize = SegmentData.size();
 		DivideIntoNgrams();
 		SaveNgramDataToFile();
@@ -26,6 +36,7 @@ CDynamicSystemSegment::CDynamicSystemSegment(string  SegmentData, int NgramSize,
 
 CDynamicSystemSegment::~CDynamicSystemSegment()
 {
+		
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 }
