@@ -5,10 +5,7 @@
 /*in this default c'tor should create the file and update the Dictionary*/
 CSegment::CSegment(CSegment & origin)
 {
-	
-	//miNgramSize = origin.miNgramSize;
-	//msSegmentData = origin.msSegmentData;
-	//CSegment(msSegmentData, miNgramSize, origin.mvDictionary);
+
 }
 
 

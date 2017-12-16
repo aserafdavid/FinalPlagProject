@@ -30,7 +30,6 @@ protected:
 	virtual  bool SaveNgramDataToFile();
 	CSegment& getCSegment(void);
 
-	//virtual  bool LoadData(void);
 	ifstream mfSegmentCFMfile; // instead mat
 	ofstream* mfSegmentSPfile; // instead mat
 	vector<string> mvSegmentNgrams;
