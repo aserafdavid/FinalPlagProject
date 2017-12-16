@@ -10,8 +10,8 @@
 #include <map>
 //#include "CSegment.h"
 #include "CDynamicSystemSegment.h"
-#include "Logger.h"
-#include "CError.h"
+//#include "Logger.h"
+//#include "CError.h"
 
 using namespace std;
 

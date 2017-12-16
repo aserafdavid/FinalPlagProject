@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+#include <string>
 #include "Logger.h"
 #include "CError.h"
 //#include "CAlgorithms.h"
@@ -21,28 +22,28 @@ public:
 	CSegment(  string& SegmentData, int NgramSize, vector<string>& vDictionary);
 	~CSegment();
 	
-	void BuildSegmentCFM(vector<string>& vDictionary);
+	void BuildSegmentCFMandSP(vector<string>& vDictionary);
 	vector<string>& CSegment::ReadNgramDataFromFile();
-	ofstream* GetSegmentSPfile(void);
+	string& GetSegmentSPfileName(void);
 	int miSegSize;
 
 protected:
-	virtual  bool SaveNgramDataToFile();
+	virtual  void SaveNgramDataToFile();
 	
 	//virtual  bool LoadData(void);
-	ifstream mfSegmentCFMfile; // instead mat
-	ofstream* mfSegmentSPfile; // instead mat
+	string mfSegmentCFMfileName; // instead mat - consider to delete it if not nececarry 
+	string mfSegmentSPfileName; // instead mat
 	vector<string> mvSegmentNgrams;
 	int miNgramSize;
 	int miSegmentSize;
+	int miSegmentNumber;
 	vector<string> mvDictionary;
 
 private:
 	string msSegmentData;
 	string mfSegmentNgramsfilePath;
-	ofstream mfSegmentNgramsfile; // instead vector
+	//ofstream mfSegmentNgramsfile; // instead vector
 	
-	void BuildSegmentSP(ofstream& mfSegmentCFMfile);
 };
 #endif
 

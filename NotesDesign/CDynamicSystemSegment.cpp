@@ -32,7 +32,6 @@ CDynamicSystemSegment::~CDynamicSystemSegment()
 
 void CDynamicSystemSegment::DivideIntoNgrams()
 {
-
 	//Ngrams.empty();
 	int segSeize, jBlockOffset, iBlock = 0;
 	string Curr_Block, tempNGram;
@@ -40,22 +39,22 @@ void CDynamicSystemSegment::DivideIntoNgrams()
 	//{
 
 	Curr_Block = msSegmentData;//textBlocks[iBlock++];
-		segSeize = (int)Curr_Block.size();
-		jBlockOffset = 0;
-		while (Curr_Block[jBlockOffset] && Curr_Block[jBlockOffset + miNgramSize])
-		{
+	segSeize = (int)Curr_Block.size();
+	jBlockOffset = 0;
+	while (Curr_Block[jBlockOffset] && Curr_Block[jBlockOffset + miNgramSize])
+	{
 
-			tempNGram = Curr_Block.substr(jBlockOffset, miNgramSize);
-			if (!(std::find(mvDictionary.begin(), mvDictionary.end(), tempNGram) != mvDictionary.end()))
-				mvDictionary.push_back(tempNGram);
+		tempNGram = Curr_Block.substr(jBlockOffset, miNgramSize);
+		if (!(std::find(mvDictionary.begin(), mvDictionary.end(), tempNGram) != mvDictionary.end()))
+			mvDictionary.push_back(tempNGram);
 
-			mvSegmentNgrams.push_back(tempNGram);
-			jBlockOffset++;
-		}
-		/*Igonre the block leftover */
-		//Ngrams.push_back(raw);
+		mvSegmentNgrams.push_back(tempNGram);
+		jBlockOffset++;
+	}
+	/*Igonre the block leftover */
+	//Ngrams.push_back(raw);
 
-		SaveNgramDataToFile();//mvSegmentNgrams Conteain the Ngram for file saving
+	SaveNgramDataToFile();//mvSegmentNgrams Conteain the Ngram for file saving
 	
 	CLogger::GetLogger()->Log("Block were Splited into Ngrams - createAnagramMatrix() Finished Succesfully");
 }

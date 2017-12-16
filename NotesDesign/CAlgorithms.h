@@ -6,8 +6,8 @@
 #include <iostream>
 #include <string.h>
 #include <armadillo>
-#include "Logger.h"
-#include "CError.h"
+//#include "Logger.h"
+//#include "CError.h"
 
 //using namespace std;
 using namespace arma;
@@ -20,7 +20,7 @@ public:
 	~CAlgorithms() {};
 
 	static void RunQrAlg(arma::mat & matrixA, arma::mat & matrixR);
-	static ofstream* BuildSPfile(ofstream & fSegmentCFMfile);
+	static string& BuildSPfile(arma::mat& mSegmentCFmMat);
 	static string& BuildTmBetweenSPs(CDynamicSystemSegment& Left, CDynamicSystemSegment& Right);
 
 

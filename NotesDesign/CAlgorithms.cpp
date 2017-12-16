@@ -30,15 +30,17 @@ void CAlgorithms::RunQrAlg(arma::mat &matrixA, arma::mat &matrixR)
 	}
 }
 
-ofstream* CAlgorithms::BuildSPfile(ofstream & fSegmentCFMfile)
+string& CAlgorithms::BuildSPfile(arma::mat& mSegmentCFmMat)
 {
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
-		// implementation here
+		// implementation here - see CSegment::BuildSegmentCFMandSP to learn how to deal with armadilo
 
-		return &fSegmentCFMfile; // just for returning something for meanwhile
+
+		string fileName = "";
+		return fileName; // just for returning something for meanwhile
 	}
 	catch (CError& Err) {
 		Err.AddID("CAlgorithms", __FUNCTION__);
