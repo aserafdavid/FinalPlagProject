@@ -7,8 +7,20 @@ using namespace arma;
 
 int main(int argc, const char **argv) {
 
-	if(Setinfrastructure())
-		CText ct("Bildschirmtext.txt", "StopWords.txt");
+
+	string path = argv[0];
+	string ext = "x64\\Debug\\PlagiarismDetection.exe";
+	if (path != ext &&
+		path.size() > ext.size() &&
+		path.substr(path.size() - ext.size()) == ext)
+				path = path.substr(0, path.size() - ext.size());
+
+	if (Setinfrastructure(path))
+	{
+		path.append("tempFiles");
+		Global_PathToTempFiles = path;
+		CText ct("Bildschirmtext.txt", "StopWords.txt", path);
+	}
 	//fileManager fm("Bildschirmtext.txt", "StopWords.txt");
 	//fm.readFile(40);
 	//fm.createAnagramMatrix(4);

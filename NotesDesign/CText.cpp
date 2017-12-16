@@ -1,14 +1,14 @@
 #include "CText.h"
 #include <stdlib.h>
 
-CText::CText(string InputFileName, string stopWordFilePATH, int SegmentSize, int NgramSize)
+CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile, int SegmentSize, int NgramSize)
 	: miSegmentSize(SegmentSize), miNgramSize(NgramSize), mfInputFile(InputFileName), mfStopWordFile(stopWordFilePATH)
 {
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
-
+		Global_PathToTempFiles = mPathToTempFiles = PathToTempFile;
 		vector<string> TempNgramSeg;
 		mfInputFile = InputFileName;
 		mfStopWordFile = stopWordFilePATH;
@@ -19,9 +19,10 @@ CText::CText(string InputFileName, string stopWordFilePATH, int SegmentSize, int
 		/*Create CFM for each segment according to NgramsFile*/
 		for each (auto TempSeg in mvSegments)
 		{
-			TempNgramSeg = TempSeg->ReadNgramDataFromFile();
-
+			//TempNgramSeg = TempSeg->ReadNgramDataFromFile();
+			TempSeg->BuildSegmentCFMandSP(mvDictionary);
 		}
+
 		//in this step - all Segments NGrams created , mvDictionary is fully updated 
 		// time to build CFM and SP's for each segment by DSeg.BuildSegmentCFM(vector<string>& vDictionary);
 
@@ -189,14 +190,7 @@ void CText::DivideTextIntoSegments(void)
 			else {
 				/*Insert according to currentBlockSize reader size wouldn't bw empty after*/
 				block += reader.substr(0, currentBlockSize);
-				CDynamicSystemSegment TempSeg(block, miNgramSize, mvDictionary);
-				//auto instance = std::make_unique<CDynamicSystemSegment>();
-				//instance = TempSeg.GetCDynamicSystemSegment();
-				//instance->GetCDynamicSystemSegment().(block, miNgramSize, mvDictionary);
-				//memcpy(&mvSegments[mvSegments.size()-1], &TempSeg, sizeof(CDynamicSystemSegment));
-				//mvSegments.push_back(TempSeg.GetCDynamicSystemSegment());
-				//std::unique_ptr<CDynamicSystemSegment> instance(new CDynamicSystemSegment(block, miNgramSize, mvDictionary));
-				mvSegments.push_back(make_shared<CDynamicSystemSegment> (block, miNgramSize, mvDictionary));
+				mvSegments.push_back(make_shared<CDynamicSystemSegment> (block, miNgramSize, mPathToTempFiles, mvDictionary));
 				block.erase();
 				readerSize -= currentBlockSize;
 				reader.erase(0, currentBlockSize);
@@ -204,15 +198,6 @@ void CText::DivideTextIntoSegments(void)
 
 			}
 		}
-		///*Test- All Blocks Size */
-		//for each (CDynamicSystemSegment block in mvSegments)
-		//{
-			//block.DivideIntoNgrams();
-			//if (block.miSegSize != miSegmentSize)
-			//{
-			//	CLogger::GetLogger()->Log("The Creation of he Blocks are unaccurate ,There is atleast one block that is size is diffrent from segSize ->check readFile() function");
-			//}
-		//}
 
 		inputFile.close();
 

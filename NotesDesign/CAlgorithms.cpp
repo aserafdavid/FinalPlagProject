@@ -39,7 +39,7 @@ string& CAlgorithms::BuildSPfile(arma::mat& mSegmentCFmMat)
 		// implementation here - see CSegment::BuildSegmentCFMandSP to learn how to deal with armadilo
 
 
-		string fileName = "";
+		string fileName = "fdf";
 		return fileName; // just for returning something for meanwhile
 	}
 	catch (CError& Err) {

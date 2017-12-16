@@ -12,8 +12,8 @@ CDynamicSystemSegment::CDynamicSystemSegment(const CDynamicSystemSegment& origin
 }
 
 
-CDynamicSystemSegment::CDynamicSystemSegment(string  SegmentData, int NgramSize, vector<string>& vDictionary)
-	: CSegment(SegmentData, NgramSize, vDictionary)
+CDynamicSystemSegment::CDynamicSystemSegment(string  SegmentData, int NgramSize,string pathTempFiles ,vector<string>& vDictionary)
+	: CSegment(SegmentData, NgramSize, pathTempFiles, vDictionary)
 {
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
@@ -21,10 +21,11 @@ CDynamicSystemSegment::CDynamicSystemSegment(string  SegmentData, int NgramSize,
 
 		//auto Csave = getCSegment();
 		//mInstance = std::make_unique<CSegment>();
-		
+		miNgramSize = NgramSize;
+		msSegmentData = SegmentData;
 		miSegSize = SegmentData.size();
-		DivideIntoNgrams();
-		SaveNgramDataToFile();
+		//DivideIntoNgrams();
+		
 
 	}
 	catch (CError& Err) {
@@ -69,10 +70,6 @@ void CDynamicSystemSegment::DivideIntoNgrams()
 	
 	CLogger::GetLogger()->Log("Block were Splited into Ngrams - createAnagramMatrix() Finished Succesfully");
 }
-
-
-
-
 
 
 

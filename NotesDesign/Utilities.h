@@ -19,6 +19,7 @@ namespace
 
 	//using namespace arma;
 	using namespace std;
+	static string Global_PathToTempFiles;
 	// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
 	const std::string CurrentDateTime()
 	{
@@ -63,32 +64,44 @@ namespace
 		return false;    // this is not a directory!
 	}
 
-	//static bool SaveNgramDataToFile(ofstream output, vector<string> vSegmentNgrams)
-	//{
-	//	if (!output.is_open())
-	//		return false;
+	static void SaveNgramDataToFile(ofstream output, vector<string> vSegmentNgrams)
+	{
+		if (!output.is_open())
+		{
+			
+		}
 
-	//	for each (string Ngram in vSegmentNgrams)
-	//		output << Ngram << endl;
-	//	return true;
-	//}
+		for each (string Ngram in vSegmentNgrams)
+			output << Ngram << endl;
+		
+	}
 
 	/*remove to Setinfrastructure function */
-	static bool Setinfrastructure(void)
+	static bool Setinfrastructure(string TempFilesPath)
 	{
-		if (!dirExists("tempFiles"))
+		string tempFiles = TempFilesPath;
+		
+		if (!dirExists(TempFilesPath + "tempFiles"))
 		{
-			mkdir("tempFiles");
-			mkdir("tempFiles/CFM's");
-			mkdir("tempFiles/SegNgrams");
+			tempFiles.append("tempFiles");
+			_mkdir(tempFiles.c_str());
+			tempFiles = TempFilesPath;
+			tempFiles.append("tempFiles//CFM's");
+			_mkdir(tempFiles.c_str());
+			tempFiles = TempFilesPath;
+			tempFiles.append("tempFiles//SegNgrams");
+			_mkdir(tempFiles.c_str());
 		}
-		if (!dirExists("tempFiles/CFM's"))
-			mkdir("tempFiles/CFM's");
-		if (!dirExists("tempFiles/SegNgrams"))
-			mkdir("tempFiles/SegNgrams");
 
-		if (!dirExists("tempFiles/CFM's") || !dirExists("tempFiles/SegNgrams"))
+
+		if (!dirExists(TempFilesPath + "tempFiles//CFM's") || !dirExists(TempFilesPath +"tempFiles//SegNgrams"))
 			return false;
+
+		///*remove  last run files*/
+		//DeleteAllFilesInFolder("c:\\CFM's\\*.txt");
+		//DeleteAllFilesInFolder("c:\\CFM's\\*.txt");
+
+
 		return true;
 	}
 

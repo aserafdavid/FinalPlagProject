@@ -22,12 +22,13 @@ using namespace std;
 class CText
 {
 public:
-	CText(string InputFileName, string stopWordFilePATH, int SegmentSize = DeafultSegmentSize, int NgramSize = DeafultNgramSize);
+	CText(string InputFileName, string stopWordFilePATH, string TempFilesPath, int SegmentSize = DeafultSegmentSize, int NgramSize = DeafultNgramSize);
 	~CText();
-
 	map<int, double>& GetSegmentsApproximationErrorMap(void);
+	string mPathToTempFiles;
 
 protected:
+	
 
 private:
 	string mfInputFile;

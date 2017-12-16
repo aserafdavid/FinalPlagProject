@@ -18,7 +18,7 @@ class CDynamicSystemSegment : public CSegment
 public:
 	CDynamicSystemSegment& GetCDynamicSystemSegment(void);
 	CDynamicSystemSegment(const CDynamicSystemSegment& origin);
-	CDynamicSystemSegment(string SegmentData, int NgramSize, vector<string>& vDictionary);
+	CDynamicSystemSegment(string SegmentData, int NgramSize, string pathTempFiles, vector<string>& vDictionary);
 	~CDynamicSystemSegment();
 
 
