@@ -36,8 +36,7 @@ private:
 
 	int miSegmentSize;
 	int miNgramSize;
-	//vector <CSegment> mvSegments;
-	vector<CDynamicSystemSegment> mvSegments;
+	vector<shared_ptr<CDynamicSystemSegment>> mvSegments;
 	vector<string> mvDictionary;
 	vector<string> mvStopWordList;
 

@@ -5,9 +5,10 @@
 /*in this default c'tor should create the file and update the Dictionary*/
 CSegment::CSegment(CSegment & origin)
 {
-	miNgramSize = origin.miNgramSize;
-	msSegmentData = origin.msSegmentData;
 	
+	//miNgramSize = origin.miNgramSize;
+	//msSegmentData = origin.msSegmentData;
+	//CSegment(msSegmentData, miNgramSize, origin.mvDictionary);
 }
 
 
@@ -91,6 +92,12 @@ bool CSegment::SaveNgramDataToFile()
 	for each (string Ngram in mvSegmentNgrams)
 		mfSegmentNgramsfile << Ngram << endl;
 	return true;
+}
+
+CSegment & CSegment::getCSegment(void)
+{
+	// TODO: insert return statement here
+	return *this;
 }
 
 CSegment::~CSegment()

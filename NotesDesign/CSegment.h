@@ -9,12 +9,12 @@
 #include "Logger.h"
 #include "CError.h"
 //#include "CAlgorithms.h"
-
+#include <memory>
 
 using namespace std;
 
 /* class definition */
-class CSegment
+class CSegment 
 {
 public:
 	CSegment( CSegment& origin);
@@ -28,7 +28,8 @@ public:
 
 protected:
 	virtual  bool SaveNgramDataToFile();
-	
+	CSegment& getCSegment(void);
+
 	//virtual  bool LoadData(void);
 	ifstream mfSegmentCFMfile; // instead mat
 	ofstream* mfSegmentSPfile; // instead mat
@@ -37,7 +38,9 @@ protected:
 	int miSegmentSize;
 	vector<string> mvDictionary;
 
+	
 private:
+
 	string msSegmentData;
 	string mfSegmentNgramsfilePath;
 	ofstream mfSegmentNgramsfile; // instead vector

@@ -120,7 +120,8 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\armadillo\include\armadillo_bits;..\armadillo\include;..\mkl\include;%(AdditionalIncludeDirectories</AdditionalIncludeDirectories>
-      <UndefinePreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE</UndefinePreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS</UndefinePreprocessorDefinitions>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
