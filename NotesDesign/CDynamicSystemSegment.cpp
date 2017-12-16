@@ -25,15 +25,8 @@ CDynamicSystemSegment::CDynamicSystemSegment(string  SegmentData, int NgramSize,
 
 CDynamicSystemSegment::~CDynamicSystemSegment()
 {
-	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
-
-	}
-	catch (CError& Err) {
-		Err.AddID("CText", __FUNCTION__);
-		throw Err;
-	}
 }
 
 void CDynamicSystemSegment::DivideIntoNgrams()

@@ -19,7 +19,7 @@ class CSegment
 public:
 	CSegment( CSegment& origin);
 	CSegment(  string& SegmentData, int NgramSize, vector<string>& vDictionary);
-	~CSegment() noexcept(false);
+	~CSegment();
 	
 	void BuildSegmentCFM(vector<string>& vDictionary);
 	vector<string> CSegment::ReadNgramDataFromFile();

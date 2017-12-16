@@ -71,16 +71,10 @@ void CText::readStopWordFile(void)
 }
 
 
-CText::~CText() noexcept(false)
+CText::~CText()
 {
-	try {
-		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
-	}
-	catch (CError& Err) {
-		Err.AddID("CText", __FUNCTION__);
-		throw Err;
-	}
+	CError Err(""); Err.AddID("CText", __FUNCTION__);
+	CLogger::GetLogger()->Log(Err.GetErrMsg());
 }
 
 /*RemoveStopWordList:

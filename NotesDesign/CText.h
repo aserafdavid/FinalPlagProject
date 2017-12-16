@@ -23,7 +23,7 @@ class CText
 {
 public:
 	CText(string InputFileName, string stopWordFilePATH, int SegmentSize = DeafultSegmentSize, int NgramSize = DeafultNgramSize);
-	~CText() noexcept(false);
+	~CText();
 
 	map<int, double>& GetSegmentsApproximationErrorMap(void);
 

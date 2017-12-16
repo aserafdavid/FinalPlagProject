@@ -93,18 +93,11 @@ bool CSegment::SaveNgramDataToFile()
 	return true;
 }
 
-CSegment::~CSegment() noexcept(false)
+CSegment::~CSegment()
 {
 	// לא לשכוח שחרורים של כל המטריצות
-	try {
-		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
-
-	}
-	catch (CError& Err) {
-		Err.AddID("CSegment", __FUNCTION__);
-		throw Err;
-	}
+	CError Err(""); Err.AddID("CText", __FUNCTION__);
+	CLogger::GetLogger()->Log(Err.GetErrMsg());
 }
 
 // 1) build CFM Matrix using vDictionary , save it in mfSegmentCFMfile
