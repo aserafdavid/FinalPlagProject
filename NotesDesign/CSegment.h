@@ -24,7 +24,7 @@ public:
 	void BuildSegmentCFM(vector<string>& vDictionary);
 	vector<string>& CSegment::ReadNgramDataFromFile();
 	ofstream* GetSegmentSPfile(void);
-	int miSegSize;
+	size_t miSegSize;
 
 protected:
 	virtual  bool SaveNgramDataToFile();

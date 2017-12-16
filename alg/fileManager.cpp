@@ -132,7 +132,7 @@ static arma::mat Create_CFM(const vector <string> NgramSeg, vector <string>* dic
 	static int counter = 0;
 
 	if (!dirExists("/CFM's"))
-		mkdir("/CFM's");
+		_mkdir("/CFM's");
 	else
 		DeleteAllFilesInFolder("c:\\CFM's\\*.txt");
 

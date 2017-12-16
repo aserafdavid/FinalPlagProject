@@ -106,17 +106,7 @@ CSegment::~CSegment()
 
 	CError Err(""); Err.AddID("CText", __FUNCTION__);
 	CLogger::GetLogger()->Log(Err.GetErrMsg());
-	try {
-		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
-
-
-		cout << "dss";
-	}
-	catch (CError& Err) {
-		Err.AddID("CSegment", __FUNCTION__);
-		throw Err;
-	}
+	cout << "dss";
 
 }
 
