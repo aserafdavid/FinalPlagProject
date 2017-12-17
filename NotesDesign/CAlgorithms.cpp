@@ -146,7 +146,7 @@ double CAlgorithms::corSpearman_adir(const arma::vec& x, const arma::vec& y)
 }
 
 
-string& CAlgorithms::BuildSPfile(arma::mat& mSegmentCFmMat, string savePath, int segNum)
+string CAlgorithms::BuildSPfile(arma::mat& mSegmentCFmMat, string savePath, int segNum)
 {
 	try {
 		CError Err(""); Err.AddID("CAlgorithms", __FUNCTION__);
@@ -182,7 +182,7 @@ string& CAlgorithms::BuildSPfile(arma::mat& mSegmentCFmMat, string savePath, int
 }
 
 // Tm = Transition Matrix between SP_i to SP_i+1
-string & CAlgorithms::BuildTmBetweenSPs(CDynamicSystemSegment & Left, CDynamicSystemSegment & Right)
+string  CAlgorithms::BuildTmBetweenSPs(CDynamicSystemSegment & Left, CDynamicSystemSegment & Right)
 {
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
