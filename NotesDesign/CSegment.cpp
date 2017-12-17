@@ -114,10 +114,8 @@ void CSegment::BuildSegmentCFMandSP(vector<string>& vDictionary)
 
 		// time to build SP's
 		// use Algorithm Class , finnaly save SP mat to mfSegmentSPfile
-		//string message = "CFM created successfuly for seg " + std::to_string(miSegmentNumber) + "--> Starting build SP";
-		//CLogger::GetLogger()->Log(message);
 		CLogger::GetLogger()->Log("CFM created successfuly for seg " + std::to_string(miSegmentNumber) + "--> Starting build SP");
-		//mfSegmentSPfileName = CAlgorithms::BuildSPfile(segCFM);
+		mfSegmentSPfileName = CAlgorithms::BuildSPfile(segCFM, mfSegmentNgramsfilepath, miSegmentNumber);
 		CLogger::GetLogger()->Log("SP created successfuly for seg " + std::to_string(miSegmentNumber) );
 	}
 	catch (CError& Err) {

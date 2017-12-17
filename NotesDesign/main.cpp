@@ -1,12 +1,23 @@
 #include <iostream>
 #include <armadillo>
 #include "CText.h"
+//#include "CAlgorithms.h"
 
 using namespace std;
 using namespace arma;
 
 int main(int argc, const char **argv) {
 
+	//vec x, y;
+	//x << 86 << 112 << 106 << 113 << 110 << 97 << 100 << 99 << 103 << 101;
+	//y << 0 << 6 << 7 << 12 << 17 << 20 << 27 << 28 << 29 << 50 ;
+	//x << 50 << 175 << 270 << 375 << 425 << 580 << 710 << 790 << 890 << 980;
+	//y << 1.80 << 1.20 << 2 << 1 << 1 << 1.20 << 0.8 << 0.6 << 1 << 0.85;
+	//x << 100 << 102 << 102;
+	//y << 257 << 264 << 257;
+	//double res;
+	//res = CAlgorithms::corSpearman(x,y);
+	//cout << "result: " << res; 
 
 	string path = argv[0];
 	string ext = "x64\\Debug\\PlagiarismDetection.exe";
@@ -21,6 +32,8 @@ int main(int argc, const char **argv) {
 		Global_PathToTempFiles = path;
 		CText ct("Bildschirmtext.txt", "StopWords.txt", path);
 	}
+
+
 	//fileManager fm("Bildschirmtext.txt", "StopWords.txt");
 	//fm.readFile(40);
 	//fm.createAnagramMatrix(4);

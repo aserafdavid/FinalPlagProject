@@ -20,9 +20,11 @@ public:
 	~CAlgorithms() {};
 
 	static void RunQrAlg(arma::mat & matrixA, arma::mat & matrixR);
-	static string& BuildSPfile(arma::mat& mSegmentCFmMat);
+	static double CAlgorithms::corSpearman(const arma::vec& x, const arma::vec& y);
+	static string& BuildSPfile(arma::mat& mSegmentCFmMat, string savePath, int segNum);
 	static string& BuildTmBetweenSPs(CDynamicSystemSegment& Left, CDynamicSystemSegment& Right);
 
+	double CAlgorithms::corSpearman_adir(const arma::vec& x, const arma::vec& y);
 
 protected:
 
