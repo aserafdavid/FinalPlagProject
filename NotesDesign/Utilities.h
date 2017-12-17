@@ -91,6 +91,9 @@ namespace
 			tempFiles = TempFilesPath;
 			tempFiles.append("tempFiles//SegNgrams");
 			_mkdir(tempFiles.c_str());
+			tempFiles = TempFilesPath;
+			tempFiles.append("tempFiles//SP's");
+			_mkdir(tempFiles.c_str());
 		}
 
 
