@@ -79,7 +79,7 @@ public:
 protected:
 	virtual  void SaveNgramDataToFile();
 	CSegment& getCSegment(void);
-
+	arma::mat& CSegment::CalcTransitionMatrix(string FileToSPMat);
 	string mfSegmentCFMfileName; // instead mat - consider to delete it if not nececarry 
 	string mfSegmentSPfileName; // instead mat
 	vector<string> mvSegmentNgrams;
