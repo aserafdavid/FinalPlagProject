@@ -26,9 +26,8 @@ int main(int argc, const char **argv) {
 		path.substr(path.size() - ext.size()) == ext)
 				path = path.substr(0, path.size() - ext.size());
 
-	if (Setinfrastructure(path))
+	if (Setinfrastructure(&path))
 	{
-		path.append("tempFiles");
 		Global_PathToTempFiles = path;
 		CText ct("Bildschirmtext1.txt", "StopWords.txt", path);
 	}

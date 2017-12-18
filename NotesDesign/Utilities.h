@@ -21,7 +21,8 @@ namespace
 	using namespace std;
 	static string Global_PathToTempFiles;
 	// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
-	const std::string CurrentDateTime()
+	//const std::string CurrentDateTime()
+	std::string CurrentDateTime()
 	{
 		time_t     now = time(NULL);
 		struct tm  tstruct;
@@ -77,44 +78,57 @@ namespace
 	}
 
 	/*remove to Setinfrastructure function */
-	static bool Setinfrastructure(string TempFilesPath)
+	static bool Setinfrastructure(string* TempFilesPath)
 	{
-		string tempFiles = TempFilesPath;
+		string tempFiles = *TempFilesPath;
 		tempFiles.append("tempFiles");
 		//Remove temp directory before generate new files;
-		_rmdir(tempFiles.c_str());
+		//_rmdir(tempFiles.c_str());
 
-		if (!dirExists(TempFilesPath + "tempFiles"))
+		//verify tempFiles directory exist
+		if (!dirExists(tempFiles))
+			_mkdir(tempFiles.c_str());
+
+		if ( !dirExists(tempFiles) )
+			return false;
+
+		//change version Path to adapt directory name format
+		string versionPath = tempFiles.append("\\" + CurrentDateTime());
+		replace(versionPath.begin() +3, versionPath.end(), ':', '_');
+		replace(versionPath.begin(), versionPath.end(), '-', '_');
+		replace(versionPath.begin(), versionPath.end(), '.', '-');
+
+		//create all sub directories
+		if (!dirExists(versionPath))
 		{
-			tempFiles = TempFilesPath;
-			tempFiles.append("tempFiles");
+			_mkdir(versionPath.c_str());
+			tempFiles = versionPath;
+			tempFiles.append("//CFM's");
 			_mkdir(tempFiles.c_str());
-			tempFiles = TempFilesPath;
-			tempFiles.append("tempFiles//CFM's");
+			tempFiles = versionPath;
+			tempFiles.append("//SegNgrams");
 			_mkdir(tempFiles.c_str());
-			tempFiles = TempFilesPath;
-			tempFiles.append("tempFiles//SegNgrams");
+			tempFiles = versionPath;
+			tempFiles.append("//SP's");
 			_mkdir(tempFiles.c_str());
-			tempFiles = TempFilesPath;
-			tempFiles.append("tempFiles//SP's");
-			_mkdir(tempFiles.c_str());
-			tempFiles = TempFilesPath;
-			tempFiles.append("tempFiles//TM's");
+			tempFiles = versionPath;
+			tempFiles.append("//TM's");
 			_mkdir(tempFiles.c_str());
 		}
 
-
-		if (!dirExists(TempFilesPath + "tempFiles//CFM's") ||
-			!dirExists(TempFilesPath +"tempFiles//SegNgrams") ||
-			!dirExists(TempFilesPath + "tempFiles//SP's") ||
-			!dirExists(TempFilesPath + "tempFiles//TM's") )
+		//verrify all sub directories exists
+		if (!dirExists(versionPath) ||
+			!dirExists(versionPath + "//CFM's") ||
+			!dirExists(versionPath +"//SegNgrams") ||
+			!dirExists(versionPath + "//SP's") ||
+			!dirExists(versionPath + "//TM's") )
 			return false;
 
 		///*remove  last run files*/
 		//DeleteAllFilesInFolder("c:\\CFM's\\*.txt");
 		//DeleteAllFilesInFolder("c:\\CFM's\\*.txt");
 
-
+		*TempFilesPath = versionPath;
 		return true;
 	}
 
