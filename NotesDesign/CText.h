@@ -28,7 +28,7 @@ public:
 	string mPathToTempFiles;
 
 protected:
-	
+	string msTmeasMatricesfileName; // instead mat
 
 private:
 	string mfInputFile;

@@ -27,7 +27,7 @@ public:
 	* Using: current Csegment sp mat.save
 	*/
 	void CalcTransitionMatrix(string FileToSPMat);
-	string& GetSegmentTmFileName(void);
+	string GetSegmentTmFileName(void);
 	void SetSegmentTmFileName(string& FileName);
 	double GetApproximationError(void);
 	void SetApproximationError(double ApproximationError);

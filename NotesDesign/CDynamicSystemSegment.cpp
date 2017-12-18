@@ -98,7 +98,7 @@ void CDynamicSystemSegment::CalcTransitionMatrix(string FileToSPMat)
 	}
 }
 
-string & CDynamicSystemSegment::GetSegmentTmFileName(void)
+string CDynamicSystemSegment::GetSegmentTmFileName(void)
 {
 	try {
 		CError Err(""); Err.AddID("CDynamicSystemSegment", __FUNCTION__);

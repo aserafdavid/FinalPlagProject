@@ -35,6 +35,9 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 		//in this step - all TM's created 
 		// time to build TM(Transition Matrix) for each segment except the last 
 		// implement by BuildTmeas() , and save matrix file name in msTmeasFileName
+		//checkinh mvSegments.size() > 2 - for verify there is any TM between 2 segments
+		if (mvSegments.size() > 2)
+			BuildTmeas();
 
 		//in this step - Tmeas created
 		// time to build set approximation error between each two segment except the last 
@@ -219,7 +222,23 @@ void CText::BuildTmeas(void)
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		// implementation here
+		arma::mat Res, Temp;
+		Temp.load(mvSegments[0]->GetSegmentTmFileName());
+		Res.set_size(Temp.n_rows, Temp.n_rows);
+		Res.zeros();
+		for (int i = 0; i < mvSegments.size() - 1; ++i)
+		{
+			Temp.load( mvSegments[i]->GetSegmentTmFileName() );
+			Res = Res + Temp;
+		}
+		Res /= (mvSegments.size() - 1);
 
+		string filename = mPathToTempFiles;
+		filename.append("\\TMeasMatrix");
+		Res.save(filename, arma::arma_ascii);
+		msTmeasMatricesfileName = filename;
+
+		CLogger::GetLogger()->Log("TMeas created successfully");
 	}
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);
