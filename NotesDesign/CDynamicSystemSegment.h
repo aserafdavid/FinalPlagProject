@@ -21,8 +21,12 @@ public:
 	CDynamicSystemSegment(string SegmentData, int NgramSize, string pathTempFiles, vector<string>& vDictionary);
 	~CDynamicSystemSegment();
 
-
-
+	/*
+	* Return mat X such as Ax=B
+	* Input: some other mat.save file path as mat B
+	* Using: current Csegment sp mat.save
+	*/
+	void CalcTransitionMatrix(string FileToSPMat);
 	string& GetSegmentTmFileName(void);
 	void SetSegmentTmFileName(string& FileName);
 	double GetApproximationError(void);

@@ -16,19 +16,21 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 		RemoveStopWordList();
 		DivideTextIntoSegments();
 
-		/*Create CFM for each segment according to NgramsFile*/
+		//in this step - all Segments NGrams created , mvDictionary is fully updated 
+		// time to build CFM and SP's for each segment by DSeg.BuildSegmentCFM(vector<string>& vDictionary);
 		for each (auto TempSeg in mvSegments)
 		{
 			//TempNgramSeg = TempSeg->ReadNgramDataFromFile();
 			TempSeg->BuildSegmentCFMandSP(mvDictionary);
 		}
 
-		//in this step - all Segments NGrams created , mvDictionary is fully updated 
-		// time to build CFM and SP's for each segment by DSeg.BuildSegmentCFM(vector<string>& vDictionary);
-
 		//in this step - all CFM's and SP's created for each segment.
 		// time to build TM(Transition Matrix) for each segment except the last 
 		// implement by CAlgorithms::BuildTmBetweenSPs , and save matrix file in DSeg.msSegmentTmFileName
+		for (int i = 0; i < mvSegments.size() - 1; ++i)
+		{
+			mvSegments[i]->CalcTransitionMatrix(mvSegments[i + 1]->GetSegmentSPfileName());
+		}
 
 		//in this step - all TM's created 
 		// time to build TM(Transition Matrix) for each segment except the last 

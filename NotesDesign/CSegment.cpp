@@ -48,21 +48,6 @@ CSegment & CSegment::getCSegment(void)
 	return *this;
 }
 
-/*
-* Return mat X such as Ax=B 
-* Input: some other mat.save file path as mat B
-* Using: current Csegment sp mat.save
-*/
-arma::mat & CSegment::CalcTransitionMatrix(string FileToSPMat)
-{
-	// TODO: insert return statement here
-	mat A,B;
-	B.load(FileToSPMat);
-	A.load(mfSegmentCFMfileName);
-	mat X = arma::solve(A,B);
-	return X;
-}
-
 CSegment::~CSegment()
 {
 	// לא לשכוח שחרורים של כל המטריצות
@@ -125,7 +110,7 @@ void CSegment::BuildSegmentCFMandSP(vector<string>& vDictionary)
 }
 
 
-string& CSegment::GetSegmentSPfileName(void)
+string CSegment::GetSegmentSPfileName(void)
 {
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);

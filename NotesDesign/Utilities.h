@@ -80,9 +80,13 @@ namespace
 	static bool Setinfrastructure(string TempFilesPath)
 	{
 		string tempFiles = TempFilesPath;
-		
+		tempFiles.append("tempFiles");
+		//Remove temp directory before generate new files;
+		_rmdir(tempFiles.c_str());
+
 		if (!dirExists(TempFilesPath + "tempFiles"))
 		{
+			tempFiles = TempFilesPath;
 			tempFiles.append("tempFiles");
 			_mkdir(tempFiles.c_str());
 			tempFiles = TempFilesPath;
@@ -94,10 +98,16 @@ namespace
 			tempFiles = TempFilesPath;
 			tempFiles.append("tempFiles//SP's");
 			_mkdir(tempFiles.c_str());
+			tempFiles = TempFilesPath;
+			tempFiles.append("tempFiles//TM's");
+			_mkdir(tempFiles.c_str());
 		}
 
 
-		if (!dirExists(TempFilesPath + "tempFiles//CFM's") || !dirExists(TempFilesPath +"tempFiles//SegNgrams"))
+		if (!dirExists(TempFilesPath + "tempFiles//CFM's") ||
+			!dirExists(TempFilesPath +"tempFiles//SegNgrams") ||
+			!dirExists(TempFilesPath + "tempFiles//SP's") ||
+			!dirExists(TempFilesPath + "tempFiles//TM's") )
 			return false;
 
 		///*remove  last run files*/

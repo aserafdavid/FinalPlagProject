@@ -30,7 +30,7 @@ int main(int argc, const char **argv) {
 	{
 		path.append("tempFiles");
 		Global_PathToTempFiles = path;
-		CText ct("Bildschirmtext.txt", "StopWords.txt", path);
+		CText ct("Bildschirmtext1.txt", "StopWords.txt", path);
 	}
 
 
@@ -64,7 +64,8 @@ int main(int argc, const char **argv) {
 	//A.save("A_mat.txt", arma::arma_ascii);
 	//B.save("B_mat.txt", arma::arma_ascii);
 
-
+	cout << "\n\nThe End! \n\n ";
+	cin >> path;
 	return 0;
 
 }

@@ -73,13 +73,12 @@ public:
 	
 	void BuildSegmentCFMandSP(vector<string>& vDictionary);
 	vector<string>& CSegment::ReadNgramDataFromFile();
-	string& GetSegmentSPfileName(void);
+	string GetSegmentSPfileName(void);
 	size_t miSegSize;
 
 protected:
 	virtual  void SaveNgramDataToFile();
 	CSegment& getCSegment(void);
-	arma::mat& CSegment::CalcTransitionMatrix(string FileToSPMat);
 	string mfSegmentCFMfileName; // instead mat - consider to delete it if not nececarry 
 	string mfSegmentSPfileName; // instead mat
 	vector<string> mvSegmentNgrams;
@@ -87,12 +86,12 @@ protected:
 	int miSegmentSize;
 	int miSegmentNumber;
 	vector<string> mvDictionary;
+	string mfSegmentNgramsfilepath;
 
 	
 private:
 
 	string msSegmentData;
-	string mfSegmentNgramsfilepath;
 	ofstream mfSegmentNgramsfile; // instead vector
 	
 };
