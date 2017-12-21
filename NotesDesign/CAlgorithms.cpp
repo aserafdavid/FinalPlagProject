@@ -153,6 +153,7 @@ string CAlgorithms::BuildSPfile(arma::mat& mSegmentCFmMat, string savePath, int 
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		// implementation here
+		double res;
 		arma::mat segSP(mSegmentCFmMat.n_cols, mSegmentCFmMat.n_cols);
 		segSP.fill(0);
 		for(int i=0; i< mSegmentCFmMat.n_cols ; ++i)
@@ -164,7 +165,7 @@ string CAlgorithms::BuildSPfile(arma::mat& mSegmentCFmMat, string savePath, int 
 				}
 				else
 				{
-					double res = corSpearman(mSegmentCFmMat.col(i), mSegmentCFmMat.col(j));
+					res = corSpearman(mSegmentCFmMat.col(i), mSegmentCFmMat.col(j));
 					segSP(i, j) = res;
 					segSP(j, i) = res;
 				}

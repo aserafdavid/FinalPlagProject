@@ -1,0 +1,68 @@
+﻿<Window x:Class="PlagiarismUI.MainShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+     
+        xmlns:local="clr-namespace:PlagiarismUI"
+        mc:Ignorable="d"
+        Title="MainShellView" Height="400" Width="600">
+
+    <Window.DataContext>
+        <local:MainShellViewModel></local:MainShellViewModel>
+    </Window.DataContext>
+    <Grid Background="LightGray" >
+
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="120" Margin="15,15,0,0" VerticalAlignment="Top" Width="555">
+            <Image x:Name="infoImage" Source ="/Images/infoIcon.png" HorizontalAlignment="Left" Height="62" Margin="483,34,-7,0" VerticalAlignment="Top" Width="77" RenderTransformOrigin="0.519,0.919">
+                <Image.ToolTip>
+                    <ToolTip  ContentStringFormat ="This Application using math for analyze your text/article and trying to find Plagiarism"></ToolTip>
+                </Image.ToolTip>
+            </Image>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="120" Margin="5,175,0,0" VerticalAlignment="Top" Width="465">
+            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Height="25" Margin="164,4,0,0" VerticalAlignment="Top" Width="120"/>
+
+        </Border>
+
+
+        <Label x:Name="LoadTextLabl" FontWeight="Bold" Content="Examination Text File:"  HorizontalAlignment="Left" Height="35" Margin="15,20,0,0" VerticalAlignment="Top" Width="145"/>
+        <Button x:Name="FileBrowse" Content="Browse " HorizontalAlignment="Left" Height="25" Margin="165,20,0,0" VerticalAlignment="Top" Width="95" Click="BrowseFileClicked" >
+            <Button.ToolTip>
+                <ToolTip>
+                    <TextBlock>You must upload a file in a .txt format.</TextBlock>
+                </ToolTip>
+            </Button.ToolTip>
+        </Button>
+        <Label x:Name="PathToMainFile" Content="{Binding PathToMainInputFile}" Foreground="red"   HorizontalAlignment="Left" Height="25" Margin="260,20,0,0" VerticalAlignment="Top" Width="300" RenderTransformOrigin="0.476,0.2"/>
+        <Label x:Name="SegSizeLabel" Content="Segment Size"  FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="20,50,0,0" VerticalAlignment="Top" Width="115"/>
+
+        <Label x:Name="NgramSizeLabel" Content="Ngram Size" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="15,85,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="SegSizeInput" HorizontalAlignment="Left" Height="25" Margin="165,55,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="NgramSizeInput" HorizontalAlignment="Left" Height="25" Margin="165,90,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100"/>
+
+
+
+        <Label x:Name="LoadTextLabl_Copy" FontWeight="Bold" Content="Stop Words TextFile:"  HorizontalAlignment="Left" Height="35" Margin="15,250,0,0" VerticalAlignment="Top" Width="140"/>
+        <Button x:Name="FileBrowseStopWordsButton" Content="Browse " HorizontalAlignment="Left" Height="25" Margin="165,250,0,0" VerticalAlignment="Top" Width="95" Click="BrowseFileClicked" RenderTransformOrigin="0.474,2"/>
+        <Label x:Name="PathToStopWordsFile" Content="{Binding PathToStopWordsFile}" Foreground="red"   HorizontalAlignment="Left" Height="25" Margin="260,250,0,0" VerticalAlignment="Top" Width="210" RenderTransformOrigin="0.476,0.2"/>
+        <RadioButton x:Name="radioButton" Content="Defult" HorizontalAlignment="Left" Margin="334,155,0,0" VerticalAlignment="Top"/>
+
+        <ComboBox x:Name="expander" ItemsSource="{Binding RunSelection}" SelectedItem ="{Binding ChoosenRun}"  HorizontalAlignment="Left" Height="25" Margin="345,325,0,0" VerticalAlignment="Top" Width="105" RenderTransformOrigin="0.81,0.143"></ComboBox>
+
+        <Button x:Name="Run" Content="Analyze Text" FontWeight="Bold"  Background="red" HorizontalAlignment="Left" Height="40" Margin="470,315,0,0" VerticalAlignment="Top" Width="90" Click="AnalyzeTextButton"/>
+
+
+        <TextBlock x:Name="InputSection" Foreground ="red" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Algorithm input Section" VerticalAlignment="Top" Margin="20,0,0,0"/>
+        <TextBlock x:Name="StopWordsSection" Foreground ="red" HorizontalAlignment="Left" Height="15" Margin="10,155,0,0" TextWrapping="Wrap" Text="StopWords Input Section" VerticalAlignment="Top" Width="150"/>
+        <Image x:Name="image" Source="/Images/MainPageImage.jpg" HorizontalAlignment="Left" Height="120" Margin="475,175,0,0" VerticalAlignment="Top" Width="98" RenderTransformOrigin="0.607,0.783"/>
+
+        <RadioButton x:Name="Academic" Content="Academic Stopword List" HorizontalAlignment="Left" Height="20" Margin="5,220,0,132.5" Width="155"/>
+        <RadioButton x:Name="Literature" Content="Literature Stopwords List" HorizontalAlignment="Left" Height="20" Margin="160,220,0,132.5" Width="160" RenderTransformOrigin="2.158,-0.5"/>
+        <RadioButton x:Name="Custom" Content="Custom StopWords List" HorizontalAlignment="Left" Height="20" Margin="315,220,0,132.5" Width="155" RenderTransformOrigin="2.158,-0.5"/>
+        <Label x:Name="LanguageLabel" FontWeight="Bold" Content="Stop Words Language:"  HorizontalAlignment="Left" Height="35" Margin="20,180,0,0" VerticalAlignment="Top" Width="210" RenderTransformOrigin="0.429,-1.143"/>
+
+
+    </Grid>
+
+</Window>
