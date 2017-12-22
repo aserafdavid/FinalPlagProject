@@ -29,7 +29,7 @@
         <TextBlock x:Name="textBlock1_Copy5" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="30" Margin="224,130,0,0" TextWrapping="Wrap" Text="Calc Q measure" VerticalAlignment="Top" Width="55"/>
         <TextBlock x:Name="textBlock1_Copy6" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="20" Margin="122,130,0,0" TextWrapping="Wrap" Text="Build Q's" VerticalAlignment="Top" Width="55"/>
         <TextBlock x:Name="textBlock1_Copy7" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="20" Margin="20,130,0,0" TextWrapping="Wrap" Text="Build SP's" VerticalAlignment="Top" Width="55" RenderTransformOrigin="-1.545,0.25"/>
-        <Button x:Name="backFromLoading" Content="Back To Main Page" HorizontalAlignment="Left" Height="30" Margin="20,315,0,0" VerticalAlignment="Top" Width="105"/>
+        <Button x:Name="backFromLoading" Content="Back To Main Page" HorizontalAlignment="Left" Height="30" Margin="20,315,0,0" VerticalAlignment="Top" Width="105" Click="backFromLoading_Click"/>
         <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" FontSize="18" Foreground="Red"  FontWeight ="UltraBold"  Height="30" Margin="185,0,0,0" TextWrapping="Wrap" Text="Algorithm Stages" VerticalAlignment="Top" Width="170"/>
         <Line></Line>
     </Grid>

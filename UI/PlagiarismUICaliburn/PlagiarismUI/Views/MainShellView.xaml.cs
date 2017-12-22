@@ -58,15 +58,21 @@ namespace PlagiarismUI
             this.DataContext = new MainShellViewModel();
         }
 
-        
+
+
 
         private void AnalyzeTextButton(object sender, RoutedEventArgs e)
         {
-            LoadingWindow LW = new LoadingWindow();
-            LW.Show();
+            
+            LoadingWindow LW = new LoadingWindow(this);
+            var Location = this.PointToScreen(new Point(0, 0));
+            LW.Left = Location.X;
+            LW.Top = Location.Y;
             this.Hide();
+            LW.ShowDialog();
+            
         }
-
+        
         private void BrowseFileClicked(object sender, RoutedEventArgs e)
         {
             // Create OpenFileDialog 

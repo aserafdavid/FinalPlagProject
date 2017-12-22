@@ -10,7 +10,11 @@
 
     <Window.DataContext>
         <local:MainShellViewModel></local:MainShellViewModel>
+        
     </Window.DataContext>
+    <Window.Resources>
+        <local:RadioBoolToIntConverter x:Key="radioBoolToIntConverter" />
+    </Window.Resources>
     <Grid Background="LightGray" >
 
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="120" Margin="15,15,0,0" VerticalAlignment="Top" Width="555">
@@ -21,7 +25,7 @@
             </Image>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="120" Margin="5,175,0,0" VerticalAlignment="Top" Width="465">
-            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Height="25" Margin="164,4,0,0" VerticalAlignment="Top" Width="120"/>
+            <ComboBox x:Name="comboBox"  ItemsSource="{Binding LanguageSelection}" SelectedItem ="{Binding ChoosenLanguage}" HorizontalAlignment="Left" Height="25" Margin="164,4,0,0" VerticalAlignment="Top" Width="120"/>
 
         </Border>
 
@@ -49,7 +53,7 @@
         <RadioButton x:Name="radioButton" Content="Defult" HorizontalAlignment="Left" Margin="334,155,0,0" VerticalAlignment="Top"/>
 
         <ComboBox x:Name="expander" ItemsSource="{Binding RunSelection}" SelectedItem ="{Binding ChoosenRun}"  HorizontalAlignment="Left" Height="25" Margin="345,325,0,0" VerticalAlignment="Top" Width="105" RenderTransformOrigin="0.81,0.143"></ComboBox>
-
+       
         <Button x:Name="Run" Content="Analyze Text" FontWeight="Bold"  Background="red" HorizontalAlignment="Left" Height="40" Margin="470,315,0,0" VerticalAlignment="Top" Width="90" Click="AnalyzeTextButton"/>
 
 
@@ -57,10 +61,10 @@
         <TextBlock x:Name="StopWordsSection" Foreground ="red" HorizontalAlignment="Left" Height="15" Margin="10,155,0,0" TextWrapping="Wrap" Text="StopWords Input Section" VerticalAlignment="Top" Width="150"/>
         <Image x:Name="image" Source="/Images/MainPageImage.jpg" HorizontalAlignment="Left" Height="120" Margin="475,175,0,0" VerticalAlignment="Top" Width="98" RenderTransformOrigin="0.607,0.783"/>
 
-        <RadioButton x:Name="Academic" Content="Academic Stopword List" HorizontalAlignment="Left" Height="20" Margin="5,220,0,132.5" Width="155"/>
-        <RadioButton x:Name="Literature" Content="Literature Stopwords List" HorizontalAlignment="Left" Height="20" Margin="160,220,0,132.5" Width="160" RenderTransformOrigin="2.158,-0.5"/>
-        <RadioButton x:Name="Custom" Content="Custom StopWords List" HorizontalAlignment="Left" Height="20" Margin="315,220,0,132.5" Width="155" RenderTransformOrigin="2.158,-0.5"/>
-        <Label x:Name="LanguageLabel" FontWeight="Bold" Content="Stop Words Language:"  HorizontalAlignment="Left" Height="35" Margin="20,180,0,0" VerticalAlignment="Top" Width="210" RenderTransformOrigin="0.429,-1.143"/>
+        <RadioButton x:Name="Academic" IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=1}" Content="Academic Stopword List" HorizontalAlignment="Left" Height="20" Margin="5,220,0,132.5" Width="155"/>
+        <RadioButton x:Name="Literature"  IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=2}"  Content="Literature Stopwords List" HorizontalAlignment="Left" Height="20" Margin="160,220,0,132.5" Width="160" RenderTransformOrigin="2.158,-0.5"/>
+        <RadioButton x:Name="Custom"  IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=3}" Content="Custom StopWords List" HorizontalAlignment="Left" Height="20" Margin="315,220,0,132.5" Width="155" RenderTransformOrigin="2.158,-0.5"/>
+        <Label x:Name="LanguageLabel" FontWeight="Bold"   Content="Stop Words Language:"  HorizontalAlignment="Left" Height="35" Margin="20,180,0,0" VerticalAlignment="Top" Width="210" RenderTransformOrigin="0.429,-1.143"/>
 
 
     </Grid>

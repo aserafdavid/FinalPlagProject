@@ -63,7 +63,6 @@ C:\Users\david-pc\Documents\FinalPlagProject\UI\PlagiarismUICaliburn\PlagiarismU
 C:\Users\david-pc\Documents\FinalPlagProject\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\PlagiarismUI.csproj.GenerateResource.Cache
 C:\Users\david-pc\Documents\FinalPlagProject\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\PlagiarismUI.exe
 C:\Users\david-pc\Documents\FinalPlagProject\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\PlagiarismUI.pdb
-C:\Users\david-pc\Documents\FinalPlagProject\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\PlagiarismUI.csprojResolveAssemblyReference.cache
 C:\Users\david-pc\Documents\FinalPlagProject\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\Views\MainShellView.g.cs
 C:\Users\david-pc\Documents\FinalPlagProject\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\Views\MainShellView.baml
 C:\Users\david-pc\Documents\FinalPlagProject\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\Views\LoadingWindow.g.cs

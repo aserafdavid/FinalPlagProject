@@ -19,9 +19,19 @@ namespace PlagiarismUI.Views
     /// </summary>
     public partial class LoadingWindow : Window
     {
-        public LoadingWindow()
+        private Window _previousWindow;
+        public LoadingWindow(Window window)
         {
             InitializeComponent();
+            _previousWindow = window;
+        }
+
+        private void backFromLoading_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            _previousWindow.Show();
+           
+
         }
     }
 }
