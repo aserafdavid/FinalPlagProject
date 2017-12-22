@@ -24,7 +24,7 @@ class CText
 public:
 	CText(string InputFileName, string stopWordFilePATH, string TempFilesPath, int SegmentSize = DeafultSegmentSize, int NgramSize = DeafultNgramSize);
 	~CText();
-	map<int, double>& GetSegmentsApproximationErrorMap(void);
+	map<int, double> GetSegmentsApproximationErrorMap(void);
 	string mPathToTempFiles;
 
 protected:

@@ -42,7 +42,7 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 		//in this step - Tmeas created
 		// time to build set approximation error between each two segment except the last 
 		// implement by SetApproximationErrorBetweenSegments() , and save approximation error in mmSegmentsApproximationError 
-
+		SetApproximationErrorBetweenSegments();
 	}
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);
@@ -255,8 +255,18 @@ void CText::SetApproximationErrorBetweenSegments(void)
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
-		// implementation here
-
+		arma::mat TMmeas, T1, T2;
+		TMmeas.load(msTmeasMatricesfileName);
+		for (int i = 0; i < mvSegments.size() - 2; ++i)
+		{
+			T1.load(mvSegments[i]->GetSegmentTmFileName());
+			T2.load(mvSegments[i+1]->GetSegmentTmFileName());
+			double res = norm(T1*TMmeas - T2);
+			res /= norm(T1);
+			mvSegments[i]->SetApproximationError(res);
+			// fill correct double vector with Approximation Errors
+			mmSegmentsApproximationError[i] = res;
+		}
 	}
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);
@@ -264,7 +274,7 @@ void CText::SetApproximationErrorBetweenSegments(void)
 	}
 }
 
-map<int, double>& CText::GetSegmentsApproximationErrorMap(void)
+map<int, double> CText::GetSegmentsApproximationErrorMap(void)
 {
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);

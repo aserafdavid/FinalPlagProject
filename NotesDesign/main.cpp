@@ -30,6 +30,11 @@ int main(int argc, const char **argv) {
 	{
 		Global_PathToTempFiles = path;
 		CText ct("Bildschirmtext1.txt", "StopWords.txt", path);
+
+		cout << "Aproximation Errors by Segments:\n";
+		map<int, double> ApproximationErrorMap = ct.GetSegmentsApproximationErrorMap();
+		for (std::map<int, double>::iterator it = ApproximationErrorMap.begin(); it != ApproximationErrorMap.end(); ++it)
+			cout << it->first << " => " << it->second << '\n';
 	}
 
 
@@ -64,7 +69,7 @@ int main(int argc, const char **argv) {
 	//B.save("B_mat.txt", arma::arma_ascii);
 
 	cout << "\n\nThe End! \n\n ";
-	cin >> path;
+	getchar();
 	return 0;
 
 }

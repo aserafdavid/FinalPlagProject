@@ -36,6 +36,9 @@
     <ClInclude Include="..\NotesDesign\Logger.h" />
     <ClInclude Include="..\NotesDesign\Utilities.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="arma1.natvis" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2598DE92-0F5F-4A2D-9BC7-A43FF7B8303F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
