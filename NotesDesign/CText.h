@@ -8,8 +8,10 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-//#include "CSegment.h"
 #include "CDynamicSystemSegment.h"
+#include "CClusteredSegment.h"
+
+//#include "CSegment.h"
 //#include "Logger.h"
 //#include "CError.h"
 
@@ -22,7 +24,7 @@ using namespace std;
 class CText
 {
 public:
-	CText(string InputFileName, string stopWordFilePATH, string TempFilesPath, int SegmentSize = DeafultSegmentSize, int NgramSize = DeafultNgramSize);
+	CText(string InputFileName, string stopWordFilePATH, string TempFilesPath, AprroachModel Aprroach, int SegmentSize = DeafultSegmentSize, int NgramSize = DeafultNgramSize);
 	~CText();
 	map<int, double> GetSegmentsApproximationErrorMap(void);
 	string mPathToTempFiles;
@@ -34,13 +36,14 @@ private:
 	string mfInputFile;
 	string mfStopWordFile;
 	string mfInputFileWithoutstopWord;
+	AprroachModel meAprroach;
 
 	int miSegmentSize;
 	int miNgramSize;
-	vector<shared_ptr<CDynamicSystemSegment>> mvSegments;
+	vector<shared_ptr<CDynamicSystemSegment>> mvDsSegments;
+	vector<shared_ptr<CClusteredSegment>> mvClSegments;
 	vector<string> mvDictionary;
 	vector<string> mvStopWordList;
-
 
 	void readStopWordFile(void);
 	void RemoveStopWordList(void);
@@ -49,6 +52,9 @@ private:
 	/* DS */
 	//Tmeas - transition measure between all the TM of segments
 	string  msTmeasFileName; // instead mat
+	void CompleteDsProcess(void);
+	void CompleteClProcess(void);
+
 	void BuildTmeas(void);
 	map<int, double> mmSegmentsApproximationError;
 	void SetApproximationErrorBetweenSegments(void);

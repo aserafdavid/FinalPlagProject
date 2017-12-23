@@ -19,12 +19,6 @@ CDynamicSystemSegment::CDynamicSystemSegment(string  SegmentData, int NgramSize,
 		CError Err(""); Err.AddID("CDynamicSystemSegment", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
-		//auto Csave = getCSegment();
-		//mInstance = std::make_unique<CSegment>();
-		miNgramSize = NgramSize;
-		msSegmentData = SegmentData;
-		miSegSize = SegmentData.size();
-		//DivideIntoNgrams();
 	}
 	catch (CError& Err) {
 		Err.AddID("CDynamicSystemSegment", __FUNCTION__);

@@ -11,6 +11,12 @@
 #include <direct.h>
 #include <windows.h>
 
+typedef enum {
+	DS_Aprroach,
+	CL_Aprroach,
+	Both_Aprroaches
+} AprroachModel;
+
 namespace
 {
 #define INVALID_FILE_SIZE ((DWORD)0xFFFFFFFF)
@@ -20,6 +26,7 @@ namespace
 	//using namespace arma;
 	using namespace std;
 	static string Global_PathToTempFiles;
+
 	// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
 	//const std::string CurrentDateTime()
 	std::string CurrentDateTime()

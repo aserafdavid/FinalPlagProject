@@ -29,7 +29,10 @@ int main(int argc, const char **argv) {
 	if (Setinfrastructure(&path))
 	{
 		Global_PathToTempFiles = path;
-		CText ct("Bildschirmtext1.txt", "StopWords.txt", path);
+		//CText ct("Bildschirmtext1.txt", "StopWords.txt", path, DS_Aprroach);
+		//CText ct("Bildschirmtext1.txt", "StopWords.txt", path, CL_Aprroach);
+		CText ct("Bildschirmtext1.txt", "StopWords.txt", path, Both_Aprroaches);
+
 
 		cout << "Aproximation Errors by Segments:\n";
 		map<int, double> ApproximationErrorMap = ct.GetSegmentsApproximationErrorMap();

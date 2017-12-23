@@ -1,8 +1,8 @@
 #include "CText.h"
 #include <stdlib.h>
 
-CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile, int SegmentSize, int NgramSize)
-	: miSegmentSize(SegmentSize), miNgramSize(NgramSize), mfInputFile(InputFileName), mfStopWordFile(stopWordFilePATH)
+CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile, AprroachModel Aprroach, int SegmentSize, int NgramSize)
+	: miSegmentSize(SegmentSize), miNgramSize(NgramSize), mfInputFile(InputFileName), mfStopWordFile(stopWordFilePATH), meAprroach(Aprroach)
 {
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
@@ -10,39 +10,45 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 
 		Global_PathToTempFiles = mPathToTempFiles = PathToTempFile;
 		vector<string> TempNgramSeg;
-		mfInputFile = InputFileName;
-		mfStopWordFile = stopWordFilePATH;
 		readStopWordFile();
 		RemoveStopWordList();
 		DivideTextIntoSegments();
 
 		//in this step - all Segments NGrams created , mvDictionary is fully updated 
 		// time to build CFM and SP's for each segment by DSeg.BuildSegmentCFM(vector<string>& vDictionary);
-		for each (auto TempSeg in mvSegments)
+
+		/*fill the correct segments vector according to Aprroach Model*/
+		if (DS_Aprroach == meAprroach || Both_Aprroaches == meAprroach)
 		{
-			//TempNgramSeg = TempSeg->ReadNgramDataFromFile();
-			TempSeg->BuildSegmentCFMandSP(mvDictionary);
+			for each (auto TempSeg in mvDsSegments)
+			{
+				TempSeg->BuildSegmentCFMandSP(mvDictionary);
+			}
+			CompleteDsProcess();
+		}
+		else if (CL_Aprroach == meAprroach)
+		{
+			for each (auto TempSeg in mvClSegments)
+			{
+				TempSeg->BuildSegmentCFMandSP(mvDictionary);
+			}
+			CompleteClProcess();
+		}
+		if (Both_Aprroaches == meAprroach)
+		{
+			// acctually only DS_Aprroach happened till now, 
+			// copy relevant data to mvClSegments (SP data) for all the segments 
+			// and continue with CL process.
+			for (int i = 0; i < mvDsSegments.size() ; ++i)
+			{
+				const CClusteredSegment ClSeg = *mvDsSegments[i];
+				mvClSegments.push_back(make_shared<CClusteredSegment>(ClSeg));
+			}
+			CompleteClProcess();
 		}
 
-		//in this step - all CFM's and SP's created for each segment.
-		// time to build TM(Transition Matrix) for each segment except the last 
-		// implement by CAlgorithms::BuildTmBetweenSPs , and save matrix file in DSeg.msSegmentTmFileName
-		for (int i = 0; i < mvSegments.size() - 1; ++i)
-		{
-			mvSegments[i]->CalcTransitionMatrix(mvSegments[i + 1]->GetSegmentSPfileName());
-		}
+		
 
-		//in this step - all TM's created 
-		// time to build TM(Transition Matrix) for each segment except the last 
-		// implement by BuildTmeas() , and save matrix file name in msTmeasFileName
-		//checkinh mvSegments.size() > 2 - for verify there is any TM between 2 segments
-		if (mvSegments.size() > 2)
-			BuildTmeas();
-
-		//in this step - Tmeas created
-		// time to build set approximation error between each two segment except the last 
-		// implement by SetApproximationErrorBetweenSegments() , and save approximation error in mmSegmentsApproximationError 
-		SetApproximationErrorBetweenSegments();
 	}
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);
@@ -195,17 +201,67 @@ void CText::DivideTextIntoSegments(void)
 			else {
 				/*Insert according to currentBlockSize reader size wouldn't bw empty after*/
 				block += reader.substr(0, currentBlockSize);
-				mvSegments.push_back(make_shared<CDynamicSystemSegment> (block, miNgramSize, mPathToTempFiles, mvDictionary));
+
+				/*fill the correct segments vector according to Aprroach Model*/
+				if (DS_Aprroach == meAprroach || Both_Aprroaches == meAprroach)
+				{
+					mvDsSegments.push_back(make_shared<CDynamicSystemSegment>(block, miNgramSize, mPathToTempFiles, mvDictionary));
+				}
+				else if (CL_Aprroach == meAprroach)
+				{
+					mvClSegments.push_back(make_shared<CClusteredSegment>(block, miNgramSize, mPathToTempFiles, mvDictionary));
+				}
 				block.erase();
 				readerSize -= currentBlockSize;
 				reader.erase(0, currentBlockSize);
 				currentBlockSize = miSegmentSize;
-
 			}
 		}
-
 		inputFile.close();
+	}
+	catch (CError& Err) {
+		Err.AddID("CText", __FUNCTION__);
+		throw Err;
+	}
+}
 
+void CText::CompleteDsProcess(void)
+{
+	try {
+		CError Err(""); Err.AddID("CText", __FUNCTION__);
+		CLogger::GetLogger()->Log(Err.GetErrMsg());
+
+		//in this step - all CFM's and SP's created for each segment.
+		// time to build TM(Transition Matrix) for each segment except the last 
+		// implement by CAlgorithms::BuildTmBetweenSPs , and save matrix file in DSeg.msSegmentTmFileName
+		for (int i = 0; i < mvDsSegments.size() - 1; ++i)
+		{
+			mvDsSegments[i]->CalcTransitionMatrix(mvDsSegments[i + 1]->GetSegmentSPfileName());
+		}
+
+		//in this step - all TM's created 
+		// time to build TM(Transition Matrix) for each segment except the last 
+		// implement by BuildTmeas() , and save matrix file name in msTmeasFileName
+		//checkinh mvSegments.size() > 2 - for verify there is any TM between 2 segments
+		if (mvDsSegments.size() > 2)
+			BuildTmeas();
+
+		//in this step - Tmeas created
+		// time to build set approximation error between each two segment except the last 
+		// implement by SetApproximationErrorBetweenSegments() , and save approximation error in mmSegmentsApproximationError 
+		SetApproximationErrorBetweenSegments();
+	}
+	catch (CError& Err) {
+		Err.AddID("CText", __FUNCTION__);
+		throw Err;
+	}
+}
+
+void CText::CompleteClProcess(void)
+{
+	try {
+		CError Err(""); Err.AddID("CText", __FUNCTION__);
+		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 	}
 	catch (CError& Err) {
@@ -223,15 +279,15 @@ void CText::BuildTmeas(void)
 
 		// implementation here
 		arma::mat Res, Temp;
-		Temp.load(mvSegments[0]->GetSegmentTmFileName());
+		Temp.load(mvDsSegments[0]->GetSegmentTmFileName());
 		Res.set_size(Temp.n_rows, Temp.n_rows);
 		Res.zeros();
-		for (int i = 0; i < mvSegments.size() - 1; ++i)
+		for (int i = 0; i < mvDsSegments.size() - 1; ++i)
 		{
-			Temp.load( mvSegments[i]->GetSegmentTmFileName() );
+			Temp.load(mvDsSegments[i]->GetSegmentTmFileName() );
 			Res = Res + Temp;
 		}
-		Res /= (mvSegments.size() - 1);
+		Res /= (mvDsSegments.size() - 1);
 
 		string filename = mPathToTempFiles;
 		filename.append("\\TMeasMatrix");
@@ -257,13 +313,13 @@ void CText::SetApproximationErrorBetweenSegments(void)
 
 		arma::mat TMmeas, T1, T2;
 		TMmeas.load(msTmeasMatricesfileName);
-		for (int i = 0; i < mvSegments.size() - 2; ++i)
+		for (int i = 0; i < mvDsSegments.size() - 2; ++i)
 		{
-			T1.load(mvSegments[i]->GetSegmentTmFileName());
-			T2.load(mvSegments[i+1]->GetSegmentTmFileName());
+			T1.load(mvDsSegments[i]->GetSegmentTmFileName());
+			T2.load(mvDsSegments[i+1]->GetSegmentTmFileName());
 			double res = norm(T1*TMmeas - T2);
 			res /= norm(T1);
-			mvSegments[i]->SetApproximationError(res);
+			mvDsSegments[i]->SetApproximationError(res);
 			// fill correct double vector with Approximation Errors
 			mmSegmentsApproximationError[i] = res;
 		}
