@@ -1,18 +1,10 @@
-﻿using PlagiarismUI.Views;
+﻿using PlagiarismUI.InfraS;
+using PlagiarismUI.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PlagiarismUI
 {
@@ -52,8 +44,44 @@ namespace PlagiarismUI
             // Save command execution logic
         }
 
+        private Pipe enginePipe;
+        Thread connectionThread;
+
+        private void initForm()
+        {
+            while (true)
+            {
+                enginePipe.connect();
+                string s = enginePipe.getEngineMessage();
+                enginePipe.sendEngineMove("Accepted");
+                if (s == "quit")
+                {
+
+                }
+                switch (s)
+                {
+                    case "ERROR":
+                        MessageBoxResult result = MessageBox.Show("An error Occured in CPP Engine, Please look at the Log Files", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Question);
+                        if (result == MessageBoxResult.OK)
+                        {
+                            Thread.CurrentThread.Abort();
+                            System.Windows.Application.Current.Shutdown();/*Close app*/
+                        }
+                    break;
+                }
+                
+            }
+        }
+
         public MainShellView()
         {
+
+            enginePipe = new Pipe();
+            connectionThread = new Thread(initForm);
+            connectionThread.Start();
+            connectionThread.IsBackground = true;
+
+
             InitializeComponent();
             this.DataContext = new MainShellViewModel();
         }

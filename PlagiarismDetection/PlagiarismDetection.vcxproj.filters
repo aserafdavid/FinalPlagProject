@@ -36,6 +36,9 @@
     <ClCompile Include="..\NotesDesign\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\NotesDesign\Cpipe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\NotesDesign\CAlgorithms.h">
@@ -57,6 +60,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\NotesDesign\Utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cpipe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

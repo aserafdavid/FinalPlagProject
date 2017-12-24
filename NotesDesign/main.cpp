@@ -2,11 +2,97 @@
 #include <armadillo>
 #include "CText.h"
 //#include "CAlgorithms.h"
+#include "Cpipe.h"
+#include <thread> 
 
 using namespace std;
 using namespace arma;
 
+
+
+Pipe p;
+enum pipe_in  {  /*messagez from the UI*/
+			    EXAMINEPATHFILE/**/
+				,EXAMINESTOPWORDFILE
+				, NGRAMSIZE
+				,SEGMENTSIZE
+				,STARTWORK
+};
+
+static std::map<std::string, pipe_in> s_mapPipeValues;
+
+//string hashPipeIn(string const& inString)
+//{
+//	s_mapPipeValues["STARTWORK"] = STARTWORK;
+//	s_mapPipeValues["EXAMINEPATHFILE"] = EXAMINEPATHFILE;
+//	s_mapPipeValues["EXAMINESTOPWORDFILE"] = EXAMINESTOPWORDFILE;
+//	s_mapPipeValues["NGRAMSIZE"] = NGRAMSIZE;
+//	s_mapPipeValues["SEGMENTSIZE"] = SEGMENTSIZE;
+//}
+
+
+
+
+void BackgroundConnectionManager(void)
+{
+	bool isConnect = p.connect();
+
+	string ans;
+	while (!isConnect)
+	{
+		cout << "trying connect again.." << endl; /* move to Logger*/
+		Sleep(5000);
+		isConnect = p.connect();
+	}
+
+	char msgToGraphics[1024];
+	string msgFromGraphics = p.getMessageFromGraphics();
+
+	while (msgFromGraphics != "quit")
+	{
+		// should handle the string the sent from graphics
+		// according the protocol. Ex: e2e4           (move e2 to e4)
+
+		// YOUR CODE
+		strcpy_s(msgToGraphics, "YOUR CODE"); // msgToGraphics should contain the result of the operation
+											  // return result to graphics		
+		p.sendMessageToGraphics(msgToGraphics);
+
+		// get message from graphics
+		msgFromGraphics = p.getMessageFromGraphics();
+
+		switch (s_mapPipeValues[msgFromGraphics])
+		{
+		case STARTWORK:
+			/*Set vars and run algorithms */
+			break;
+		case EXAMINEPATHFILE:
+		break;
+		case EXAMINESTOPWORDFILE:
+		break;
+		case NGRAMSIZE:
+		break;
+		case SEGMENTSIZE:
+		break;
+	
+
+		}
+
+	}
+
+	p.close();
+}
+
+
+
 int main(int argc, const char **argv) {
+
+
+	
+	/*while (!p.connect());
+	p.sendMessageToGraphics("HandshakCPPStart");
+	p.getMessageFromGraphics();
+	std:thread(BackgroundConnectionManager);*/
 
 	//vec x, y;
 	//x << 86 << 112 << 106 << 113 << 110 << 97 << 100 << 99 << 103 << 101;
@@ -18,6 +104,9 @@ int main(int argc, const char **argv) {
 	//double res;
 	//res = CAlgorithms::corSpearman(x,y);
 	//cout << "result: " << res; 
+
+	/*std::this_thread::sleep_for(std::chrono::milliseconds(10000)); 
+	p.sendMessageToGraphics("HandshakCPPStart");*/
 
 	string path = argv[0];
 	string ext = "x64\\Debug\\PlagiarismDetection.exe";

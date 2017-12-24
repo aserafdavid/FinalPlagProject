@@ -90,6 +90,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="InfraS\Pipe.cs" />
     <Compile Include="InfraS\RelayCommand.cs" />
     <Page Include="Views\LoadingWindow.xaml">
       <SubType>Designer</SubType>
