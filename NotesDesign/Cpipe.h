@@ -31,7 +31,6 @@ private:
 public:
 
 	void Pipe::Test();
-
 	Pipe()
 	{
 		// Prepare the pipe name

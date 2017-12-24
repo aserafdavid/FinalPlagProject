@@ -19,6 +19,8 @@ enum pipe_in  {  /*messagez from the UI*/
 				,STARTWORK
 };
 
+
+volatile static bool startWork = false;
 static std::map<std::string, pipe_in> s_mapPipeValues;
 
 //string hashPipeIn(string const& inString)
@@ -51,7 +53,6 @@ void BackgroundConnectionManager(void)
 	while (msgFromGraphics != "quit")
 	{
 		// should handle the string the sent from graphics
-		// according the protocol. Ex: e2e4           (move e2 to e4)
 
 		// YOUR CODE
 		strcpy_s(msgToGraphics, "YOUR CODE"); // msgToGraphics should contain the result of the operation
@@ -117,6 +118,10 @@ int main(int argc, const char **argv) {
 
 	if (Setinfrastructure(&path))
 	{
+		while (!startWork)
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+		}
 		Global_PathToTempFiles = path;
 		//CText ct("Bildschirmtext1.txt", "StopWords.txt", path, DS_Aprroach);
 		//CText ct("Bildschirmtext1.txt", "StopWords.txt", path, CL_Aprroach);
