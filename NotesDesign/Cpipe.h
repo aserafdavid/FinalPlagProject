@@ -25,11 +25,12 @@ using namespace std;
  class Pipe
 {
 private:
-	HANDLE hPipe;
+
 	LPTSTR  strPipeName;
 
 public:
 
+	HANDLE hPipe;
 	void Pipe::Test();
 	Pipe()
 	{
@@ -37,13 +38,13 @@ public:
 		strPipeName = TEXT("\\\\.\\pipe\\PlagPipe");
 
 	}
-
+	
 	bool connect()
 	{
 		hPipe = CreateFile(
 			strPipeName,			// Pipe name 
 			GENERIC_READ |			// Read and write access 
-			GENERIC_WRITE,
+			GENERIC_WRITE | PIPE_WAIT |PIPE_ACCESS_DUPLEX,
 			0,						// No sharing 
 			NULL,					// Default security attributes
 			OPEN_EXISTING,			// Opens existing pipe 
@@ -78,7 +79,7 @@ public:
 		// Send one message to the pipe.
 
 		cbRequestBytes = sizeof(TCHAR) * (lstrlen(chRequest) + 1);
-
+		
 		BOOL bResult = WriteFile(			// Write to the pipe.
 			hPipe,						// Handle of the pipe
 			chRequest,					// Message to be written

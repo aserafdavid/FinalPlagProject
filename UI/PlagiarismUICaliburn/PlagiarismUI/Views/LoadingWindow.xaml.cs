@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlagiarismUI.InfraS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,8 +21,10 @@ namespace PlagiarismUI.Views
     public partial class LoadingWindow : Window
     {
         private Window _previousWindow;
-        public LoadingWindow(Window window)
+        Pipe pipe;
+        public LoadingWindow(Window window, Pipe enginePipe)
         {
+            pipe = enginePipe;
             InitializeComponent();
             _previousWindow = window;
         }
@@ -30,8 +33,9 @@ namespace PlagiarismUI.Views
         {
             this.Close();
             _previousWindow.Show();
-           
-
+     
+            pipe.sendEngineMove("CANCELRUN");
+            string s=pipe.getEngineMessage();
         }
     }
 }

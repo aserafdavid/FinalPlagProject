@@ -65,10 +65,10 @@
     <ClInclude Include="..\NotesDesign\Utilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\NotesDesign\Cpipe.h">
+    <ClInclude Include="..\NotesDesign\CClusteredSegment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\NotesDesign\CClusteredSegment.h">
+    <ClInclude Include="Cpipe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

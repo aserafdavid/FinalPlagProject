@@ -5,7 +5,7 @@ using System.IO;
 
 namespace PlagiarismUI.InfraS
 {
-    class Pipe
+    public class Pipe
     {
         NamedPipeServerStream pipeServer;
         StreamString ss;
@@ -72,19 +72,10 @@ namespace PlagiarismUI.InfraS
 
         public string getStringFromEngine()
         {
-            // protocol:
-            // 0 -
-            // 1 -
-            // 2 -
-            // 3 -
-            // 4 -
-            // 5 -
-            // 6 -
-            // 7 -
-            // 8 -
+
 
             byte[] inBuffer = new byte[1024];
-            ioStream.Read(inBuffer, 0, 1024);
+           int k= ioStream.Read(inBuffer, 0, 1024);
 
 
             String MyString = Encoding.ASCII.GetString(inBuffer).TrimEnd((Char)0);
@@ -106,8 +97,8 @@ namespace PlagiarismUI.InfraS
             try
             {
                 ioStream.Write(inBuffer, 0, inBuffer.Length);
-
                 ioStream.Flush();
+
             }
             catch
             {

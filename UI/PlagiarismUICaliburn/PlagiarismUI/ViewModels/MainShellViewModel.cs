@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlagiarismUI.InfraS;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
@@ -22,12 +23,35 @@ namespace PlagiarismUI
         private ObservableCollection<string> _LanguageSelection = new ObservableCollection<string> { "English", "Hebrew" };
         private string _ChoosenRun = "Dynamical";
         private string _ChoosenLanguage = "English";
-        private int _StopWordsListChecked;
+        private int _StopWordsListChecked,_NgramSize,_SegmentSize;
 
         #endregion
 
         #region Properties
         /*Properties*/
+        public string SegmentSize
+        {
+            get
+            {
+                return _SegmentSize.ToString();
+            }
+            set
+            {
+                _SegmentSize = int.Parse(value); RaisePropertyChanged("SegmentSize");
+            }
+        }
+        public string NgramSize
+        {
+            get
+            {
+                return _NgramSize.ToString();
+            }
+            set
+            {
+                _NgramSize = int.Parse(value); RaisePropertyChanged("NgramSize");
+            }
+        }
+
         public int StopWordsListChecked
         {
             get { return _StopWordsListChecked; }
@@ -62,7 +86,7 @@ namespace PlagiarismUI
         public string PathToStopWordsFile
         {
             get { return _PathToStopWordsFile; }
-            set { _PathToStopWordsFile = value; }
+            set { _PathToStopWordsFile = value; RaisePropertyChanged("PathToStopWordsFile"); }
         }
         public string PathToMainInputFile
         {
@@ -93,6 +117,8 @@ namespace PlagiarismUI
             }
         }
     }
+
+
 
 
     public class RadioBoolToIntConverter : IValueConverter

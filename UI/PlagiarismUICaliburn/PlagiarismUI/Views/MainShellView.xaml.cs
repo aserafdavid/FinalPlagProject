@@ -5,7 +5,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
+using System.Text.RegularExpressions;
 namespace PlagiarismUI
 {
     /// <summary>
@@ -14,6 +14,8 @@ namespace PlagiarismUI
     public partial class MainShellView : Window
     {
         private ICommand _saveCommand;
+        public Pipe enginePipe;
+
 
         public ICommand SaveCommand
         {
@@ -44,61 +46,108 @@ namespace PlagiarismUI
             // Save command execution logic
         }
 
-        private Pipe enginePipe;
-        Thread connectionThread;
+        
+        //Thread connectionThread;
 
-        private void initForm()
-        {
-            while (true)
-            {
-                enginePipe.connect();
-                string s = enginePipe.getEngineMessage();
-                enginePipe.sendEngineMove("Accepted");
-                if (s == "quit")
-                {
-
-                }
-                switch (s)
-                {
-                    case "ERROR":
-                        MessageBoxResult result = MessageBox.Show("An error Occured in CPP Engine, Please look at the Log Files", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Question);
-                        if (result == MessageBoxResult.OK)
-                        {
-                            Thread.CurrentThread.Abort();
-                            System.Windows.Application.Current.Shutdown();/*Close app*/
-                        }
-                    break;
-                }
+        //private void initForm()
+        //{
+        //    bool isConnected =enginePipe.connect();
+        //    while (isConnected)
+        //    {
                 
-            }
-        }
+        //        string s = enginePipe.getEngineMessage();
+        //        enginePipe.sendEngineMove("Accepted");
+        //        if (s == "quit")
+        //        {
+
+        //        }
+        //        switch (s)
+        //        {
+        //            case "ERROR":
+        //                MessageBoxResult result = MessageBox.Show("An error Occured in CPP Engine, Please look at the Log Files", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Question);
+        //                if (result == MessageBoxResult.OK)
+        //                {
+        //                    Thread.CurrentThread.Abort();
+        //                    System.Windows.Application.Current.Shutdown();/*Close app*/
+        //                }
+        //            break;
+        //        }
+                
+        //    }
+        //}
 
         public MainShellView()
         {
 
             enginePipe = new Pipe();
-            connectionThread = new Thread(initForm);
-            connectionThread.Start();
-            connectionThread.IsBackground = true;
+            enginePipe.connect();
+
+                //connectionThread = new Thread(initForm);
+            //connectionThread.Start();
+         //   connectionThread.IsBackground = true;
 
 
             InitializeComponent();
             this.DataContext = new MainShellViewModel();
         }
 
+        private bool ValidateInput()
+        {
+            return true;
+        }
 
+        private bool StartBackgroundWork()
+        {
+            if (ValidateInput())
+            {
+                var DC = this.DataContext as MainShellViewModel;
 
+                enginePipe.sendEngineMove("NGRAMSIZE");
+                enginePipe.sendEngineMove(DC.NgramSize.ToString());
+
+                //string s = enginePipe.getEngineMessage();
+
+                enginePipe.sendEngineMove("SEGMENTSIZE");
+                
+                enginePipe.sendEngineMove(DC.SegmentSize.ToString());
+
+                // s = enginePipe.getEngineMessage();
+
+                enginePipe.sendEngineMove("EXAMINESTOPWORDFILE");
+                enginePipe.sendEngineMove(PathToMainFile.ToString());
+               //  s = enginePipe.getEngineMessage();
+
+                enginePipe.sendEngineMove("EXAMINEPATHFILE");
+                enginePipe.sendEngineMove(PathToStopWordsFile.ToString());
+               //  s = enginePipe.getEngineMessage();
+
+                enginePipe.sendEngineMove("STARTWORK");
+                string s = enginePipe.getEngineMessage();
+                return true;
+            }
+            else
+                return false;
+            
+        }
 
         private void AnalyzeTextButton(object sender, RoutedEventArgs e)
         {
-            
-            LoadingWindow LW = new LoadingWindow(this);
-            var Location = this.PointToScreen(new Point(0, 0));
-            LW.Left = Location.X;
-            LW.Top = Location.Y;
-            this.Hide();
-            LW.ShowDialog();
-            
+            if (true == StartBackgroundWork())
+            {
+                LoadingWindow LW = new LoadingWindow(this, enginePipe);
+                var Location = this.PointToScreen(new Point(0, 0));
+                LW.Left = Location.X;
+                LW.Top = Location.Y;
+
+                this.Hide();
+                LW.ShowDialog();
+            }
+            else
+            {
+                //pop up error message
+                MessageBox.Show("Please Fill all fields", "Invalid input", MessageBoxButton.OK);
+            }
+           
         }
         
         private void BrowseFileClicked(object sender, RoutedEventArgs e)
@@ -129,6 +178,19 @@ namespace PlagiarismUI
                     DC.PathToMainInputFile = filename;
                
             }
+        }
+
+
+        
+    private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+    {
+        Regex regex = new Regex("[^0-9]+");
+        e.Handled = regex.IsMatch(e.Text);
+    }
+
+    private void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            enginePipe.sendEngineMove("QUIT");
         }
     }
 }
