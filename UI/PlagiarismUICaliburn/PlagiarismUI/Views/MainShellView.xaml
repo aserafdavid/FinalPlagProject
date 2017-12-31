@@ -71,7 +71,8 @@
         <RadioButton x:Name="Custom"  IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=3}" Content="Custom StopWords List" HorizontalAlignment="Left" Height="20" Margin="315,220,0,132.5" Width="155" RenderTransformOrigin="2.158,-0.5"/>
         <Label x:Name="LanguageLabel" FontWeight="Bold"   Content="Stop Words Language:"  HorizontalAlignment="Left" Height="35" Margin="20,180,0,0" VerticalAlignment="Top" Width="210" RenderTransformOrigin="0.429,-1.143"/>
 
-
+  
     </Grid>
+
 
 </Window>

@@ -15,7 +15,7 @@ namespace PlagiarismUI
     {
         private ICommand _saveCommand;
         public Pipe enginePipe;
-
+        public volatile bool varsSended = false;
 
         public ICommand SaveCommand
         {
@@ -79,7 +79,7 @@ namespace PlagiarismUI
         public MainShellView()
         {
 
-            enginePipe = new Pipe();
+            enginePipe = new Pipe("PlagPipe");
             enginePipe.connect();
 
                 //connectionThread = new Thread(initForm);
@@ -96,6 +96,7 @@ namespace PlagiarismUI
             return true;
         }
 
+
         private bool StartBackgroundWork()
         {
             if (ValidateInput())
@@ -104,25 +105,14 @@ namespace PlagiarismUI
 
                 enginePipe.sendEngineMove("NGRAMSIZE");
                 enginePipe.sendEngineMove(DC.NgramSize.ToString());
-
-                //string s = enginePipe.getEngineMessage();
-
                 enginePipe.sendEngineMove("SEGMENTSIZE");
-                
                 enginePipe.sendEngineMove(DC.SegmentSize.ToString());
-
-                // s = enginePipe.getEngineMessage();
-
                 enginePipe.sendEngineMove("EXAMINESTOPWORDFILE");
-                enginePipe.sendEngineMove(PathToMainFile.ToString());
-               //  s = enginePipe.getEngineMessage();
-
+                enginePipe.sendEngineMove(DC.PathToMainInputFile);
                 enginePipe.sendEngineMove("EXAMINEPATHFILE");
-                enginePipe.sendEngineMove(PathToStopWordsFile.ToString());
-               //  s = enginePipe.getEngineMessage();
-
+                enginePipe.sendEngineMove(DC.PathToStopWordsFile);
                 enginePipe.sendEngineMove("STARTWORK");
-                string s = enginePipe.getEngineMessage();
+               
                 return true;
             }
             else
@@ -132,15 +122,20 @@ namespace PlagiarismUI
 
         private void AnalyzeTextButton(object sender, RoutedEventArgs e)
         {
+            
             if (true == StartBackgroundWork())
             {
-                LoadingWindow LW = new LoadingWindow(this, enginePipe);
+                enginePipe.close();
+                LoadingWindow LW = new LoadingWindow(this);
                 var Location = this.PointToScreen(new Point(0, 0));
                 LW.Left = Location.X;
                 LW.Top = Location.Y;
-
                 this.Hide();
                 LW.ShowDialog();
+                
+               
+                enginePipe = new Pipe("PlagPipe");
+                enginePipe.connect();
             }
             else
             {
@@ -191,6 +186,7 @@ namespace PlagiarismUI
     private void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             enginePipe.sendEngineMove("QUIT");
+            enginePipe.getEngineMessage();
         }
     }
 }

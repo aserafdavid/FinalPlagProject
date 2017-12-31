@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Images\search-Icon.ico</ApplicationIcon>
+    <ApplicationIcon>ips_300x271_nO6_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Caliburn.Micro, Version=3.0.3.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
@@ -92,6 +92,9 @@
     </ApplicationDefinition>
     <Compile Include="InfraS\Pipe.cs" />
     <Compile Include="InfraS\RelayCommand.cs" />
+    <Compile Include="Views\ResultsWindow.xaml.cs">
+      <DependentUpon>ResultsWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\LoadingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -112,6 +115,10 @@
       <DependentUpon>MainShellView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ResultsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ViewModels\MainShellViewModel.cs" />
@@ -162,6 +169,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\infoIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ips_300x271_nO6_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

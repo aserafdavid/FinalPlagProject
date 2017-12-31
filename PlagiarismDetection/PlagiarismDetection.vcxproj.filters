@@ -68,7 +68,7 @@
     <ClInclude Include="..\NotesDesign\CClusteredSegment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cpipe.h">
+    <ClInclude Include="..\NotesDesign\Cpipe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

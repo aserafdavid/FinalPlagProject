@@ -78,7 +78,6 @@ D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\System.
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\Caliburn.Micro.xml
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\Caliburn.Micro.Platform.xml
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\Caliburn.Micro.Platform.Core.xml
-D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\PlagiarismUI.csprojResolveAssemblyReference.cache
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\Views\LoadingWindow.g.cs
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\Views\MainShellView.g.cs
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\App.g.cs
@@ -93,3 +92,6 @@ D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\Plagiar
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\PlagiarismUI.csproj.GenerateResource.Cache
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\PlagiarismUI.exe
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\PlagiarismUI.pdb
+D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\PlagiarismUI.csprojResolveAssemblyReference.cache
+D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\Views\ResultsWindow.g.cs
+D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\Views\ResultsWindow.baml

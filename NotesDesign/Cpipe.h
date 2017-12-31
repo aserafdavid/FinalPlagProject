@@ -10,9 +10,15 @@
 #include <conio.h>
 #include <tchar.h>
 #include <strsafe.h>
-
+#include <stdlib.h>
 #pragma endregion
 
+
+
+
+#define Color_Red "\33[0:31m\\]" // Color Start
+#define Color_end "\33[0m\\]" // To flush out prev settings
+#define LOG_RED(X) printf("%s %s %s",Color_Red,X,Color_end)
 
 #ifndef _WIN32_WINNT            // Specifies that the minimum required platform is Windows Vista.
 #define _WIN32_WINNT 0x0600     // Change this to the appropriate value to target other versions of Windows.
@@ -21,7 +27,8 @@
 using namespace std;
 
 #define BUFFER_SIZE		1024 // 1K
-
+#define PIPEMAINNAME "\\\\.\\pipe\\PlagPipe"
+#define PIPELOADNAME "\\\\.\\pipe\\PIPELOADNAME"
  class Pipe
 {
 private:
@@ -32,11 +39,12 @@ public:
 
 	HANDLE hPipe;
 	void Pipe::Test();
-	Pipe()
+	Pipe(int pipeType)
 	{
-		// Prepare the pipe name
-		strPipeName = TEXT("\\\\.\\pipe\\PlagPipe");
-
+		if (pipeType == 0)
+			strPipeName = TEXT(PIPEMAINNAME);
+		else if(pipeType == 1)
+			strPipeName = TEXT(PIPEMAINNAME);
 	}
 	
 	bool connect()
@@ -61,12 +69,13 @@ public:
 			// All pipe instances are busy, so wait for 5 seconds
 			!WaitNamedPipe(strPipeName, 5000))
 		{
+			//system("COLOR 74");
 			_tprintf(_T("Unable to open named pipe %s w/err 0x%08lx\n"),
 				strPipeName, GetLastError());
 			return false;
 		}
 
-		_tprintf(_T("The named pipe, %s, is connected.\n"), strPipeName);
+		_tprintf( _T( " The named pipe, %s, is connected.\n"), strPipeName );
 		return true;
 
 	}
@@ -89,11 +98,11 @@ public:
 
 		if (!bResult/*Failed*/ || cbRequestBytes != cbBytesWritten/*Failed*/)
 		{
-			_tprintf(_T("WriteFile failed w/err 0x%08lx\n"), GetLastError());
+			_tprintf( _T( "WriteFile failed w/err 0x%08lx\n"), GetLastError());
 			return false;
 		}
 
-		_tprintf(_T("Sends %ld bytes; Message: \"%s\"\n"),
+		_tprintf( _T( "Sends %ld bytes; Message: \"%s\"\n"),
 			cbBytesWritten, chRequest);
 
 		return true;
@@ -116,11 +125,11 @@ public:
 
 		if (!bResult && GetLastError() != ERROR_MORE_DATA)
 		{
-			_tprintf(_T("ReadFile failed w/err 0x%08lx\n"), GetLastError());
+			_tprintf( _T( "ReadFile failed w/err 0x%08lx\n"), GetLastError());
 			return "";
 		}
 
-		_tprintf(_T("Receives %ld bytes; Message: \"%s\"\n"),
+		_tprintf( _T( "Receives %ld bytes; Message: \"%s\"\n"),
 			cbBytesRead, chReply);
 
 		return chReply;

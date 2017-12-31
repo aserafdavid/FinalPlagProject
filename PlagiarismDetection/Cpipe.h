@@ -29,12 +29,14 @@ private:
 	LPTSTR  strPipeName;
 
 public:
-
+	string nameBase;
 	void Pipe::Test();
-	Pipe()
+	Pipe(string pipeName)
 	{
 		// Prepare the pipe name
-		strPipeName = TEXT("\\\\.\\pipe\\PlagPipe");
+		nameBase = "\\\\.\\pipe\\";
+		nameBase.append(pipeName);
+		strPipeName = TEXT(nameBase.c_str);
 
 	}
 

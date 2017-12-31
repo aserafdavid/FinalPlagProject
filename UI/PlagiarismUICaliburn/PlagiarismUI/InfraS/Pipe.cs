@@ -10,15 +10,15 @@ namespace PlagiarismUI.InfraS
         NamedPipeServerStream pipeServer;
         StreamString ss;
 
-        public Pipe()
+        public Pipe(string pipeName)
         {
-            pipeServer =  new NamedPipeServerStream("PlagPipe", PipeDirection.InOut, 1);
+            pipeServer =  new NamedPipeServerStream(pipeName, PipeDirection.InOut, 1);
             ss = new StreamString(pipeServer);
         }
         public bool connect()
         {
             if(! pipeServer.IsConnected)
-                     // Wait for a client to connect
+                // Wait for a client to connect
                  pipeServer.WaitForConnection();
 
             return pipeServer.IsConnected;

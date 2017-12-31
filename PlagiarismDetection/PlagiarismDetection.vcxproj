@@ -34,11 +34,11 @@
     <ClInclude Include="..\NotesDesign\CClusteredSegment.h" />
     <ClInclude Include="..\NotesDesign\CDynamicSystemSegment.h" />
     <ClInclude Include="..\NotesDesign\CError.h" />
+    <ClInclude Include="..\NotesDesign\Cpipe.h" />
     <ClInclude Include="..\NotesDesign\CSegment.h" />
     <ClInclude Include="..\NotesDesign\CText.h" />
     <ClInclude Include="..\NotesDesign\Logger.h" />
     <ClInclude Include="..\NotesDesign\Utilities.h" />
-    <ClInclude Include="Cpipe.h" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="arma1.natvis" />

@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("info-icon.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("ips_300x271_no6_icon.ico")]
 
 

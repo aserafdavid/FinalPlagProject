@@ -3,19 +3,20 @@
 #include <thread>
 
 using namespace std;
-
+#define ANSI_COLOR_RED     "\x1b[31m"
 void Pipe::Test()
 {
 	srand(time_t(NULL));
 
 
-	Pipe p;
+	Pipe p(0);
 	bool isConnect = p.connect();
 
 	string ans;
 	while (! isConnect)
 	{
-			cout << "trying connect again.." << endl; /* move to Logger*/
+
+			printf(ANSI_COLOR_RED "trying connect again..\n" ANSI_COLOR_RED ); /* move to Logger*/
 			Sleep(5000);
 			isConnect = p.connect();
 	}

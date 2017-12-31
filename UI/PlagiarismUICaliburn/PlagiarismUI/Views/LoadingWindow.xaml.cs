@@ -21,10 +21,12 @@ namespace PlagiarismUI.Views
     public partial class LoadingWindow : Window
     {
         private Window _previousWindow;
-        Pipe pipe;
-        public LoadingWindow(Window window, Pipe enginePipe)
+        private Pipe enginePipe;
+        public LoadingWindow(Window window)
         {
-            pipe = enginePipe;
+            // pipe = enginePipe;
+            enginePipe = new Pipe("PlagPipe");
+            enginePipe.connect();
             InitializeComponent();
             _previousWindow = window;
         }
@@ -33,9 +35,15 @@ namespace PlagiarismUI.Views
         {
             this.Close();
             _previousWindow.Show();
-     
-            pipe.sendEngineMove("CANCELRUN");
-            string s=pipe.getEngineMessage();
+
+            enginePipe.sendEngineMove("CANCELRUN");
+            string s= enginePipe.getEngineMessage();
+            if(s =="ACCEPTED")
+                 enginePipe.close();
+            else
+            {
+                //TODO add popup window
+            }
         }
     }
 }
