@@ -279,14 +279,14 @@ void CText::CompleteClProcess(void)
 		}
 
 		//in this step - EVM created.
-		// time to call to PAM algorithm with EVM and CL_num as parameters and save all the clustering results.
-		// CL_num - const number - 0..10
-		// implement by CAlgorithms::BuildTmBetweenSPs , and save matrix file in DSeg.msSegmentTmFileName
+		// time to call to Kmeas algorithm with EVM and CL_num as parameters and save all the clustering results.
+		// CL_num - const number - 2..9
+		// Then examine each Kmeas result by Silhouette algorithm, and choose the best Kmeas clusterization by Silhouette.
+		// implement by CAlgorithms::FindBestClusterization, result save in mat means.
+		mat means;
+		CAlgorithms::FindBestClusterization(mEVM, means);
 
-		//in this step - all clustering results created.
-		// time to call to examine each PAM result by Silhouette algorithm, and choose the best PAM clusterization by Silhouette.
-		// implement by CAlgorithms::BuildTmBetweenSPs , and save matrix file in DSeg.msSegmentTmFileName
-
+		// Ask Dan how to detect Plagiarism from mat means.
 	}
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);

@@ -145,6 +145,83 @@ double CAlgorithms::corSpearman_adir(const arma::vec& x, const arma::vec& y)
 	return 0;
 }
 
+void CAlgorithms::FindBestClusterization(const arma::mat & EVM, arma::mat & BestClusteredMat)
+{
+	try 
+	{
+		double MaxSilhouetteScore = -1;
+		mat means;
+
+		for (int i = 2; i < 10; i++)
+		{
+			means.zeros();
+			if (i < EVM.n_cols)
+			{
+				// can use also with static_subset , random_subset, static_spread, random_spread.
+				// more explanation : http://arma.sourceforge.net/docs.html#kmeans
+				bool status = kmeans(means, EVM, i, random_spread, 10, false);
+				if (status == false)
+				{
+					cout << "clustering failed" << endl;
+				}
+				else
+				{
+					//means.print("means:");
+					double SilhouetteRes = CalcSilhouetteCoefficient(means);
+					if (SilhouetteRes > MaxSilhouetteScore)
+					{
+						MaxSilhouetteScore = SilhouetteRes;
+						BestClusteredMat = means;
+					}
+				}
+			}
+
+		}
+	}
+	catch (CError& Err) 
+	{
+		Err.AddID("CAlgorithms", __FUNCTION__);
+		throw Err;
+	}
+}
+
+double CAlgorithms::CalcSilhouetteCoefficient(const arma::mat & ClustersResultsMat)
+{
+	try {
+		CError Err(""); Err.AddID("CText", __FUNCTION__);
+		CLogger::GetLogger()->Log(Err.GetErrMsg());
+
+		double SC = 0;
+		arma::vec sum_all_in_cluster(ClustersResultsMat.n_cols);
+
+		for (int i = 0; i < ClustersResultsMat.n_cols; ++i)
+		{
+			sum_all_in_cluster[i] = sum(ClustersResultsMat.col(i));
+		}
+
+		for (int i = 0; i < ClustersResultsMat.n_cols; ++i)
+		{
+			for (int j = 0; j < ClustersResultsMat.n_rows; ++j)
+			{
+				double avg_distance_in_cluster = (sum_all_in_cluster(i) - ClustersResultsMat[i, j]) / (ClustersResultsMat.n_rows - 1);
+				double avg_distance_out_cluster = (sum(sum_all_in_cluster) - sum_all_in_cluster(i) + ClustersResultsMat[i, j]) /
+													(ClustersResultsMat.n_rows * (ClustersResultsMat.n_cols -1) +1);
+				if (0 != max(avg_distance_out_cluster, avg_distance_in_cluster))
+				{
+					double silhouette_res_one_node = (avg_distance_out_cluster - avg_distance_in_cluster) /
+														max(avg_distance_out_cluster, avg_distance_in_cluster);
+					SC += silhouette_res_one_node;
+				}
+			}
+		}
+
+		return SC;
+	}
+	catch (CError& Err) {
+		Err.AddID("CAlgorithms", __FUNCTION__);
+		throw Err;
+	}
+}
 
 string CAlgorithms::BuildSPfile(arma::mat& mSegmentCFmMat, string savePath, int segNum)
 {
