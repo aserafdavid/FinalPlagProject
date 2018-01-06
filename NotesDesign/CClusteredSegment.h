@@ -12,6 +12,7 @@
 //using namespace std;
 #include "CSegment.h"
 #include "CDynamicSystemSegment.h"
+#include "CAlgorithms.h"
 
 /* class definition */
 class CClusteredSegment : public CSegment
@@ -24,6 +25,7 @@ public:
 	CClusteredSegment(string SegmentData, int NgramSize, string pathTempFiles, vector<string>& vDictionary);
 	~CClusteredSegment();
 
+	arma::vec CalcEV(void);
 
 protected:
 

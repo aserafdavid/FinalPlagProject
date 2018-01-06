@@ -263,6 +263,30 @@ void CText::CompleteClProcess(void)
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
+		//in this step - all CFM's and SP's created for each segment.
+		// time to calculate EV(eigen values) for each SP matrix by QR algorithm., then create EVM(eigen values matrix) -
+		// unite of all  EV vectors from each segment's EV. 
+		// implement by CClusteredSegment::CalcEV using CAlgorithms::RunQrAlg.
+		arma::mat dummy;
+		dummy.load(mvClSegments[0]->GetSegmentSPfileName() );
+
+		mEVM.set_size(dummy.n_cols, mvClSegments.size());
+		mEVM.zeros();
+
+		for (int i = 0; i < mvClSegments.size() ; ++i)
+		{
+			mEVM.col(i) = mvClSegments[i]->CalcEV();
+		}
+
+		//in this step - EVM created.
+		// time to call to PAM algorithm with EVM and CL_num as parameters and save all the clustering results.
+		// CL_num - const number - 0..10
+		// implement by CAlgorithms::BuildTmBetweenSPs , and save matrix file in DSeg.msSegmentTmFileName
+
+		//in this step - all clustering results created.
+		// time to call to examine each PAM result by Silhouette algorithm, and choose the best PAM clusterization by Silhouette.
+		// implement by CAlgorithms::BuildTmBetweenSPs , and save matrix file in DSeg.msSegmentTmFileName
+
 	}
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);

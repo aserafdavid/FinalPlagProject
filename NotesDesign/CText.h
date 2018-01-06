@@ -59,5 +59,8 @@ private:
 	map<int, double> mmSegmentsApproximationError;
 	void SetApproximationErrorBetweenSegments(void);
 
+	/* CL */
+	arma::mat mEVM;
+
 };
 #endif
