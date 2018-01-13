@@ -118,20 +118,16 @@ int main(int argc, const char **argv) {
 
 	if (Setinfrastructure(&path))
 	{
-		while (!startWork)
-		{
-			std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-		}
-		Global_PathToTempFiles = path;
+		//while (!startWork)
+		//{
+		//	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+		//}
+		//Global_PathToTempFiles = path;
+
 		//CText ct("Bildschirmtext1.txt", "StopWords.txt", path, DS_Aprroach);
 		//CText ct("Bildschirmtext1.txt", "StopWords.txt", path, CL_Aprroach);
+		//CText ct("Bildschirmtext1.txt", "StopWords.txt", path, Both_Aprroaches);
 		CText ct("Bildschirmtext1.txt", "StopWords.txt", path, Both_Aprroaches);
-
-
-		cout << "Aproximation Errors by Segments:\n";
-		map<int, double> ApproximationErrorMap = ct.GetSegmentsApproximationErrorMap();
-		for (std::map<int, double>::iterator it = ApproximationErrorMap.begin(); it != ApproximationErrorMap.end(); ++it)
-			cout << it->first << " => " << it->second << '\n';
 	}
 
 

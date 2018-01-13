@@ -250,6 +250,13 @@ void CText::CompleteDsProcess(void)
 		// time to build set approximation error between each two segment except the last 
 		// implement by SetApproximationErrorBetweenSegments() , and save approximation error in mmSegmentsApproximationError 
 		SetApproximationErrorBetweenSegments();
+
+		// print Aproximation Errors
+		cout << "Aproximation Errors by Segments:\n";
+		map<int, double> ApproximationErrorMap = GetSegmentsApproximationErrorMap();
+		cout << endl;
+		for (std::map<int, double>::iterator it = ApproximationErrorMap.begin(); it != ApproximationErrorMap.end(); ++it)
+			cout << it->first << " => " << it->second << '\n';
 	}
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);
@@ -283,10 +290,15 @@ void CText::CompleteClProcess(void)
 		// CL_num - const number - 2..9
 		// Then examine each Kmeas result by Silhouette algorithm, and choose the best Kmeas clusterization by Silhouette.
 		// implement by CAlgorithms::FindBestClusterization, result save in mat means.
-		mat means;
-		CAlgorithms::FindBestClusterization(mEVM, means);
+		pair<int ,map<int, int> > BestClustersMap;
+		CAlgorithms::FindBestClusterization(mEVM, BestClustersMap);
 
-		// Ask Dan how to detect Plagiarism from mat means.
+		//print BestClustersMap
+		cout << endl << "Number of clusters for Best Clusterization: " << BestClustersMap.first << endl;
+		for (map<int,int>::iterator it = BestClustersMap.second.begin(); it != BestClustersMap.second.end(); ++it)
+		{
+			cout << "Seg " << it->first << " => " << it->second << endl;
+		}
 	}
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);

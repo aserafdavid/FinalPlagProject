@@ -2,6 +2,7 @@
 
 
 #include <R.h>
+#include <math.h>
 
 //using namespace Rcpp;
 
@@ -145,12 +146,21 @@ double CAlgorithms::corSpearman_adir(const arma::vec& x, const arma::vec& y)
 	return 0;
 }
 
-void CAlgorithms::FindBestClusterization(const arma::mat & EVM, arma::mat & BestClusteredMat)
+
+
+
+
+
+
+
+
+void CAlgorithms::FindBestClusterization(const arma::mat & EVM, pair<int, map<int, int> >& BestClustersMap)
 {
 	try 
 	{
 		double MaxSilhouetteScore = -1;
 		mat means;
+		map<int,int> SegmentsToClustersMap;
 
 		for (int i = 2; i < 10; i++)
 		{
@@ -167,11 +177,16 @@ void CAlgorithms::FindBestClusterization(const arma::mat & EVM, arma::mat & Best
 				else
 				{
 					//means.print("means:");
-					double SilhouetteRes = CalcSilhouetteCoefficient(means);
+					// match each EV column from EVM to the closest centroid from Kmeas
+					SegmentsToClustersMap.clear();
+					BuildClustersVector(EVM, means, SegmentsToClustersMap);
+					double SilhouetteRes = CalcSilhouetteCoefficient(EVM, SegmentsToClustersMap, i);
 					if (SilhouetteRes > MaxSilhouetteScore)
 					{
 						MaxSilhouetteScore = SilhouetteRes;
-						BestClusteredMat = means;
+						BestClustersMap.second.clear();
+						BestClustersMap.second = SegmentsToClustersMap;
+						BestClustersMap.first = i;
 					}
 				}
 			}
@@ -185,36 +200,69 @@ void CAlgorithms::FindBestClusterization(const arma::mat & EVM, arma::mat & Best
 	}
 }
 
-double CAlgorithms::CalcSilhouetteCoefficient(const arma::mat & ClustersResultsMat)
+void CAlgorithms::BuildClustersVector(const arma::mat & EVM, const arma::mat & Centroids, map<int, int>& SegmentsToClustersMap)
+{
+	try
+	{
+		double smallest_distance;
+		for (int i=0; i < EVM.n_cols; ++i)
+		{
+			smallest_distance = pow(10, 6);
+			for (int j=0; j < Centroids.n_cols; ++j)
+			{
+				double dis = CalcDistanceBetweenVectors(EVM.col(i), Centroids.col(j));
+				if (dis < smallest_distance)
+				{
+					smallest_distance = dis;
+					SegmentsToClustersMap[i] = j;
+				}
+			}
+
+		}
+	}
+	catch (CError& Err)
+	{
+		Err.AddID("CAlgorithms", __FUNCTION__);
+		throw Err;
+	}
+}
+
+double CAlgorithms::CalcDistanceBetweenVectors(const arma::vec & vec1, const arma::vec & vec2)
+{
+	try
+	{
+		double dis = sqrt( accu(square(vec1 - vec2)) );
+		return dis;
+	}
+	catch (CError& Err)
+	{
+		Err.AddID("CAlgorithms", __FUNCTION__);
+		throw Err;
+	}
+}
+
+double CAlgorithms::CalcSilhouetteCoefficient(const arma::mat & EVM, map<int, int>& SegToClusterVector, int ClustersNumber)
 {
 	try {
-		CError Err(""); Err.AddID("CText", __FUNCTION__);
+		CError Err(""); Err.AddID("CAlgorithms", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		double SC = 0;
-		arma::vec sum_all_in_cluster(ClustersResultsMat.n_cols);
 
-		for (int i = 0; i < ClustersResultsMat.n_cols; ++i)
-		{
-			sum_all_in_cluster[i] = sum(ClustersResultsMat.col(i));
-		}
+		double avg_distance_in_cluster;
+		double avg_distance_out_cluster;
 
-		for (int i = 0; i < ClustersResultsMat.n_cols; ++i)
+		for (int i = 0; i < EVM.n_cols; ++i)
 		{
-			for (int j = 0; j < ClustersResultsMat.n_rows; ++j)
+			CalcDistancesPerSegment(EVM,SegToClusterVector, i, &avg_distance_in_cluster, &avg_distance_out_cluster);
+			if (0 != max(avg_distance_out_cluster, avg_distance_in_cluster))
 			{
-				double avg_distance_in_cluster = (sum_all_in_cluster(i) - ClustersResultsMat[i, j]) / (ClustersResultsMat.n_rows - 1);
-				double avg_distance_out_cluster = (sum(sum_all_in_cluster) - sum_all_in_cluster(i) + ClustersResultsMat[i, j]) /
-													(ClustersResultsMat.n_rows * (ClustersResultsMat.n_cols -1) +1);
-				if (0 != max(avg_distance_out_cluster, avg_distance_in_cluster))
-				{
-					double silhouette_res_one_node = (avg_distance_out_cluster - avg_distance_in_cluster) /
-														max(avg_distance_out_cluster, avg_distance_in_cluster);
-					SC += silhouette_res_one_node;
-				}
+				double silhouette_res_one_node = (avg_distance_out_cluster - avg_distance_in_cluster) /
+													max(avg_distance_out_cluster, avg_distance_in_cluster);
+				SC += silhouette_res_one_node;
 			}
 		}
-
+		SC /= EVM.n_cols;
 		return SC;
 	}
 	catch (CError& Err) {
@@ -222,6 +270,71 @@ double CAlgorithms::CalcSilhouetteCoefficient(const arma::mat & ClustersResultsM
 		throw Err;
 	}
 }
+
+void CAlgorithms::CalcDistancesPerSegment(const arma::mat & EVM, map<int, int>& SegToClusterVector, int SegNum, 
+											double * avg_distance_in_cluster, double * avg_distance_out_cluster)
+{
+	try {
+		CError Err(""); Err.AddID("CAlgorithms", __FUNCTION__);
+		CLogger::GetLogger()->Log(Err.GetErrMsg());
+
+		double segments_in_cluster_sum = 0;
+		double segments_out_cluster_sum = 0;
+		int segments_in_cluster_count = 0;
+		int segments_out_cluster_count = 0;
+
+		for (int i = 0; i < EVM.n_cols ; ++i)
+		{
+			if (i != SegNum)
+			{
+				double distance = CalcDistanceBetweenVectors(EVM.col(i), EVM.col(SegNum));
+				if (SegToClusterVector[SegNum] == SegToClusterVector[i]) // i and SegNum in the same cluster
+				{
+					segments_in_cluster_sum += distance;
+					segments_in_cluster_count++;
+				}
+				else // i and SegNum in different clusters
+				{
+					segments_out_cluster_sum += distance;
+					segments_out_cluster_count++;
+				}
+			}
+		}
+
+		if (0 != segments_in_cluster_count)
+		{
+			*avg_distance_in_cluster = segments_in_cluster_sum / segments_in_cluster_count;
+		}
+		else
+		{
+			*avg_distance_in_cluster = 0;
+		}
+
+		if (0 != segments_out_cluster_count)
+		{
+			*avg_distance_out_cluster = segments_out_cluster_sum / segments_out_cluster_count;
+		}
+		else
+		{
+			*avg_distance_out_cluster = 0;
+		}
+
+	}
+	catch (CError& Err) {
+		Err.AddID("CAlgorithms", __FUNCTION__);
+		throw Err;
+	}
+}
+
+
+
+
+
+
+
+
+
+
 
 string CAlgorithms::BuildSPfile(arma::mat& mSegmentCFmMat, string savePath, int segNum)
 {
