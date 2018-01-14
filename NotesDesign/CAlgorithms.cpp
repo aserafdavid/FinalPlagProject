@@ -154,7 +154,7 @@ double CAlgorithms::corSpearman_adir(const arma::vec& x, const arma::vec& y)
 
 
 
-void CAlgorithms::FindBestClusterization(const arma::mat & EVM, pair<int, map<int, int> >& BestClustersMap)
+void CAlgorithms::FindBestClusterization(const arma::mat & EVM, pair<int, map<int, int> >& BestClustersMap, int ClusterNumberRequested )
 {
 	try 
 	{
@@ -162,35 +162,55 @@ void CAlgorithms::FindBestClusterization(const arma::mat & EVM, pair<int, map<in
 		mat means;
 		map<int,int> SegmentsToClustersMap;
 
-		for (int i = 2; i < 10; i++)
+		if (ClusterNumberRequested != 0 && ClusterNumberRequested < EVM.n_cols)
 		{
 			means.zeros();
-			if (i < EVM.n_cols)
+			bool status = kmeans(means, EVM, ClusterNumberRequested, random_spread, 10, false);
+			if (status == false)
 			{
-				// can use also with static_subset , random_subset, static_spread, random_spread.
-				// more explanation : http://arma.sourceforge.net/docs.html#kmeans
-				bool status = kmeans(means, EVM, i, random_spread, 10, false);
-				if (status == false)
+				cout << "clustering failed" << endl;
+			}
+			else
+			{
+				// match each EV column from EVM to the closest centroid from Kmeas
+				SegmentsToClustersMap.clear();
+				BuildClustersVector(EVM, means, SegmentsToClustersMap);
+				BestClustersMap.second.clear();
+				BestClustersMap.second = SegmentsToClustersMap;
+				BestClustersMap.first = ClusterNumberRequested;
+			}
+		}
+		else
+		{
+			for (int i = 2; i < 10; i++)
+			{
+				means.zeros();
+				if (i < EVM.n_cols)
 				{
-					cout << "clustering failed" << endl;
-				}
-				else
-				{
-					//means.print("means:");
-					// match each EV column from EVM to the closest centroid from Kmeas
-					SegmentsToClustersMap.clear();
-					BuildClustersVector(EVM, means, SegmentsToClustersMap);
-					double SilhouetteRes = CalcSilhouetteCoefficient(EVM, SegmentsToClustersMap, i);
-					if (SilhouetteRes > MaxSilhouetteScore)
+					// can use also with static_subset , random_subset, static_spread, random_spread.
+					// more explanation : http://arma.sourceforge.net/docs.html#kmeans
+					bool status = kmeans(means, EVM, i, random_spread, 10, false);
+					if (status == false)
 					{
-						MaxSilhouetteScore = SilhouetteRes;
-						BestClustersMap.second.clear();
-						BestClustersMap.second = SegmentsToClustersMap;
-						BestClustersMap.first = i;
+						cout << "clustering failed" << endl;
+					}
+					else
+					{
+						//means.print("means:");
+						// match each EV column from EVM to the closest centroid from Kmeas
+						SegmentsToClustersMap.clear();
+						BuildClustersVector(EVM, means, SegmentsToClustersMap);
+						double SilhouetteRes = CalcSilhouetteCoefficient(EVM, SegmentsToClustersMap, i);
+						if (SilhouetteRes > MaxSilhouetteScore)
+						{
+							MaxSilhouetteScore = SilhouetteRes;
+							BestClustersMap.second.clear();
+							BestClustersMap.second = SegmentsToClustersMap;
+							BestClustersMap.first = i;
+						}
 					}
 				}
 			}
-
 		}
 	}
 	catch (CError& Err) 

@@ -24,7 +24,8 @@ using namespace std;
 class CText
 {
 public:
-	CText(string InputFileName, string stopWordFilePATH, string TempFilesPath, AprroachModel Aprroach, int SegmentSize = DeafultSegmentSize, int NgramSize = DeafultNgramSize);
+	CText(string InputFileName, string stopWordFilePATH, string TempFilesPath, AprroachModel Aprroach,
+			int SegmentSize = DeafultSegmentSize, int NgramSize = DeafultNgramSize, int ClusterNumberRequested=0);
 	~CText();
 	map<int, double> GetSegmentsApproximationErrorMap(void);
 	string mPathToTempFiles;
@@ -64,6 +65,7 @@ private:
 
 	/* CL */
 	arma::mat mEVM;
+	int miClusterNumberRequested;
 
 };
 #endif

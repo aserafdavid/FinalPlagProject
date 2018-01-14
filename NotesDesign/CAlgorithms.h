@@ -26,7 +26,7 @@ public:
 	static string BuildTmBetweenSPs(CDynamicSystemSegment& Left, CDynamicSystemSegment& Right);
 	double CAlgorithms::corSpearman_adir(const arma::vec& x, const arma::vec& y);
 
-	static void FindBestClusterization(const arma::mat & EVM, pair<int, map<int, int> >& BestClustersMap);
+	static void FindBestClusterization(const arma::mat & EVM, pair<int, map<int, int> >& BestClustersMap,int ClusterNumberRequested = 0);
 	static void BuildClustersVector(const arma::mat & EVM, const arma::mat & Centroids, map<int, int>& ClustersVector);
 	static double CalcDistanceBetweenVectors(const arma::vec & vec1, const arma::vec & vec2);
 	static double CalcSilhouetteCoefficient(const arma::mat & EVM, map<int, int>& ClustersVector, int ClustersNumber);

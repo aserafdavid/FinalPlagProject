@@ -1,7 +1,8 @@
 #include "CText.h"
 #include <stdlib.h>
 
-CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile, AprroachModel Aprroach, int SegmentSize, int NgramSize)
+CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile, AprroachModel Aprroach,
+				int SegmentSize, int NgramSize, int ClusterNumberRequested)
 	: miSegmentSize(SegmentSize), miNgramSize(NgramSize), mfInputFile(InputFileName), mfStopWordFile(stopWordFilePATH), meAprroach(Aprroach)
 {
 	try {
@@ -9,6 +10,7 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		Global_PathToTempFiles = mPathToTempFiles = PathToTempFile;
+		miClusterNumberRequested = ClusterNumberRequested;
 		vector<string> TempNgramSeg;
 		readStopWordFile();
 		RemoveStopWordList();
@@ -292,7 +294,7 @@ void CText::CompleteClProcess(void)
 		// Then examine each Kmeas result by Silhouette algorithm, and choose the best Kmeas clusterization by Silhouette.
 		// implement by CAlgorithms::FindBestClusterization, result save in mat means.
 		pair<int ,map<int, int> > BestClustersMap;
-		CAlgorithms::FindBestClusterization(mEVM, BestClustersMap);
+		CAlgorithms::FindBestClusterization(mEVM, BestClustersMap, miClusterNumberRequested);
 
 		CreateResultsFileForCL(BestClustersMap);
 		//print BestClustersMap
