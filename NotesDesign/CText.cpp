@@ -316,7 +316,7 @@ void CText::CreateResultsFileForDS(void)
 	{
 		ofstream ResFile;
 		string DSpath = mPathToTempFiles;
-		DSpath.append("\\Results\\DS_Results");
+		DSpath.append("\\Results\\DS_Results.txt");
 		ResFile.open(DSpath);
 
 		for (int i = 0; i < mvDsSegments.size() - 2; ++i)
@@ -339,7 +339,7 @@ void CText::CreateResultsFileForCL(pair<int, map<int, int> > ClustersPair)
 	{
 		ofstream ResFile;
 		string DSpath = mPathToTempFiles;
-		DSpath.append("\\Results\\CL_Results");
+		DSpath.append("\\Results\\CL_Results.txt");
 		ResFile.open(DSpath);
 
 		for (int i = 0; i < mvClSegments.size() ; ++i)
@@ -375,7 +375,7 @@ void CText::BuildTmeas(void)
 		Res /= (mvDsSegments.size() - 1);
 
 		string filename = mPathToTempFiles;
-		filename.append("\\TMeasMatrix");
+		filename.append("\\TMeasMatrix.txt");
 		Res.save(filename, arma::arma_ascii);
 		msTmeasMatricesfileName = filename;
 

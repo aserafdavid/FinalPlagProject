@@ -82,7 +82,7 @@ void CDynamicSystemSegment::CalcTransitionMatrix(string FileToSPMat)
 		arma::mat X = arma::solve(A, B);
 
 		string filename = mfSegmentNgramsfilepath;
-		filename.append("\\TM's\\segTM" + std::to_string(miSegmentNumber));
+		filename.append("\\TM's\\segTM" + std::to_string(miSegmentNumber) + ".txt");
 		X.save(filename, arma::arma_ascii);
 		msSegmentTmFileName = filename;
 	}

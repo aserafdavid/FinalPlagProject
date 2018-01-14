@@ -29,6 +29,9 @@ public:
       return singleton object of Clogger class..
 	*/
 	static CLogger* GetLogger();
+
+	static void SetLogPath(string path);
+
 private:
 	/**
 	  Default constructor for the Logger class.
@@ -42,7 +45,6 @@ private:
 											
 	CLogger& operator=(const CLogger&) { return *this; };  // assignment operator is private
 
-	static const std::string m_sFileName;
 	/*
     Singleton logger class object pointer.
 	*/
@@ -51,5 +53,6 @@ private:
     Log file stream object.
 	*/
 	static ofstream m_Logfile;
+
 };
 #endif

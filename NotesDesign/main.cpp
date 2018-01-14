@@ -127,7 +127,8 @@ int main(int argc, const char **argv) {
 		//CText ct("Bildschirmtext1.txt", "StopWords.txt", path, DS_Aprroach);
 		//CText ct("Bildschirmtext1.txt", "StopWords.txt", path, CL_Aprroach);
 		//CText ct("Bildschirmtext1.txt", "StopWords.txt", path, Both_Aprroaches);
-		CText ct("Harry_Bible_Combined.txt", "StopWords.txt", path, Both_Aprroaches, 50, 3, 2);
+		CLogger::SetLogPath(path);
+		CText ct("Bildschirmtext1.txt", "StopWords.txt", path, Both_Aprroaches, 50, 3, 2);
 	}
 
 

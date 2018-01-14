@@ -382,7 +382,7 @@ string CAlgorithms::BuildSPfile(arma::mat& mSegmentCFmMat, string savePath, int 
 			}
 
 		string fileName = savePath;
-		fileName.append("\\SP's\\segSP" + std::to_string(segNum));
+		fileName.append("\\SP's\\segSP" + std::to_string(segNum) + ".txt");
 		segSP.save(fileName, arma::arma_ascii);
 		return fileName;
 	}

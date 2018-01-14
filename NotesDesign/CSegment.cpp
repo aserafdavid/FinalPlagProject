@@ -64,7 +64,7 @@ CSegment::CSegment(string& SegmentData, int NgramSize, string pathTempFiles, vec
 		/*TODO:write to File and save*/
 		mfSegmentNgramsfilepath = pathTempFiles;
 		//mPathToTempFiles.append("NgramFromSeg" + std::to_string(miSegmentNumber));
-		pathTempFiles.append("\\SegNgrams\\NgramFromSeg" + std::to_string(miSegmentNumber));
+		pathTempFiles.append("\\SegNgrams\\NgramFromSeg" + std::to_string(miSegmentNumber) +".txt");
 		mfSegmentNgramsfile.open(pathTempFiles);
 
 		SaveNgramDataToFile();
@@ -155,7 +155,7 @@ void CSegment::BuildSegmentCFMandSP(vector<string>& vDictionary)
 		
 		
 		string filename = mfSegmentNgramsfilepath;
-		filename.append("\\CFM's\\segCFM" + std::to_string(miSegmentNumber));
+		filename.append("\\CFM's\\segCFM" + std::to_string(miSegmentNumber) + ".txt");
 		segCFM.save(filename, arma::arma_ascii);
 		mfSegmentCFMfileName = filename;
 		//segCFM.load(filename);
