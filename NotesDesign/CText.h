@@ -55,6 +55,9 @@ private:
 	void CompleteDsProcess(void);
 	void CompleteClProcess(void);
 
+	void CreateResultsFileForDS(void);
+	void CreateResultsFileForCL(pair<int, map<int, int> > ClustersPair);
+
 	void BuildTmeas(void);
 	map<int, double> mmSegmentsApproximationError;
 	void SetApproximationErrorBetweenSegments(void);

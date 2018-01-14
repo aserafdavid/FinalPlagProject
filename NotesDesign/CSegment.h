@@ -29,6 +29,7 @@ public:
 	size_t miSegSize;
 
 	string GetSegmentSPfileName(void);
+	string GetSegmentData(void);
 
 protected:
 	virtual  void SaveNgramDataToFile();

@@ -251,6 +251,7 @@ void CText::CompleteDsProcess(void)
 		// implement by SetApproximationErrorBetweenSegments() , and save approximation error in mmSegmentsApproximationError 
 		SetApproximationErrorBetweenSegments();
 
+		CreateResultsFileForDS();
 		// print Aproximation Errors
 		cout << "Aproximation Errors by Segments:\n";
 		map<int, double> ApproximationErrorMap = GetSegmentsApproximationErrorMap();
@@ -293,12 +294,58 @@ void CText::CompleteClProcess(void)
 		pair<int ,map<int, int> > BestClustersMap;
 		CAlgorithms::FindBestClusterization(mEVM, BestClustersMap);
 
+		CreateResultsFileForCL(BestClustersMap);
 		//print BestClustersMap
 		cout << endl << "Number of clusters for Best Clusterization: " << BestClustersMap.first << endl;
 		for (map<int,int>::iterator it = BestClustersMap.second.begin(); it != BestClustersMap.second.end(); ++it)
 		{
 			cout << "Seg " << it->first << " => " << it->second << endl;
 		}
+	}
+	catch (CError& Err) {
+		Err.AddID("CText", __FUNCTION__);
+		throw Err;
+	}
+}
+
+void CText::CreateResultsFileForDS(void)
+{
+	try 
+	{
+		ofstream ResFile;
+		string DSpath = mPathToTempFiles;
+		DSpath.append("\\Results\\DS_Results");
+		ResFile.open(DSpath);
+
+		for (int i = 0; i < mvDsSegments.size() - 2; ++i)
+		{
+			ResFile << mvDsSegments[i]->GetApproximationError() << "\t";
+			ResFile << mvDsSegments[i]->GetSegmentData() << endl;
+		}
+		ResFile << "\t" << mvDsSegments[mvDsSegments.size() - 1]->GetSegmentData() ;
+		ResFile.close();
+	}
+	catch (CError& Err) {
+		Err.AddID("CText", __FUNCTION__);
+		throw Err;
+	}
+}
+
+void CText::CreateResultsFileForCL(pair<int, map<int, int> > ClustersPair)
+{
+	try 
+	{
+		ofstream ResFile;
+		string DSpath = mPathToTempFiles;
+		DSpath.append("\\Results\\CL_Results");
+		ResFile.open(DSpath);
+
+		for (int i = 0; i < mvClSegments.size() ; ++i)
+		{
+			ResFile << ClustersPair.second[i] << "\t";
+			ResFile << mvClSegments[i]->GetSegmentData() << endl;
+		}
+		ResFile.close();
 	}
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);

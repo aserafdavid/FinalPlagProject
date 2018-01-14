@@ -121,6 +121,9 @@ namespace
 			tempFiles = versionPath;
 			tempFiles.append("//TM's");
 			_mkdir(tempFiles.c_str());
+			tempFiles = versionPath;
+			tempFiles.append("//Results");
+			_mkdir(tempFiles.c_str());
 		}
 
 		//verrify all sub directories exists
@@ -128,7 +131,8 @@ namespace
 			!dirExists(versionPath + "//CFM's") ||
 			!dirExists(versionPath +"//SegNgrams") ||
 			!dirExists(versionPath + "//SP's") ||
-			!dirExists(versionPath + "//TM's") )
+			!dirExists(versionPath + "//TM's") ||
+			!dirExists(versionPath + "//Results") )
 			return false;
 
 		///*remove  last run files*/

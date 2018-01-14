@@ -13,6 +13,7 @@ CSegment::CSegment(const CSegment & src)
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		this->miSegSize = src.miSegSize;
+		this->msSegmentData = src.msSegmentData;
 		this->mfSegmentSPfileName = src.mfSegmentSPfileName;
 		this->miNgramSize = src.miNgramSize;
 		this->miSegmentSize = src.miSegmentSize;
@@ -181,6 +182,20 @@ string CSegment::GetSegmentSPfileName(void)
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		return mfSegmentSPfileName;
+	}
+	catch (CError& Err) {
+		Err.AddID("CSegment", __FUNCTION__);
+		throw Err;
+	}
+}
+
+string CSegment::GetSegmentData(void)
+{
+	try {
+		CError Err(""); Err.AddID("CSegment", __FUNCTION__);
+		CLogger::GetLogger()->Log(Err.GetErrMsg());
+
+		return msSegmentData;
 	}
 	catch (CError& Err) {
 		Err.AddID("CSegment", __FUNCTION__);

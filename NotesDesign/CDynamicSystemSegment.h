@@ -31,7 +31,6 @@ public:
 	void SetSegmentTmFileName(string& FileName);
 	double GetApproximationError(void);
 	void SetApproximationError(double ApproximationError);
-	
 protected:
 
 private:
