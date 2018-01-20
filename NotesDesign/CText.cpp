@@ -94,8 +94,8 @@ void CText::readStopWordFile(void)
 
 CText::~CText()
 {
-	CError Err(""); Err.AddID("CText", __FUNCTION__);
-	CLogger::GetLogger()->Log(Err.GetErrMsg());
+	//CError Err(""); Err.AddID("CText", __FUNCTION__);
+	//CLogger::GetLogger()->Log(Err.GetErrMsg());
 }
 
 /*RemoveStopWordList:
@@ -116,7 +116,7 @@ void CText::RemoveStopWordList(void)
 
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 
 		std::ifstream readStream;
@@ -143,7 +143,7 @@ void CText::RemoveStopWordList(void)
 			}
 		}
 
-		CLogger::GetLogger()->Log("A new File Created ,named %s%s ", mfInputFile.c_str(), NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
+		//CLogger::GetLogger()->Log("A new File Created ,named %s%s ", mfInputFile.c_str(), NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
 		readStream.close();
 		writeStream.close();
 
@@ -168,7 +168,7 @@ void CText::DivideTextIntoSegments(void)
 
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		//string temp("asd");
 		//CSegment TempSeg(temp, 3, mvDictionary);
@@ -287,6 +287,7 @@ void CText::CompleteClProcess(void)
 		{
 			mEVM.col(i) = mvClSegments[i]->CalcEV();
 		}
+		CLogger::GetLogger()->Log("EVM created successfully.");
 
 		//in this step - EVM created.
 		// time to call to Kmeas algorithm with EVM and CL_num as parameters and save all the clustering results.
@@ -359,8 +360,8 @@ void CText::CreateResultsFileForCL(pair<int, map<int, int> > ClustersPair)
 void CText::BuildTmeas(void)
 {
 	try {
-		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CText", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		// implementation here
 		arma::mat Res, Temp;
@@ -393,8 +394,8 @@ void CText::BuildTmeas(void)
 void CText::SetApproximationErrorBetweenSegments(void)
 {
 	try {
-		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CText", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		arma::mat TMmeas, T1, T2;
 		TMmeas.load(msTmeasMatricesfileName);
@@ -418,8 +419,8 @@ void CText::SetApproximationErrorBetweenSegments(void)
 map<int, double> CText::GetSegmentsApproximationErrorMap(void)
 {
 	try {
-		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CText", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		return mmSegmentsApproximationError;
 	}

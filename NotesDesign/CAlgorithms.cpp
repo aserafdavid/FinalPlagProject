@@ -13,8 +13,8 @@ output: NxN after QR decomposition
 void CAlgorithms::RunQrAlg(arma::mat &matrixA, arma::mat &matrixR)
 {
 	try {
-		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CText", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		// QR-decomposition of matrix A, A is replaced with Q
 		for (size_t i = 0; i < matrixA.n_cols; i++)
@@ -178,6 +178,7 @@ void CAlgorithms::FindBestClusterization(const arma::mat & EVM, pair<int, map<in
 				BestClustersMap.second.clear();
 				BestClustersMap.second = SegmentsToClustersMap;
 				BestClustersMap.first = ClusterNumberRequested;
+				CLogger::GetLogger()->Log("Creation clusters map successfully for REQUESTED num of clusters.");
 			}
 		}
 		else
@@ -201,13 +202,14 @@ void CAlgorithms::FindBestClusterization(const arma::mat & EVM, pair<int, map<in
 						SegmentsToClustersMap.clear();
 						BuildClustersVector(EVM, means, SegmentsToClustersMap);
 						double SilhouetteRes = CalcSilhouetteCoefficient(EVM, SegmentsToClustersMap, i);
-						if (SilhouetteRes > MaxSilhouetteScore)
+						if (SilhouetteRes > MaxSilhouetteScore * 1.2)
 						{
 							MaxSilhouetteScore = SilhouetteRes;
 							BestClustersMap.second.clear();
 							BestClustersMap.second = SegmentsToClustersMap;
 							BestClustersMap.first = i;
 						}
+						CLogger::GetLogger()->Log("FindBestClusterization- num of clusters: " + std::to_string(i));
 					}
 				}
 			}
@@ -264,8 +266,8 @@ double CAlgorithms::CalcDistanceBetweenVectors(const arma::vec & vec1, const arm
 double CAlgorithms::CalcSilhouetteCoefficient(const arma::mat & EVM, map<int, int>& SegToClusterVector, int ClustersNumber)
 {
 	try {
-		CError Err(""); Err.AddID("CAlgorithms", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CAlgorithms", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		double SC = 0;
 
@@ -295,8 +297,8 @@ void CAlgorithms::CalcDistancesPerSegment(const arma::mat & EVM, map<int, int>& 
 											double * avg_distance_in_cluster, double * avg_distance_out_cluster)
 {
 	try {
-		CError Err(""); Err.AddID("CAlgorithms", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CAlgorithms", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		double segments_in_cluster_sum = 0;
 		double segments_out_cluster_sum = 0;
@@ -359,8 +361,8 @@ void CAlgorithms::CalcDistancesPerSegment(const arma::mat & EVM, map<int, int>& 
 string CAlgorithms::BuildSPfile(arma::mat& mSegmentCFmMat, string savePath, int segNum)
 {
 	try {
-		CError Err(""); Err.AddID("CAlgorithms", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CAlgorithms", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		// implementation here
 		double res;

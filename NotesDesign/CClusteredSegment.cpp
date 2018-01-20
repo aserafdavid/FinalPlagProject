@@ -16,8 +16,8 @@ CClusteredSegment::CClusteredSegment(const CDynamicSystemSegment & src)
 	: CSegment(src)
 {
 	try {
-		CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 	}
 	catch (CError& Err) {
@@ -45,16 +45,16 @@ CClusteredSegment::CClusteredSegment(string  SegmentData, int NgramSize, string 
 
 CClusteredSegment::~CClusteredSegment()
 {
-	CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
-	CLogger::GetLogger()->Log(Err.GetErrMsg());
+	//CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
+	//CLogger::GetLogger()->Log(Err.GetErrMsg());
 }
 
 arma::vec CClusteredSegment::CalcEV(void)
 {
 	try
 	{
-		CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		arma::mat A, R;
 		A.load(mfSegmentSPfileName);
