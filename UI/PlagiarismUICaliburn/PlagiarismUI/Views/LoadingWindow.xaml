@@ -6,18 +6,18 @@
         xmlns:local="clr-namespace:PlagiarismUI.Views"
         mc:Ignorable="d"
         Title="LoadingWindow" Height="400" Width="600">
-    <Grid Background="LightGray">
+    <Grid Background="DarkGray">
 
-        <Ellipse Fill="white" HorizontalAlignment="Left" Height="65" Margin="410,30,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="white" HorizontalAlignment="Left" Height="65" Margin="310,30,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.533,0.462"/>
-        <Ellipse Fill="white" HorizontalAlignment="Left" Height="65" Margin="210,30,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="white" HorizontalAlignment="Left" Height="65" Margin="410,110,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="white" HorizontalAlignment="Left" Height="65" Margin="110,30,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="white" HorizontalAlignment="Left" Height="65" Margin="10,30,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="white" HorizontalAlignment="Left" Height="65" Margin="310,110,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="white" HorizontalAlignment="Left" Height="65" Margin="210,110,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="white" HorizontalAlignment="Left" Height="65" Margin="110,110,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="white" HorizontalAlignment="Left" Height="65" Margin="10,110,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding BuldCFMsStepFinished}" HorizontalAlignment="Left" Height="65" Margin="410,30,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding BuildVocStepFinished}" HorizontalAlignment="Left" Height="65" Margin="310,30,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.533,0.462"/>
+        <Ellipse Fill="{Binding ExtractNgramsStepFinished}" HorizontalAlignment="Left" Height="65" Margin="210,30,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding ExamineResult}" HorizontalAlignment="Left" Height="65" Margin="410,110,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding DevideTextToSegStepFinished}" HorizontalAlignment="Left" Height="65" Margin="110,30,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding OmitStopWordsStepFinished}" HorizontalAlignment="Left" Height="65" Margin="10,30,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding CalcApproxMeasStepFinished}" HorizontalAlignment="Left" Height="65" Margin="310,110,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding CalcAQMeasureStepFinished}" HorizontalAlignment="Left" Height="65" Margin="210,110,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding BuildQsStepFinished}" HorizontalAlignment="Left" Height="65" Margin="110,110,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding BuildSPsStepFinished}" HorizontalAlignment="Left" Height="65" Margin="10,110,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
 
         <TextBlock x:Name="textBlock1"  FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="41" Margin="120,45,0,0" TextWrapping="Wrap" Text="divide Text into Chunks" VerticalAlignment="Top" Width="60"/>
         <TextBlock x:Name="textBlock1_Copy" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="31" Margin="220,49,0,0" TextWrapping="Wrap" Text="Extract NGrams" VerticalAlignment="Top" Width="55"/>

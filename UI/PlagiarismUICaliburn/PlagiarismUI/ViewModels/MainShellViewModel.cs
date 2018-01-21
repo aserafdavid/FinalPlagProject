@@ -24,11 +24,16 @@ namespace PlagiarismUI
         private string _ChoosenRun = "Dynamical";
         private string _ChoosenLanguage = "English";
         private int _StopWordsListChecked,_NgramSize,_SegmentSize;
-
+        private bool _AnalyzeEnabled = true; //TODO
         #endregion
 
         #region Properties
         /*Properties*/
+        public bool AnalyzeEnabled
+        {
+            get { return _AnalyzeEnabled; }
+            set { _AnalyzeEnabled = value; RaisePropertyChanged("AnalyzeEnabled"); }
+        }
         public string SegmentSize
         {
             get
@@ -37,7 +42,8 @@ namespace PlagiarismUI
             }
             set
             {
-                _SegmentSize = int.Parse(value); RaisePropertyChanged("SegmentSize");
+                _SegmentSize = int.Parse(value);
+                RaisePropertyChanged("SegmentSize");
             }
         }
         public string NgramSize

@@ -1,17 +1,8 @@
 ﻿using PlagiarismUI.InfraS;
+using PlagiarismUI.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PlagiarismUI.Views
 {
@@ -21,25 +12,47 @@ namespace PlagiarismUI.Views
     public partial class LoadingWindow : Window
     {
         private Window _previousWindow;
-        private Pipe enginePipe;
-        public LoadingWindow(Window window)
+        
+
+        public LoadingWindow(Window window )
         {
-            // pipe = enginePipe;
-            enginePipe = new Pipe("PlagPipe");
-            enginePipe.connect();
+
+
             InitializeComponent();
             _previousWindow = window;
+             DataContext = new LoadingWindowViewModel();
+
+
         }
 
-        private void backFromLoading_Click(object sender, RoutedEventArgs e)
+        private void ConnectLoadingPipe_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
+            ResultsWindow RW = new ResultsWindow();
+            this.Hide();
+            RW.ShowDialog();
+        }
+
+        private void InitProperties()
+        {
+
+        }
+        private void backFromLoading_Click(object sender, EventArgs e)
+        {
+
+            InitProperties();
+
             this.Close();
             _previousWindow.Show();
+            //this.Hide();
+            var DC = this.DataContext as LoadingWindowViewModel;
+            ConnectionManager.GetEnginePipe().sendEngineMove("CANCELRUN");
+            string s = ConnectionManager.GetEnginePipe().getEngineMessage();
+            if (s == "ACCEPTED")
+            {
+                ConnectionManager.GetEnginePipe().close();
+                ConnectionManager.GetUIenginePipe().close();
 
-            enginePipe.sendEngineMove("CANCELRUN");
-            string s= enginePipe.getEngineMessage();
-            if(s =="ACCEPTED")
-                 enginePipe.close();
+            }
             else
             {
                 //TODO add popup window
@@ -47,3 +60,99 @@ namespace PlagiarismUI.Views
         }
     }
 }
+
+
+// Thread.CurrentThread.Priority = ThreadPriority.Highest;
+// MethodInvoker myProcessStarter = new MethodInvoker(ConnectLoadingPipe);
+// myProcessStarter.BeginInvoke(null, null);
+//Thread.CurrentThread.Priority = ThreadPriority.Highest;
+//Thread newPipe = new Thread(ConnectLoadingPipe);
+//newPipe.Start();
+
+//enginePipe = new Pipe("PIPELOADNAME"); //PIPELOADNAME
+//enginePipe.connect();
+//UIenginePipe = new Pipe("PIPEUPDATEUI");
+//UIenginePipe.connect();
+//Thread.CurrentThread.Priority = ThreadPriority.Highest;
+//var DC = this.DataContext as LoadingWindowViewModel;
+//string state = UIenginePipe.getEngineMessage();
+//while (state != "FinishLoadingStage")//TODO change from true
+//{
+//    state = UIenginePipe.getEngineMessage();
+//    switch (state)
+//    {
+//        case "OmitStopWordsStepFinished":
+//            DC.OmitStopWordsStepFinished = Brushes.Blue;
+//            //  MessageBox.Show("OmitStopWordsStepFinished");
+//            break;
+//        case "BuldCFMsStepFinished":
+//            DC.BuldCFMsStepFinished = Brushes.Blue;
+//            //    MessageBox.Show("BuldCFMsStepFinished");
+//            break;
+//        case "ExtractNgramsStepFinished":
+//            DC.ExtractNgramsStepFinished = Brushes.Blue;
+//            //    MessageBox.Show("ExtractNgramsStepFinished");
+//            break;
+//        case "ExamineResult":
+//            DC.ExamineResult = Brushes.Blue;
+//            // MessageBox.Show("ExamineResult");
+//            break;
+//        case "DevideTextToSegStepFinished":
+//            DC.DevideTextToSegStepFinished = Brushes.Blue;
+//            //  MessageBox.Show("DevideTextToSegStepFinished");
+//            break;
+//        case "CalcApproxMeasStepFinished":
+//            DC.CalcApproxMeasStepFinished = Brushes.Blue;
+//            //   MessageBox.Show("DevideTextToSegStepFinished");
+//            break;
+//        case "BuildSPsStepFinished":
+//            DC.BuildSPsStepFinished = Brushes.Blue;
+//            //   MessageBox.Show("DevideTextToSegStepFinished");
+
+//            break;
+//        case "BuildQsStepFinished":
+//            DC.BuildQsStepFinished = Brushes.Blue;
+//            //  MessageBox.Show("DevideTextToSegStepFinished");
+
+//            break;
+//        case "CalcAQMeasureStepFinished":
+//            DC.CalcAQMeasureStepFinished = Brushes.Blue;
+//            // MessageBox.Show("DevideTextToSegStepFinished");
+
+//            break;
+//        case "BuildVocStepFinished":
+//            DC.BuildVocStepFinished = Brushes.Blue;
+
+//            break;
+//        //case "FinishLoadingStage":
+//        //    e.Cancel = true;
+//        //    break;
+
+
+
+//        default:
+//            break;
+//    }
+
+
+//}
+//ResultsWindow RW = new ResultsWindow();
+//this.Hide();
+//RW.ShowDialog();
+
+
+//private void UpdateField(string message)
+//{
+//    var DC = this.DataContext as LoadingWindowViewModel;
+//    PropertyInfo propertyInfo = DC.GetType().GetProperty(message);
+//    propertyInfo.SetValue(DC, Convert.ChangeType(Brushes.Blue, propertyInfo.PropertyType), null);
+//    t = _mevent;
+//    t.ObserveOnDispatcher().Subscribe(onUpdate);
+//}
+
+//private void onUpdate(Unit unit)
+//{
+
+//}
+
+//  public delegate void UpdateTextCallback(string message);object sender, DoWorkEventArgs e

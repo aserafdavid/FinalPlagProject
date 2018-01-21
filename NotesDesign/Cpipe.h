@@ -15,6 +15,33 @@
 
 
 
+enum pipe_in {  /*messagez from the UI*/
+	EXAMINEPATHFILE/**/
+	, EXAMINESTOPWORDFILE
+	, NGRAMSIZE
+	, SEGMENTSIZE
+	, STARTWORK
+	, QUIT
+	, CANCELRUN
+
+};
+
+enum pipe_out {
+	Initialize,
+	OmitStopWordsStepFinished
+	, BuldCFMsStepFinished
+	, BuildVocStepFinished
+	, ExtractNgramsStepFinished
+	, ExamineResult
+	, DevideTextToSegStepFinished
+	, CalcApproxMeasStepFinished
+	, CalcAQMeasureStepFinished
+	, BuildQsStepFinished
+	, BuildSPsStepFinished
+	, FinishLoadingStage
+	, CancelRUN
+};
+
 
 #define Color_Red "\33[0:31m\\]" // Color Start
 #define Color_end "\33[0m\\]" // To flush out prev settings
@@ -29,6 +56,7 @@ using namespace std;
 #define BUFFER_SIZE		1024 // 1K
 #define PIPEMAINNAME "\\\\.\\pipe\\PlagPipe"
 #define PIPELOADNAME "\\\\.\\pipe\\PIPELOADNAME"
+#define PIPEUPDATEUI "\\\\.\\pipe\\PIPEUPDATEUI"
  class Pipe
 {
 private:
@@ -44,7 +72,10 @@ public:
 		if (pipeType == 0)
 			strPipeName = TEXT(PIPEMAINNAME);
 		else if(pipeType == 1)
-			strPipeName = TEXT(PIPEMAINNAME);
+			strPipeName = TEXT(PIPELOADNAME);
+		else if (pipeType ==2)
+			strPipeName = TEXT(PIPEUPDATEUI);
+
 	}
 	
 	bool connect()

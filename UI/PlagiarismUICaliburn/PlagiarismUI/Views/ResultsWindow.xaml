@@ -4,15 +4,39 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlagiarismUI.Views"
-        mc:Ignorable="d"
+        xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+       mc:Ignorable="d"
         Title="ResultsWindow"  Height="400" Width="600">
     <Grid>
         <TabControl>
             <TabItem Header="Clustered">
-                <Frame x:Name="frame" BorderThickness="10"  BorderBrush="Black" FontWeight="Bold"  Content="Algorithm Details:"  Width="206" Margin="19,0,364,0">
-                </Frame>
+                <Grid>
+                    <DVC:Chart  Name="MyChart" Margin="230,0,0,92.5" Background="LightGray" Height="250" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="350">
+                        <DVC:Chart.Series>
+                            <DVC:ScatterSeries  Margin="-30,-55,-115,0" HorizontalAlignment="Left" Width="365" Height="233" VerticalAlignment="Bottom">
+
+                            </DVC:ScatterSeries>
+                        </DVC:Chart.Series>
+                    </DVC:Chart>
+                    <Frame x:Name="frame" BorderThickness="10"  BorderBrush="Black" FontWeight="Bold"  Content="Algorithm Details:"  Width="206" Margin="19,0,364,0">
+                    
+                    </Frame>
+                </Grid>
             </TabItem>
-            <TabItem Header="DS" />
+            <TabItem Header="DS" >
+                <Grid>
+                    <DVC:Chart  Name="SecChart" Margin="230,0,0,92.5" Background="LightGray" Height="250" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="350">
+                        <DVC:Chart.Series>
+                            <DVC:ScatterSeries  Margin="-30,-55,-115,0" HorizontalAlignment="Left" Width="365" Height="233" VerticalAlignment="Bottom">
+
+                            </DVC:ScatterSeries>
+                        </DVC:Chart.Series>
+                    </DVC:Chart>
+                    <Frame x:Name="frame2" BorderThickness="10"  BorderBrush="Black" FontWeight="Bold"  Content="Algorithm Details:"  Width="206" Margin="19,0,364,0">
+
+                    </Frame>
+                </Grid>
+            </TabItem>
         </TabControl>
         <Label x:Name="label" Content="Text Name:" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="40,60,0,0" VerticalAlignment="Top" Width="90"/>
         <Label x:Name="label1" Content="Segment Size:" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="35,100,0,0" VerticalAlignment="Top" Width="90"/>
@@ -20,5 +44,6 @@
         <Label x:Name="label3" Content="#Clusters:" HorizontalAlignment="Left" Height="30" FontWeight="Bold" Margin="35,185,0,0" VerticalAlignment="Top" Width="95"/>
         <Label x:Name="label4" Content="Language:" HorizontalAlignment="Left" FontWeight="Bold" Height="30" Margin="35,230,0,0" VerticalAlignment="Top" Width="90"/>
         <Label x:Name="label5" Content="List Type:" HorizontalAlignment="Left" FontWeight="Bold" Height="30" Margin="40,270,0,0" VerticalAlignment="Top" Width="85"/>
+
     </Grid>
 </Window>

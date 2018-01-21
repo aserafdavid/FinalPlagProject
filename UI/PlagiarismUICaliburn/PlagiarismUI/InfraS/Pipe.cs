@@ -7,12 +7,13 @@ namespace PlagiarismUI.InfraS
 {
     public class Pipe
     {
+
         NamedPipeServerStream pipeServer;
         StreamString ss;
 
         public Pipe(string pipeName)
         {
-            pipeServer =  new NamedPipeServerStream(pipeName, PipeDirection.InOut, 1);
+            pipeServer =  new NamedPipeServerStream(pipeName, PipeDirection.InOut, 20);
             ss = new StreamString(pipeServer);
         }
         public bool connect()

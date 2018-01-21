@@ -16,7 +16,7 @@
         <local:RadioBoolToIntConverter x:Key="radioBoolToIntConverter" />
     </Window.Resources>
 
-    <Grid Background="LightGray" >
+    <Grid Background="DarkGray" >
 
         <!--<Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="120" Margin="15,15,0,0" VerticalAlignment="Top" Width="555">-->
         <Image x:Name="infoImage" Source ="/Images/infoIcon.png" HorizontalAlignment="Left" Height="62" Margin="483,34,-7,0" VerticalAlignment="Top" Width="77" RenderTransformOrigin="0.519,0.919">
@@ -59,7 +59,7 @@
 
         <ComboBox x:Name="expander" ItemsSource="{Binding RunSelection}" SelectedItem ="{Binding ChoosenRun}"  HorizontalAlignment="Left" Height="25" Margin="345,325,0,0" VerticalAlignment="Top" Width="105" RenderTransformOrigin="0.81,0.143"></ComboBox>
 
-        <Button x:Name="Run" Content="Analyze Text" FontWeight="Bold"  Background="red" HorizontalAlignment="Left" Height="40" Margin="470,315,0,0" VerticalAlignment="Top" Width="90" Click="AnalyzeTextButton"/>
+        <Button x:Name="Run" IsEnabled="{Binding AnalyzeEnabled}" Content="Analyze Text" FontWeight="Bold"  Background="red" HorizontalAlignment="Left" Height="40" Margin="470,315,0,0" VerticalAlignment="Top" Width="90" Click="AnalyzeTextButton"/>
 
 
         <TextBlock x:Name="InputSection" Foreground ="red" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Algorithm input Section" VerticalAlignment="Top" Margin="20,0,0,0"/>
@@ -70,9 +70,5 @@
         <RadioButton x:Name="Literature"  IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=2}"  Content="Literature Stopwords List" HorizontalAlignment="Left" Height="20" Margin="160,220,0,132.5" Width="160" RenderTransformOrigin="2.158,-0.5"/>
         <RadioButton x:Name="Custom"  IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=3}" Content="Custom StopWords List" HorizontalAlignment="Left" Height="20" Margin="315,220,0,132.5" Width="155" RenderTransformOrigin="2.158,-0.5"/>
         <Label x:Name="LanguageLabel" FontWeight="Bold"   Content="Stop Words Language:"  HorizontalAlignment="Left" Height="35" Margin="20,180,0,0" VerticalAlignment="Top" Width="210" RenderTransformOrigin="0.429,-1.143"/>
-
-  
     </Grid>
-
-
 </Window>

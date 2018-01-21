@@ -17,6 +17,7 @@ namespace PlagiarismUI
         public Pipe enginePipe;
         public volatile bool varsSended = false;
 
+
         public ICommand SaveCommand
         {
             get
@@ -32,9 +33,6 @@ namespace PlagiarismUI
             }
         }
 
-        
-        
-
         private bool CanSave()
         {
             // Verify command can be executed here
@@ -47,46 +45,14 @@ namespace PlagiarismUI
         }
 
         
-        //Thread connectionThread;
-
-        //private void initForm()
-        //{
-        //    bool isConnected =enginePipe.connect();
-        //    while (isConnected)
-        //    {
-                
-        //        string s = enginePipe.getEngineMessage();
-        //        enginePipe.sendEngineMove("Accepted");
-        //        if (s == "quit")
-        //        {
-
-        //        }
-        //        switch (s)
-        //        {
-        //            case "ERROR":
-        //                MessageBoxResult result = MessageBox.Show("An error Occured in CPP Engine, Please look at the Log Files", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Question);
-        //                if (result == MessageBoxResult.OK)
-        //                {
-        //                    Thread.CurrentThread.Abort();
-        //                    System.Windows.Application.Current.Shutdown();/*Close app*/
-        //                }
-        //            break;
-        //        }
-                
-        //    }
-        //}
-
         public MainShellView()
         {
-
-            enginePipe = new Pipe("PlagPipe");
-            enginePipe.connect();
-
-                //connectionThread = new Thread(initForm);
-            //connectionThread.Start();
-         //   connectionThread.IsBackground = true;
-
-
+            //   enginePipe = new Pipe("PlagPipe");
+            //   enginePipe.connect();
+           // System.Diagnostics.Process.GetCurrentProcess().PriorityClass = System.Diagnostics.ProcessPriorityClass.RealTime;
+            Thread newPipe = new Thread(connectNewPipe);
+            newPipe.IsBackground = true;
+            newPipe.Start();
             InitializeComponent();
             this.DataContext = new MainShellViewModel();
         }
@@ -120,21 +86,32 @@ namespace PlagiarismUI
             
         }
 
+
+        public void connectNewPipe()
+        {
+           // ConnectionManager.ConnectPlagEnginePipe();
+            enginePipe = new Pipe("PlagPipe");
+            enginePipe.connect();
+
+        }
         private void AnalyzeTextButton(object sender, RoutedEventArgs e)
         {
             
             if (true == StartBackgroundWork())
             {
                 enginePipe.close();
+
                 LoadingWindow LW = new LoadingWindow(this);
+            
                 var Location = this.PointToScreen(new Point(0, 0));
                 LW.Left = Location.X;
                 LW.Top = Location.Y;
                 this.Hide();
                 LW.ShowDialog();
-                
-               
-                enginePipe = new Pipe("PlagPipe");
+
+                //Thread newPipe = new Thread(connectNewPipe);
+               // newPipe.Start();
+                enginePipe = new Pipe("PlagPipe"); 
                 enginePipe.connect();
             }
             else
