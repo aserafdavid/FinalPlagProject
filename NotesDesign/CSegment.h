@@ -24,7 +24,7 @@ public:
 	CSegment(string& SegmentData, int NgramSize, string pathTempFiles, vector<string>& vDictionary);
 	~CSegment();
 	
-	void BuildSegmentCFMandSP(vector<string>& vDictionary);
+	void BuildSegmentCFMandSP(const vector<string>& vDictionary);
 	vector<string>& CSegment::ReadNgramDataFromFile();
 	size_t miSegSize;
 

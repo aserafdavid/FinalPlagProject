@@ -49,6 +49,10 @@ private:
 	void readStopWordFile(void);
 	void RemoveStopWordList(void);
 	void DivideTextIntoSegments(void);
+	void BuildSegmentCFMandSPThreadDS(void);
+	void BuildSegmentCFMandSPThreadCL(void);
+	int miConcurrentThreadsNumber = 0;
+	int miInitForThreads = 0;
 
 	/* DS */
 	//Tmeas - transition measure between all the TM of segments

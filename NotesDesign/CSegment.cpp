@@ -122,7 +122,7 @@ CSegment::~CSegment()
 // 1) build CFM Matrix using vDictionary , save it in mfSegmentCFMfile
 // 2) build SP Matrix using mfSegmentCFMfile, save it in mfSegmentSPfile: 
 //    use the private function BuildSegmentSP(ofstream & mfSegmentCFMfile)
-void CSegment::BuildSegmentCFMandSP(vector<string>& vDictionary)
+void CSegment::BuildSegmentCFMandSP(const vector<string>& vDictionary)
 {
 	try {
 		//CError Err(""); Err.AddID("CSegment", __FUNCTION__);
@@ -153,10 +153,6 @@ void CSegment::BuildSegmentCFMandSP(vector<string>& vDictionary)
 		filename.append("\\CFM's\\segCFM" + std::to_string(miSegmentNumber) + ".txt");
 		segCFM.save(filename, arma::arma_ascii);
 		mfSegmentCFMfileName = filename;
-		//segCFM.load(filename);
-		//arma::mat G;
-		//G.load(filename);
-
 		// time to build SP's
 		// use Algorithm Class , finnaly save SP mat to mfSegmentSPfile
 		CLogger::GetLogger()->Log("CFM created successfuly for seg " + std::to_string(miSegmentNumber) + "--> Starting build SP");
@@ -183,6 +179,7 @@ string CSegment::GetSegmentSPfileName(void)
 		throw Err;
 	}
 }
+
 
 string CSegment::GetSegmentData(void)
 {

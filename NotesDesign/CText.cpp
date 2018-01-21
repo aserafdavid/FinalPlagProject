@@ -1,5 +1,6 @@
 #include "CText.h"
 #include <stdlib.h>
+#include <thread>
 
 CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile, AprroachModel Aprroach,
 				int SegmentSize, int NgramSize, int ClusterNumberRequested)
@@ -19,20 +20,36 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 		//in this step - all Segments NGrams created , mvDictionary is fully updated 
 		// time to build CFM and SP's for each segment by DSeg.BuildSegmentCFM(vector<string>& vDictionary);
 
+		//miConcurrentThreadsNumber = std::thread::hardware_concurrency();
+		miConcurrentThreadsNumber = 4;
+		std::thread t[4];
+		//cout << n << " concurrent threads are supported.\n";
+
 		/*fill the correct segments vector according to Aprroach Model*/
 		if (DS_Aprroach == meAprroach || Both_Aprroaches == meAprroach)
 		{
-			for each (auto TempSeg in mvDsSegments)
+			for (int i = 0; i < miConcurrentThreadsNumber; ++i)
 			{
-				TempSeg->BuildSegmentCFMandSP(mvDictionary);
+				t[i] = std::thread (std::bind(&CText::BuildSegmentCFMandSPThreadDS,this));
 			}
+
+			for (int i = 0; i < miConcurrentThreadsNumber; ++i)
+			{
+				t[i].join();
+			}
+
 			CompleteDsProcess();
 		}
 		else if (CL_Aprroach == meAprroach)
 		{
-			for each (auto TempSeg in mvClSegments)
+			for (int i = 0; i < miConcurrentThreadsNumber; ++i)
 			{
-				TempSeg->BuildSegmentCFMandSP(mvDictionary);
+				t[i] = std::thread(std::bind(&CText::BuildSegmentCFMandSPThreadCL, this));
+			}
+
+			for (int i = 0; i < miConcurrentThreadsNumber; ++i)
+			{
+				t[i].join();
 			}
 			CompleteClProcess();
 		}
@@ -55,6 +72,22 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);
 		throw Err;
+	}
+}
+
+void CText::BuildSegmentCFMandSPThreadDS()
+{
+	for (int i = miInitForThreads++ ; i < mvDsSegments.size(); i += miConcurrentThreadsNumber)
+	{
+		mvDsSegments[i]->BuildSegmentCFMandSP(mvDictionary);
+	}
+}
+
+void CText::BuildSegmentCFMandSPThreadCL()
+{
+	for (int i = miInitForThreads++; i < mvClSegments.size(); i += miConcurrentThreadsNumber)
+	{
+		mvClSegments[i]->BuildSegmentCFMandSP(mvDictionary);
 	}
 }
 

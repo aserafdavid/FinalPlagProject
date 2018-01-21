@@ -31,8 +31,8 @@ CClusteredSegment::CClusteredSegment(string  SegmentData, int NgramSize, string 
 {
 	try 
 	{
-		CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 	}
 	catch (CError& Err) 
