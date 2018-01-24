@@ -5,45 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlagiarismUI.Views"
         xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
-       mc:Ignorable="d"
-        Title="ResultsWindow"  Height="400" Width="600">
-    <Grid>
-        <TabControl>
-            <TabItem Header="Clustered">
-                <Grid>
-                    <DVC:Chart  Name="MyChart" Margin="230,0,0,92.5" Background="LightGray" Height="250" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="350">
-                        <DVC:Chart.Series>
-                            <DVC:ScatterSeries  Margin="-30,-55,-115,0" HorizontalAlignment="Left" Width="365" Height="233" VerticalAlignment="Bottom">
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
 
-                            </DVC:ScatterSeries>
+     xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
+        mc:Ignorable="d"
+        Title="ResultsWindow"  Height="450" Width="600">
+    <Grid Background ="{Binding GridBackGround}">
+        <TabControl Background="DarkGray" Margin="0,0,0,-2.5" Height="425"  VerticalAlignment="Top" >
+            <TabItem Header="DS">
+                <Grid>
+
+                    <DVC:Chart  Name="MyChart" Margin="197,0,-3,92" Background="LightGray" Height="305" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="395">
+                        <DVC:Chart.Series>
+                            <DVC:LineSeries IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}">
+
+                            </DVC:LineSeries>
+                            <DVC:ScatterSeries  Margin="-10,-105,-115,28" HorizontalAlignment="Right" Width="390" RenderTransformOrigin="0.344,0.505" Height="300" VerticalAlignment="Bottom"/>
                         </DVC:Chart.Series>
                     </DVC:Chart>
-                    <Frame x:Name="frame" BorderThickness="10"  BorderBrush="Black" FontWeight="Bold"  Content="Algorithm Details:"  Width="206" Margin="19,0,364,0">
-                    
-                    </Frame>
+                    <!--<Frame x:Name="frame" BorderThickness="10"  BorderBrush="Black" FontWeight="Bold" Content="Algorithm Details:" Margin="-3,0,392,102"/>-->
+                    <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Height="45" Margin="12,330,0,0" VerticalAlignment="Top" Width="140"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="DS" >
+            <TabItem Header="Clustered" >
                 <Grid>
-                    <DVC:Chart  Name="SecChart" Margin="230,0,0,92.5" Background="LightGray" Height="250" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="350">
+
+
+                    <!--<DVC:Chart  Name="SecChart" Margin="120,0,-3,97" Background="LightGray" Height="300" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="395" Grid.Column="2">
                         <DVC:Chart.Series>
-                            <DVC:ScatterSeries  Margin="-30,-55,-115,0" HorizontalAlignment="Left" Width="365" Height="233" VerticalAlignment="Bottom">
+                            <DVC:ScatterSeries  Margin="-28,-54,-115,0" HorizontalAlignment="Left" Width="363" Height="232" VerticalAlignment="Bottom">
 
                             </DVC:ScatterSeries>
                         </DVC:Chart.Series>
-                    </DVC:Chart>
-                    <Frame x:Name="frame2" BorderThickness="10"  BorderBrush="Black" FontWeight="Bold"  Content="Algorithm Details:"  Width="206" Margin="19,0,364,0">
+                    </DVC:Chart>-->
 
-                    </Frame>
+                    <Button x:Name="button3" Content="Button" HorizontalAlignment="Left" Height="45" Margin="12,330,0,0" VerticalAlignment="Top" Width="140" Grid.ColumnSpan="3"/>
+
+                    <DataGrid  x:Name="GraphGrid"  HorizontalAlignment="Left" Height="230" Margin="217,40,0,0" VerticalAlignment="Top" Width="360">
+                    </DataGrid>
+
                 </Grid>
             </TabItem>
         </TabControl>
-        <Label x:Name="label" Content="Text Name:" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="40,60,0,0" VerticalAlignment="Top" Width="90"/>
-        <Label x:Name="label1" Content="Segment Size:" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="35,100,0,0" VerticalAlignment="Top" Width="90"/>
-        <Label x:Name="label2" Content="Ngram Size:" HorizontalAlignment="Left" FontWeight="Bold" Height="30" Margin="35,140,0,0" VerticalAlignment="Top" Width="90"/>
-        <Label x:Name="label3" Content="#Clusters:" HorizontalAlignment="Left" Height="30" FontWeight="Bold" Margin="35,185,0,0" VerticalAlignment="Top" Width="95"/>
-        <Label x:Name="label4" Content="Language:" HorizontalAlignment="Left" FontWeight="Bold" Height="30" Margin="35,230,0,0" VerticalAlignment="Top" Width="90"/>
-        <Label x:Name="label5" Content="List Type:" HorizontalAlignment="Left" FontWeight="Bold" Height="30" Margin="40,270,0,0" VerticalAlignment="Top" Width="85"/>
+        <Frame x:Name="frame2" BorderThickness="10"  BorderBrush="Black" FontWeight="Bold"  Content="Algorithm Details:"   Margin="-5,25,394,0" Height="280" VerticalAlignment="Top"/>
+        <Label x:Name="label5" Content="{Binding TextName}" HorizontalAlignment="Left" Height="30" Margin="112,35,0,0" VerticalAlignment="Top" Width="70"/>
+        <Label x:Name="label6" Content="{Binding SegSize}" HorizontalAlignment="Left" Height="30" Margin="112,75,0,0" VerticalAlignment="Top" Width="70"/>
+        <Label x:Name="label7" Content="{Binding NGramSize}"  HorizontalAlignment="Left" Height="30" Margin="112,120,0,0" VerticalAlignment="Top" Width="70"/>
+        <Label x:Name="label7_Copy" Content="{Binding Clusters}"  HorizontalAlignment="Left" Height="30" Margin="112,155,0,0" VerticalAlignment="Top" Width="70"/>
+        <Label x:Name="label7_Copy1" Content="{Binding Lang}" HorizontalAlignment="Left" Height="30" Margin="112,200,0,0" VerticalAlignment="Top" Width="70"/>
+        <Label x:Name="label" Content="Text Name:" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="10,60,0,0" VerticalAlignment="Top" Width="85"/>
+        <Label x:Name="label1" Content="Segment Size:" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="10,100,0,0" VerticalAlignment="Top" Width="90"/>
+        <Label x:Name="label2" Content="Ngram Size:" HorizontalAlignment="Left" FontWeight="Bold" Height="30" Margin="10,140,0,0" VerticalAlignment="Top" Width="90"/>
+        <Label x:Name="label3" Content="#Clusters:" HorizontalAlignment="Left" Height="30" FontWeight="Bold" Margin="10,185,0,0" VerticalAlignment="Top" Width="95"/>
+        <Label x:Name="label4" Content="Language:" HorizontalAlignment="Left" FontWeight="Bold" Height="30" Margin="10,230,0,0" VerticalAlignment="Top" Width="90"/>
 
     </Grid>
 </Window>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PlagiarismUI.InfraS
 {
-   public static class ConnectionManager
+    public static class ConnectionManager
     {
         private static Pipe enginePipe;
         private static Pipe UIenginePipe;
@@ -44,7 +44,7 @@ namespace PlagiarismUI.InfraS
 
         public static Pipe GetUIenginePipe()
         {
-            if(!is_enginePipeConnected)
+            if (!is_enginePipeConnected)
             {
                 ConnectUIenginePipe();
             }
@@ -55,10 +55,10 @@ namespace PlagiarismUI.InfraS
 
         public static void ConnectEnginePipe()
         {
-               enginePipe = new Pipe("PIPELOADNAME"); //PIPELOADNAME
-               enginePipe.connect();
-               is_enginePipeConnected = true;
-            
+            enginePipe = new Pipe("PIPELOADNAME"); //PIPELOADNAME
+            enginePipe.connect();
+            is_enginePipeConnected = true;
+
         }
         public static string GetengineMessage()
         {
@@ -88,11 +88,21 @@ namespace PlagiarismUI.InfraS
         }
         public static void ConnectUIenginePipe()
         {
-                UIenginePipe = new Pipe("PIPEUPDATEUI");
-                UIenginePipe.connect();
-                is_UIenginePipeConnected = true;
+            UIenginePipe = new Pipe("PIPEUPDATEUI");
+            UIenginePipe.connect();
+            is_UIenginePipeConnected = true;
         }
 
 
     }
+    public class saveData
+    {
+        public string TextName;
+        public string segSize;
+        public string NGramSize;
+        public string ClustersNum;
+        public string stopWordsLanguage;
+
+    }
+
 }

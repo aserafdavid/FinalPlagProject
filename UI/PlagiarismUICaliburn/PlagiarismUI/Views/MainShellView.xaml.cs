@@ -47,9 +47,16 @@ namespace PlagiarismUI
         
         public MainShellView()
         {
+            //for debug
+            ResultsWindow rw = new ResultsWindow(this);
+            this.Hide();
+            rw.ShowDialog();
+            
+
+            //for debug
             //   enginePipe = new Pipe("PlagPipe");
             //   enginePipe.connect();
-           // System.Diagnostics.Process.GetCurrentProcess().PriorityClass = System.Diagnostics.ProcessPriorityClass.RealTime;
+            // System.Diagnostics.Process.GetCurrentProcess().PriorityClass = System.Diagnostics.ProcessPriorityClass.RealTime;
             Thread newPipe = new Thread(connectNewPipe);
             newPipe.IsBackground = true;
             newPipe.Start();
@@ -107,12 +114,11 @@ namespace PlagiarismUI
                 LW.Left = Location.X;
                 LW.Top = Location.Y;
                 this.Hide();
-                LW.ShowDialog();
+                LW.Show();
 
                 //Thread newPipe = new Thread(connectNewPipe);
                // newPipe.Start();
-                enginePipe = new Pipe("PlagPipe"); 
-                enginePipe.connect();
+
             }
             else
             {
@@ -122,6 +128,12 @@ namespace PlagiarismUI
            
         }
         
+        public void LoadAgain()
+        {
+            this.Show();
+            enginePipe = new Pipe("PlagPipe");
+            enginePipe.connect();
+        }
         private void BrowseFileClicked(object sender, RoutedEventArgs e)
         {
             // Create OpenFileDialog 

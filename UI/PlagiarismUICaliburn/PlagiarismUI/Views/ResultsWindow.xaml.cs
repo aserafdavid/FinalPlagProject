@@ -1,16 +1,10 @@
-﻿using System;
+﻿using PlagiarismUI.ViewModels;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+using System.Windows.Controls.DataVisualization.Charting;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PlagiarismUI.Views
 {
@@ -19,9 +13,59 @@ namespace PlagiarismUI.Views
     /// </summary>
     public partial class ResultsWindow : Window
     {
-        public ResultsWindow()
+        private Window _MainWindow;
+        private void LoadDSChart()
         {
-            InitializeComponent();
+            //TODO Adir need to load graph here->
+            //I think the graph should be build as a grid ask idan just for case
+
+
+           // DataGrid myGraphDataGrid = (DataGrid)this.FindName("GraphGrid");
+           //for (int i = 0; i < 10; i++)
+           // {
+           //     DataGridRow row = new DataGridRow();
+           //     myGraphDataGrid.Items.Add(row);
+           //     for (int j = 0; j < 10; j++)
+           //     {
+           //         //DataGridCell cell = new DataGridCell();
+           //         //cell.Background = Brushes.Blue;
+           //         //myGraphDataGrid.Items.Add(cell);
+           //     }
+                
+                
+           //}
+
         }
+
+        public ResultsWindow(Window mainWindow)
+        {
+            _MainWindow = mainWindow;
+            InitializeComponent();
+            DataContext = new ResultwindowViewModel();
+            
+            LoadLineChartData();
+            LoadDSChart();
+        }
+        private void LoadLineChartData()
+        {
+            ((LineSeries)MyChart.Series[0]).ItemsSource =
+        new KeyValuePair<DateTime, int>[]{
+        new KeyValuePair<DateTime,int>(DateTime.Now, 100),
+        new KeyValuePair<DateTime,int>(DateTime.Now.AddMonths(1), 130),
+        new KeyValuePair<DateTime,int>(DateTime.Now.AddMonths(2), 150),
+        new KeyValuePair<DateTime,int>(DateTime.Now.AddMonths(3), 125),
+        new KeyValuePair<DateTime,int>(DateTime.Now.AddMonths(4),155) };
+
+        }
+
+
+        //////////////
+       
+
+
+
     }
+
+
 }
+

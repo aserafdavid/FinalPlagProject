@@ -1,4 +1,5 @@
 ﻿using PlagiarismUI.InfraS;
+using PlagiarismUI.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,8 +16,8 @@ namespace PlagiarismUI.ViewModels
     {
 
 
-        
-       private void ConnectLoadingPipe()
+
+        private void ConnectLoadingPipe()
         {
             ConnectionManager.ConnectEnginePipe();
             ConnectionManager.ConnectUIenginePipe();
@@ -26,10 +27,12 @@ namespace PlagiarismUI.ViewModels
                 string state = ConnectionManager.GetUIengineMessage();
                 switch (state)
                 {
-                    
+
                     case "OmitStopWordsStepFinished":
                         OmitStopWordsStepFinished = Brushes.Blue;
-                        break;
+                        ShowResults = true;
+                        return;
+                     
 
                     case "BuldCFMsStepFinished":
                         BuldCFMsStepFinished = Brushes.Blue;
@@ -66,12 +69,15 @@ namespace PlagiarismUI.ViewModels
                     case "BuildVocStepFinished":
                         BuildVocStepFinished = Brushes.Blue;
                         break;
-                        
+
 
                     case "FinishLoadingStage":
-                        break;
+                        
+                        return;
+
 
                     case "CancelRUN":
+                        
                         break;
 
 
@@ -81,16 +87,15 @@ namespace PlagiarismUI.ViewModels
             }
         }
 
-      static Thread newPipe;
-        
+        static Thread newPipe;
+
         public LoadingWindowViewModel()
         {
-            //Thread newPipe = new Thread(() => ConnectLoadingPipe(FirstTime));
+            newPipe = new Thread(ConnectLoadingPipe);
+        //    newPipe.SetApartmentState(ApartmentState.STA);
+            newPipe.Start();
             
-            //newPipe = new Thread(() => ConnectLoadingPipe()); 
 
-               newPipe = new Thread(ConnectLoadingPipe);
-               newPipe.Start();
 
         }
 
@@ -105,7 +110,17 @@ namespace PlagiarismUI.ViewModels
         private Brush _CalcAQMeasureStepFinished = Brushes.White;
         private Brush _BuildVocStepFinished = Brushes.White;
 
+        private bool _ShowResults = false;
+
+
         #region properties
+
+        public bool ShowResults
+        {
+            get { return _ShowResults; }
+            set { _ShowResults = value; RaisePropertyChanged("ShowResults"); }
+        }
+
         public Brush OmitStopWordsStepFinished
         {
             get

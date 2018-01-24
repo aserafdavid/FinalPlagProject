@@ -32,5 +32,6 @@
         <Button x:Name="backFromLoading" Content="Back To Main Page" HorizontalAlignment="Left" Height="30" Margin="20,315,0,0" VerticalAlignment="Top" Width="105" Click="backFromLoading_Click"/>
         <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" FontSize="18" Foreground="Red"  FontWeight ="UltraBold"  Height="30" Margin="185,0,0,0" TextWrapping="Wrap" Text="Algorithm Stages" VerticalAlignment="Top" Width="170"/>
         <Line></Line>
+        <Button x:Name="ShowResults" Content="Show Results" IsEnabled="{Binding ShowResults}" FontWeight="Bold"  Background="red" HorizontalAlignment="Left" Height="50" Margin="435,310,0,0" VerticalAlignment="Top" Width="140" Click="ShowResults_Click"/>
     </Grid>
 </Window>

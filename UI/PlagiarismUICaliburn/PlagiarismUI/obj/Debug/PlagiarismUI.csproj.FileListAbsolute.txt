@@ -104,4 +104,8 @@ D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\System.
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\System.Reactive.Linq.xml
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\System.Reactive.PlatformServices.xml
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\System.Reactive.Windows.Threading.xml
-D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\PlagiarismUI.csprojResolveAssemblyReference.cache
+D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\PlagiarismUI_Content.g.cs
+D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.dll
+D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\WPFToolkit.dll
+D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.pdb
+D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\DataGrid2DLibrary.dll

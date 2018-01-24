@@ -56,7 +56,7 @@ void InithashPipe()
 	s_mapOutPipeValues["CalcAQMeasureStepFinished"] = CalcAQMeasureStepFinished;
 	s_mapOutPipeValues["BuildQsStepFinished"] = BuildQsStepFinished;
 	s_mapOutPipeValues["BuildSPsStepFinished"] = BuildSPsStepFinished;
-
+	s_mapOutPipeValues["FinishLoadingStage"] = FinishLoadingStage;
 }
 
 
@@ -76,9 +76,16 @@ void BackgroundEngine(string argv)
 		count++;
 		if (count % 11 == 0)
 		{
-			changeState++;
-			*CurrStatePtr = static_cast<pipe_out>(changeState);
-			cout << changeState;
+			*CurrStatePtr = OmitStopWordsStepFinished;
+			if(count ==22)
+				*CurrStatePtr = FinishLoadingStage;
+
+			//changeState++;
+			//*CurrStatePtr = static_cast<pipe_out>(changeState);
+			//if (count == 30)
+			//	*CurrStatePtr = FinishLoadingStage;
+			//cout << changeState;
+			
 		}
 		if (*abortRun == true)/*Should be implanted in algorithm code*/
 		{
@@ -122,7 +129,7 @@ void BackgroundEngine(string argv)
 
 void StatesUpdate(Pipe &Pipe_UpdateUI)
 {
-	while (CurrState != FinishLoadingStage)//*abortRun != true && 
+	while (*abortRun != true)//CurrState != FinishLoadingStage && PrevState!= FinishLoadingStage)//*abortRun != true && 
 	{
 		/*Handle out Messages */
 		if (PrevState != CurrState)
@@ -155,10 +162,12 @@ void StatesUpdate(Pipe &Pipe_UpdateUI)
 				break;
 			case FinishLoadingStage:
 				Pipe_UpdateUI.sendMessageToGraphics("FinishLoadingStage");
+				return;
 				break;
 			case CancelRUN:
 				Pipe_UpdateUI.sendMessageToGraphics("CancelRUN");
 				break;
+
 
 
 			default:
@@ -169,6 +178,7 @@ void StatesUpdate(Pipe &Pipe_UpdateUI)
 			std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
 		}
+
 		if (*abortRun == true)/*Should be implanted in algorithm code*/
 		{
 
