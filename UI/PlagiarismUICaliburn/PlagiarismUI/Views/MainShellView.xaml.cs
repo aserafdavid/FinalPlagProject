@@ -47,10 +47,10 @@ namespace PlagiarismUI
         
         public MainShellView()
         {
-            //for debug
-            ResultsWindow rw = new ResultsWindow(this);
-            this.Hide();
-            rw.ShowDialog();
+            ////for debug
+            //ResultsWindow rw = new ResultsWindow(this);
+            //this.Hide();
+            //rw.ShowDialog();
             
 
             //for debug
@@ -85,7 +85,7 @@ namespace PlagiarismUI
                 enginePipe.sendEngineMove("EXAMINEPATHFILE");
                 enginePipe.sendEngineMove(DC.PathToStopWordsFile);
                 enginePipe.sendEngineMove("STARTWORK");
-                DC.save();
+                //DC.save();
                 return true;
             }
             else
