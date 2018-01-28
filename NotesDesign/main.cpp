@@ -13,7 +13,9 @@ using namespace arma;
 
 
 Pipe p(0), L(1), Pipe_UpdateUI(2);
-std::mutex mtx;
+
+static string path;
+
 
 static bool AbortRunner = false;
 volatile bool* abortRun = &AbortRunner;
@@ -58,45 +60,45 @@ void InithashPipe()
 	s_mapOutPipeValues["BuildSPsStepFinished"] = BuildSPsStepFinished;
 	s_mapOutPipeValues["FinishLoadingStage"] = FinishLoadingStage;
 }
-
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+                                                                                                                                          
 //TODO : add volatile var to tell background worker to stop work and 
 void BackgroundEngine(string argv)
 {
 
-	//SetThreadPriority(GetCurrentThread(), HIGH_PRIORITY_CLASS);//set high priority to the thread
+	////SetThreadPriority(GetCurrentThread(), HIGH_PRIORITY_CLASS);//set high priority to the thread
+	                                                                                                                                 
+	//printf("threadstart\n");
+	//static unsigned int count = 0;                                  
+	//static unsigned int changeState = 0;
+	//while (true)
+	//{
+	//	printf("alive");
+	//	std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	//	count++;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+	//	if (count % 11 == 0)
+	//	{
+	//		*CurrStatePtr = OmitStopWordsStepFinished;
+	//		if(count ==22)
+	//			*CurrStatePtr = FinishLoadingStage;
 
-	printf("threadstart\n");
-	static unsigned int count = 0;
-	static unsigned int changeState = 0;
-	while (true)
-	{
-		printf("alive");
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
-		count++;
-		if (count % 11 == 0)
-		{
-			*CurrStatePtr = OmitStopWordsStepFinished;
-			if(count ==22)
-				*CurrStatePtr = FinishLoadingStage;
+	//		//changeState++;
+	//		//*CurrStatePtr = static_cast<pipe_out>(changeState);
+	//		//if (count == 30)
+	//		//	*CurrStatePtr = FinishLoadingStage;
+	//		//cout << changeState;
+	//		
+	//	}
+	//	if (*abortRun == true)/*Should be implanted in algorithm code*/
+	//	{
+	//		printf("Worker aborted\n");
+	//		HANDLE t = GetCurrentThread();
+	//		TerminateThread(t, 0);
 
-			//changeState++;
-			//*CurrStatePtr = static_cast<pipe_out>(changeState);
-			//if (count == 30)
-			//	*CurrStatePtr = FinishLoadingStage;
-			//cout << changeState;
-			
-		}
-		if (*abortRun == true)/*Should be implanted in algorithm code*/
-		{
-			printf("Worker aborted\n");
-			HANDLE t = GetCurrentThread();
-			TerminateThread(t, 0);
+	//	}
+	//};
 
-		}
-	};
-
-	string path = argv;
+	path = argv;
 	string ext = "x64\\Debug\\PlagiarismDetection.exe";
 	if (path != ext &&
 		path.size() > ext.size() &&
@@ -105,18 +107,8 @@ void BackgroundEngine(string argv)
 
 	if (Setinfrastructure(&path))
 	{
-
-		//	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-		//}
 		Global_PathToTempFiles = path;
-
-		CText ct(fileNamePath, StopwordsNamePath, path, Both_Aprroaches, SEGMENTSIZE, NGRAMSIZE);
-
-
-		//cout << "Aproximation Errors by Segments:\n";
-		//map<int, double> ApproximationErrorMap = ct.GetSegmentsApproximationErrorMap();
-		//for (std::map<int, double>::iterator it = ApproximationErrorMap.begin(); it != ApproximationErrorMap.end(); ++it)
-		//	cout << it->first << " => " << it->second << '\n';
+		CText ct(fileNamePath, StopwordsNamePath, path, Both_Aprroaches, segSize, NgramSize);
 	}
 
 
@@ -162,6 +154,9 @@ void StatesUpdate(Pipe &Pipe_UpdateUI)
 				break;
 			case FinishLoadingStage:
 				Pipe_UpdateUI.sendMessageToGraphics("FinishLoadingStage");
+				char *temp = new char[path.size()+1];
+				strcpy(temp, path.c_str());
+				Pipe_UpdateUI.sendMessageToGraphics(temp);//TODO Add FULL Path to results file
 				return;
 				break;
 			case CancelRUN:
@@ -175,7 +170,7 @@ void StatesUpdate(Pipe &Pipe_UpdateUI)
 			}
 
 			PrevState = CurrState;//Dont Forget update PrevState
-			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
 		}
 
@@ -189,6 +184,7 @@ void StatesUpdate(Pipe &Pipe_UpdateUI)
 	}
 	//Pipe_UpdateUI.close();
 }
+
 static int counter = 0;
 int main(int argc, const char **argv) {
 
@@ -302,12 +298,13 @@ int main(int argc, const char **argv) {
 			break;
 
 			case EXAMINEPATHFILE:
-				fileNamePath = p.getMessageFromGraphics();
+				StopwordsNamePath = p.getMessageFromGraphics();
 				LOGGER->GetLogger()->Log("EXAMINEPATHFILE Message from app");
 				break;
 
 			case EXAMINESTOPWORDFILE:
-				StopwordsNamePath = p.getMessageFromGraphics();
+				
+				fileNamePath = p.getMessageFromGraphics();
 				LOGGER->GetLogger()->Log("EXAMINESTOPWORDFILE Message from app");
 				break;
 
@@ -321,17 +318,8 @@ int main(int argc, const char **argv) {
 				LOGGER->GetLogger()->Log("SEGMENTSIZE Message from app");
 				break;
 
-			case CANCELRUN:
-				//w.~thread();
-				//TerminateThread(w.native_handle(), 0);
-				//CloseHandle(w.native_handle());
-				LOGGER->GetLogger()->Log("CANCELRUN Message from app");
-				p.sendMessageToGraphics("ACCEPTED");
-				break;
-
 			case QUIT:
-				//TerminateThread(w.native_handle(), 0);
-				//CloseHandle(w.native_handle());
+
 				LOGGER->GetLogger()->Log("QUIT Message from app");
 				exit(1);
 				break;
