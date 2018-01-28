@@ -6,6 +6,8 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 				int SegmentSize, int NgramSize, int ClusterNumberRequested)
 	: miSegmentSize(SegmentSize), miNgramSize(NgramSize), mfInputFile(InputFileName), mfStopWordFile(stopWordFilePATH), meAprroach(Aprroach)
 {
+
+
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
@@ -20,10 +22,35 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 		//in this step - all Segments NGrams created , mvDictionary is fully updated 
 		// time to build CFM and SP's for each segment by DSeg.BuildSegmentCFM(vector<string>& vDictionary);
 
-		//miConcurrentThreadsNumber = std::thread::hardware_concurrency();
-		miConcurrentThreadsNumber = 4;
-		std::thread t[4];
-		//cout << n << " concurrent threads are supported.\n";
+		miConcurrentThreadsNumber = std::thread::hardware_concurrency();
+		cout << "hardware_concurrency() = " << miConcurrentThreadsNumber << endl;
+		std::thread* t;
+		//std::thread t[MAXT];
+		if (miConcurrentThreadsNumber >= MAXT)
+		{
+			t= new std::thread[MAXT];
+			miConcurrentThreadsNumber = MAXT;
+		}
+		else if (miConcurrentThreadsNumber >= MIDHT)
+		{
+			t = new std::thread[MIDHT];
+			miConcurrentThreadsNumber = MIDHT;
+		}
+		else if (miConcurrentThreadsNumber >= MIDLT)
+		{
+			t = new std::thread[MIDLT];
+			miConcurrentThreadsNumber = MIDLT;
+		}
+		else
+		{
+			t = new std::thread[MINT];
+			miConcurrentThreadsNumber = MINT;
+		}
+		
+		
+		//miConcurrentThreadsNumber = 4; 
+		//std::thread t[4];
+		//cout << miConcurrentThreadsNumber << " concurrent threads are supported.\n";
 
 		/*fill the correct segments vector according to Aprroach Model*/
 		if (DS_Aprroach == meAprroach || Both_Aprroaches == meAprroach)

@@ -20,6 +20,11 @@ using namespace std;
 #define DeafultSegmentSize 40
 #define DeafultNgramSize 3
 
+#define MAXT 16
+#define MIDHT 12
+#define MIDLT 8
+#define MINT 4
+
 /* class definition */
 class CText
 {

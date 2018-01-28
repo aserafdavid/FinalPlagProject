@@ -1,5 +1,6 @@
 #include <iostream>
 #include <armadillo>
+#include "main.h"
 #include "CText.h"
 //#include "CAlgorithms.h"
 #include "Cpipe.h"
@@ -121,6 +122,7 @@ void BackgroundEngine(string argv)
 
 void StatesUpdate(Pipe &Pipe_UpdateUI)
 {
+	char *temp;
 	while (*abortRun != true)//CurrState != FinishLoadingStage && PrevState!= FinishLoadingStage)//*abortRun != true && 
 	{
 		/*Handle out Messages */
@@ -154,7 +156,7 @@ void StatesUpdate(Pipe &Pipe_UpdateUI)
 				break;
 			case FinishLoadingStage:
 				Pipe_UpdateUI.sendMessageToGraphics("FinishLoadingStage");
-				char *temp = new char[path.size()+1];
+				temp = new char[path.size()+1];
 				strcpy(temp, path.c_str());
 				Pipe_UpdateUI.sendMessageToGraphics(temp);//TODO Add FULL Path to results file
 				return;
