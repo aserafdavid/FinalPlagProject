@@ -1,6 +1,4 @@
-#pragma once
 
-#pragma once
 #pragma region Includes
 #include <stdio.h>
 #include <tchar.h>
@@ -15,7 +13,7 @@
 
 
 
-enum pipe_in {  /*messagez from the UI*/
+enum pipe_in {  /*messages from the UI*/
 	EXAMINEPATHFILE/**/
 	, EXAMINESTOPWORDFILE
 	, NGRAMSIZE

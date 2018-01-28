@@ -1,4 +1,5 @@
 ﻿using Microsoft.Windows.Controls.Primitives;
+using PlagiarismUI.InfraS;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -45,9 +46,15 @@ namespace PlagiarismUI.ViewModels
             get { return _Lang; }
             set { _Lang = value; }
         }
+
         private void setAlgorithmInput()
         {
-
+            saveData sv = new saveData();
+            Clusters=sv.ClustersNum;
+            Lang = sv.Language;
+            NGramSize = sv.NGramSize;
+            TextName = sv.TextName;
+            SegSize = sv.segSize;
         }
         public ResultwindowViewModel()
         {

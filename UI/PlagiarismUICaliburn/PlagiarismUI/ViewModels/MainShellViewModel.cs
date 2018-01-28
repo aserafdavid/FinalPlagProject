@@ -12,11 +12,12 @@ namespace PlagiarismUI
 {
     public class MainShellViewModel : UserControl, INotifyPropertyChanged
     {
-       
+
 
 
         /*fields*/
         #region Vars
+        saveData sd;
         private string _PathToMainInputFile = "No File Choosen";
         private string _PathToStopWordsFile = "No File Choosen";
         private ObservableCollection<string> _RunSelection = new ObservableCollection<string> { "BOTH", "Clustered","Dynamical"};
@@ -26,6 +27,16 @@ namespace PlagiarismUI
         private int _StopWordsListChecked,_NgramSize,_SegmentSize;
         private bool _AnalyzeEnabled = true; //TODO
         #endregion
+
+        public void save()
+        {
+            saveData sd = new saveData();
+            sd.NGramSize = NgramSize;
+            sd.segSize = SegmentSize;
+            sd.TextName = PathToMainInputFile.Substring(PathToMainInputFile.LastIndexOf("/"));
+            sd.Language = ChoosenLanguage;
+        }
+
 
         #region Properties
         /*Properties*/
