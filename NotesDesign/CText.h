@@ -24,7 +24,8 @@ using namespace std;
 class CText
 {
 public:
-	CText(string InputFileName, string stopWordFilePATH, string TempFilesPath, AprroachModel Aprroach, int SegmentSize = DeafultSegmentSize, int NgramSize = DeafultNgramSize);
+	CText(string InputFileName, string stopWordFilePATH, string TempFilesPath, AprroachModel Aprroach,
+			int SegmentSize = DeafultSegmentSize, int NgramSize = DeafultNgramSize, int ClusterNumberRequested=0);
 	~CText();
 	map<int, double> GetSegmentsApproximationErrorMap(void);
 	string mPathToTempFiles;
@@ -48,6 +49,10 @@ private:
 	void readStopWordFile(void);
 	void RemoveStopWordList(void);
 	void DivideTextIntoSegments(void);
+	void BuildSegmentCFMandSPThreadDS(void);
+	void BuildSegmentCFMandSPThreadCL(void);
+	int miConcurrentThreadsNumber = 0;
+	int miInitForThreads = 0;
 
 	/* DS */
 	//Tmeas - transition measure between all the TM of segments
@@ -55,9 +60,16 @@ private:
 	void CompleteDsProcess(void);
 	void CompleteClProcess(void);
 
+	void CreateResultsFileForDS(void);
+	void CreateResultsFileForCL(pair<int, map<int, int> > ClustersPair);
+
 	void BuildTmeas(void);
 	map<int, double> mmSegmentsApproximationError;
 	void SetApproximationErrorBetweenSegments(void);
+
+	/* CL */
+	arma::mat mEVM;
+	int miClusterNumberRequested;
 
 };
 #endif

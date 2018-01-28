@@ -109,3 +109,6 @@ D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\System.
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\WPFToolkit.dll
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.pdb
 D:\finalProjectPlagiarism\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\DataGrid2DLibrary.dll
+C:\Users\anotes\Downloads\FPP\UI\PlagiarismUICaliburn\PlagiarismUI\bin\Debug\PlagiarismUI.exe.config
+C:\Users\anotes\Downloads\FPP\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\PlagiarismUI.exe
+C:\Users\anotes\Downloads\FPP\UI\PlagiarismUICaliburn\PlagiarismUI\obj\Debug\PlagiarismUI.pdb

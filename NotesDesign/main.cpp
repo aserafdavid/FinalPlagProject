@@ -113,10 +113,10 @@ void BackgroundEngine(string argv)
 		CText ct(fileNamePath, StopwordsNamePath, path, Both_Aprroaches, SEGMENTSIZE, NGRAMSIZE);
 
 
-		cout << "Aproximation Errors by Segments:\n";
-		map<int, double> ApproximationErrorMap = ct.GetSegmentsApproximationErrorMap();
-		for (std::map<int, double>::iterator it = ApproximationErrorMap.begin(); it != ApproximationErrorMap.end(); ++it)
-			cout << it->first << " => " << it->second << '\n';
+		//cout << "Aproximation Errors by Segments:\n";
+		//map<int, double> ApproximationErrorMap = ct.GetSegmentsApproximationErrorMap();
+		//for (std::map<int, double>::iterator it = ApproximationErrorMap.begin(); it != ApproximationErrorMap.end(); ++it)
+		//	cout << it->first << " => " << it->second << '\n';
 	}
 
 
@@ -203,7 +203,7 @@ int main(int argc, const char **argv) {
 	while (!isConnect)
 	{
 		cout << "trying connect again.." << endl; /* move to Logger*/
-		Sleep(3000);
+		Sleep(1000);
 		isConnect = p.connect();
 	}
 
@@ -339,10 +339,7 @@ int main(int argc, const char **argv) {
 			default:
 				std::this_thread::sleep_for(std::chrono::milliseconds(500));
 				break;
-
-				printf("316");
 			}
-			printf("318");
 		}
 
 	}

@@ -16,8 +16,8 @@ CClusteredSegment::CClusteredSegment(const CDynamicSystemSegment & src)
 	: CSegment(src)
 {
 	try {
-		CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 	}
 	catch (CError& Err) {
@@ -29,12 +29,14 @@ CClusteredSegment::CClusteredSegment(const CDynamicSystemSegment & src)
 CClusteredSegment::CClusteredSegment(string  SegmentData, int NgramSize, string pathTempFiles, vector<string>& vDictionary)
 	: CSegment(SegmentData, NgramSize, pathTempFiles, vDictionary)
 {
-	try {
-		CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+	try 
+	{
+		//CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 	}
-	catch (CError& Err) {
+	catch (CError& Err) 
+	{
 		Err.AddID("CClusteredSegment", __FUNCTION__);
 		throw Err;
 	}
@@ -43,6 +45,28 @@ CClusteredSegment::CClusteredSegment(string  SegmentData, int NgramSize, string 
 
 CClusteredSegment::~CClusteredSegment()
 {
-	CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
-	CLogger::GetLogger()->Log(Err.GetErrMsg());
+	//CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
+	//CLogger::GetLogger()->Log(Err.GetErrMsg());
+}
+
+arma::vec CClusteredSegment::CalcEV(void)
+{
+	try
+	{
+		//CError Err(""); Err.AddID("CClusteredSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
+
+		arma::mat A, R;
+		A.load(mfSegmentSPfileName);
+		R.eye(A.n_cols, A.n_cols);
+
+		CAlgorithms::RunQrAlg(A, R);
+		arma::vec res = sort(diagvec(R), "descend");
+		return res;
+	}
+	catch (CError& Err)
+	{
+		Err.AddID("CClusteredSegment", __FUNCTION__);
+		throw Err;
+	}
 }

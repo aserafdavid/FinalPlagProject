@@ -85,7 +85,7 @@ namespace PlagiarismUI
                 enginePipe.sendEngineMove("EXAMINEPATHFILE");
                 enginePipe.sendEngineMove(DC.PathToStopWordsFile);
                 enginePipe.sendEngineMove("STARTWORK");
-               
+                DC.save();
                 return true;
             }
             else

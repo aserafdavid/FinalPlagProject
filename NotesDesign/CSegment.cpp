@@ -9,10 +9,11 @@
 CSegment::CSegment(const CSegment & src)
 {
 	try {
-		CError Err(""); Err.AddID("CSegment", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		this->miSegSize = src.miSegSize;
+		this->msSegmentData = src.msSegmentData;
 		this->mfSegmentSPfileName = src.mfSegmentSPfileName;
 		this->miNgramSize = src.miNgramSize;
 		this->miSegmentSize = src.miSegmentSize;
@@ -31,8 +32,8 @@ CSegment::CSegment(string& SegmentData, int NgramSize, string pathTempFiles, vec
 {
 
 	try {
-		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CText", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		/********************************/
 		static int counter = 0;
@@ -59,11 +60,10 @@ CSegment::CSegment(string& SegmentData, int NgramSize, string pathTempFiles, vec
 			jBlockOffset++;
 
 		}
-		CLogger::GetLogger()->Log("Block were Splited into Ngrams - createAnagramMatrix() Finished Succesfully");
-		/*TODO:write to File and save*/
+		//CLogger::GetLogger()->Log("Block were Splited into Ngrams - createAnagramMatrix() Finished Succesfully");
 		mfSegmentNgramsfilepath = pathTempFiles;
 		//mPathToTempFiles.append("NgramFromSeg" + std::to_string(miSegmentNumber));
-		pathTempFiles.append("\\SegNgrams\\NgramFromSeg" + std::to_string(miSegmentNumber));
+		pathTempFiles.append("\\SegNgrams\\NgramFromSeg" + std::to_string(miSegmentNumber) +".txt");
 		mfSegmentNgramsfile.open(pathTempFiles);
 
 		SaveNgramDataToFile();
@@ -114,23 +114,19 @@ CSegment & CSegment::getCSegment(void)
 
 CSegment::~CSegment()
 {
-	// לא לשכוח שחרורים של כל המטריצות
-
-	CError Err(""); Err.AddID("CText", __FUNCTION__);
-	CLogger::GetLogger()->Log(Err.GetErrMsg());
-	cout << "dss";
-
+	//CError Err(""); Err.AddID("CText", __FUNCTION__);
+	//CLogger::GetLogger()->Log(Err.GetErrMsg());
+	cout << "dss" << miSegmentNumber << " ";
 }
 
 // 1) build CFM Matrix using vDictionary , save it in mfSegmentCFMfile
 // 2) build SP Matrix using mfSegmentCFMfile, save it in mfSegmentSPfile: 
 //    use the private function BuildSegmentSP(ofstream & mfSegmentCFMfile)
-void CSegment::BuildSegmentCFMandSP(vector<string>& vDictionary)
+void CSegment::BuildSegmentCFMandSP(const vector<string>& vDictionary)
 {
-	// use mfSegmentNgramsfile , finnaly save CFM mat to mfSegmentCFMfile
 	try {
-		CError Err(""); Err.AddID("CSegment", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		arma::mat segCFM(vDictionary.size(), mvSegmentNgrams.size());
 		segCFM.fill(0);
@@ -154,13 +150,9 @@ void CSegment::BuildSegmentCFMandSP(vector<string>& vDictionary)
 		
 		
 		string filename = mfSegmentNgramsfilepath;
-		filename.append("\\CFM's\\segCFM" + std::to_string(miSegmentNumber));
+		filename.append("\\CFM's\\segCFM" + std::to_string(miSegmentNumber) + ".txt");
 		segCFM.save(filename, arma::arma_ascii);
 		mfSegmentCFMfileName = filename;
-		//segCFM.load(filename);
-		//arma::mat G;
-		//G.load(filename);
-
 		// time to build SP's
 		// use Algorithm Class , finnaly save SP mat to mfSegmentSPfile
 		CLogger::GetLogger()->Log("CFM created successfuly for seg " + std::to_string(miSegmentNumber) + "--> Starting build SP");
@@ -177,10 +169,25 @@ void CSegment::BuildSegmentCFMandSP(vector<string>& vDictionary)
 string CSegment::GetSegmentSPfileName(void)
 {
 	try {
-		CError Err(""); Err.AddID("CSegment", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		return mfSegmentSPfileName;
+	}
+	catch (CError& Err) {
+		Err.AddID("CSegment", __FUNCTION__);
+		throw Err;
+	}
+}
+
+
+string CSegment::GetSegmentData(void)
+{
+	try {
+		//CError Err(""); Err.AddID("CSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
+
+		return msSegmentData;
 	}
 	catch (CError& Err) {
 		Err.AddID("CSegment", __FUNCTION__);

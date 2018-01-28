@@ -1,7 +1,9 @@
 #include "CText.h"
 #include <stdlib.h>
+#include <thread>
 
-CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile, AprroachModel Aprroach, int SegmentSize, int NgramSize)
+CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile, AprroachModel Aprroach,
+				int SegmentSize, int NgramSize, int ClusterNumberRequested)
 	: miSegmentSize(SegmentSize), miNgramSize(NgramSize), mfInputFile(InputFileName), mfStopWordFile(stopWordFilePATH), meAprroach(Aprroach)
 {
 	try {
@@ -9,6 +11,7 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		Global_PathToTempFiles = mPathToTempFiles = PathToTempFile;
+		miClusterNumberRequested = ClusterNumberRequested;
 		vector<string> TempNgramSeg;
 		readStopWordFile();
 		RemoveStopWordList();
@@ -17,20 +20,36 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 		//in this step - all Segments NGrams created , mvDictionary is fully updated 
 		// time to build CFM and SP's for each segment by DSeg.BuildSegmentCFM(vector<string>& vDictionary);
 
+		//miConcurrentThreadsNumber = std::thread::hardware_concurrency();
+		miConcurrentThreadsNumber = 4;
+		std::thread t[4];
+		//cout << n << " concurrent threads are supported.\n";
+
 		/*fill the correct segments vector according to Aprroach Model*/
 		if (DS_Aprroach == meAprroach || Both_Aprroaches == meAprroach)
 		{
-			for each (auto TempSeg in mvDsSegments)
+			for (int i = 0; i < miConcurrentThreadsNumber; ++i)
 			{
-				TempSeg->BuildSegmentCFMandSP(mvDictionary);
+				t[i] = std::thread (std::bind(&CText::BuildSegmentCFMandSPThreadDS,this));
 			}
+
+			for (int i = 0; i < miConcurrentThreadsNumber; ++i)
+			{
+				t[i].join();
+			}
+
 			CompleteDsProcess();
 		}
 		else if (CL_Aprroach == meAprroach)
 		{
-			for each (auto TempSeg in mvClSegments)
+			for (int i = 0; i < miConcurrentThreadsNumber; ++i)
 			{
-				TempSeg->BuildSegmentCFMandSP(mvDictionary);
+				t[i] = std::thread(std::bind(&CText::BuildSegmentCFMandSPThreadCL, this));
+			}
+
+			for (int i = 0; i < miConcurrentThreadsNumber; ++i)
+			{
+				t[i].join();
 			}
 			CompleteClProcess();
 		}
@@ -53,6 +72,22 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);
 		throw Err;
+	}
+}
+
+void CText::BuildSegmentCFMandSPThreadDS()
+{
+	for (int i = miInitForThreads++ ; i < mvDsSegments.size(); i += miConcurrentThreadsNumber)
+	{
+		mvDsSegments[i]->BuildSegmentCFMandSP(mvDictionary);
+	}
+}
+
+void CText::BuildSegmentCFMandSPThreadCL()
+{
+	for (int i = miInitForThreads++; i < mvClSegments.size(); i += miConcurrentThreadsNumber)
+	{
+		mvClSegments[i]->BuildSegmentCFMandSP(mvDictionary);
 	}
 }
 
@@ -92,8 +127,8 @@ void CText::readStopWordFile(void)
 
 CText::~CText()
 {
-	CError Err(""); Err.AddID("CText", __FUNCTION__);
-	CLogger::GetLogger()->Log(Err.GetErrMsg());
+	//CError Err(""); Err.AddID("CText", __FUNCTION__);
+	//CLogger::GetLogger()->Log(Err.GetErrMsg());
 }
 
 /*RemoveStopWordList:
@@ -114,7 +149,7 @@ void CText::RemoveStopWordList(void)
 
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 
 		std::ifstream readStream;
@@ -141,7 +176,7 @@ void CText::RemoveStopWordList(void)
 			}
 		}
 
-		CLogger::GetLogger()->Log("A new File Created ,named %s%s ", mfInputFile.c_str(), NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
+		//CLogger::GetLogger()->Log("A new File Created ,named %s%s ", mfInputFile.c_str(), NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
 		readStream.close();
 		writeStream.close();
 
@@ -166,7 +201,7 @@ void CText::DivideTextIntoSegments(void)
 
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		//string temp("asd");
 		//CSegment TempSeg(temp, 3, mvDictionary);
@@ -250,6 +285,14 @@ void CText::CompleteDsProcess(void)
 		// time to build set approximation error between each two segment except the last 
 		// implement by SetApproximationErrorBetweenSegments() , and save approximation error in mmSegmentsApproximationError 
 		SetApproximationErrorBetweenSegments();
+
+		CreateResultsFileForDS();
+		// print Aproximation Errors
+		cout << "Aproximation Errors by Segments:\n";
+		map<int, double> ApproximationErrorMap = GetSegmentsApproximationErrorMap();
+		cout << endl;
+		for (std::map<int, double>::iterator it = ApproximationErrorMap.begin(); it != ApproximationErrorMap.end(); ++it)
+			cout << it->first << " => " << it->second << '\n';
 	}
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);
@@ -263,6 +306,82 @@ void CText::CompleteClProcess(void)
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
 
+		//in this step - all CFM's and SP's created for each segment.
+		// time to calculate EV(eigen values) for each SP matrix by QR algorithm., then create EVM(eigen values matrix) -
+		// unite of all  EV vectors from each segment's EV. 
+		// implement by CClusteredSegment::CalcEV using CAlgorithms::RunQrAlg.
+		arma::mat dummy;
+		dummy.load(mvClSegments[0]->GetSegmentSPfileName() );
+
+		mEVM.set_size(dummy.n_cols, mvClSegments.size());
+		mEVM.zeros();
+
+		for (int i = 0; i < mvClSegments.size() ; ++i)
+		{
+			mEVM.col(i) = mvClSegments[i]->CalcEV();
+		}
+		CLogger::GetLogger()->Log("EVM created successfully.");
+
+		//in this step - EVM created.
+		// time to call to Kmeas algorithm with EVM and CL_num as parameters and save all the clustering results.
+		// CL_num - const number - 2..9
+		// Then examine each Kmeas result by Silhouette algorithm, and choose the best Kmeas clusterization by Silhouette.
+		// implement by CAlgorithms::FindBestClusterization, result save in mat means.
+		pair<int ,map<int, int> > BestClustersMap;
+		CAlgorithms::FindBestClusterization(mEVM, BestClustersMap, miClusterNumberRequested);
+
+		CreateResultsFileForCL(BestClustersMap);
+		//print BestClustersMap
+		cout << endl << "Number of clusters for Best Clusterization: " << BestClustersMap.first << endl;
+		for (map<int,int>::iterator it = BestClustersMap.second.begin(); it != BestClustersMap.second.end(); ++it)
+		{
+			cout << "Seg " << it->first << " => " << it->second << endl;
+		}
+	}
+	catch (CError& Err) {
+		Err.AddID("CText", __FUNCTION__);
+		throw Err;
+	}
+}
+
+void CText::CreateResultsFileForDS(void)
+{
+	try 
+	{
+		ofstream ResFile;
+		string DSpath = mPathToTempFiles;
+		DSpath.append("\\Results\\DS_Results.txt");
+		ResFile.open(DSpath);
+
+		for (int i = 0; i < mvDsSegments.size() - 2; ++i)
+		{
+			ResFile << mvDsSegments[i]->GetApproximationError() << "\t";
+			ResFile << mvDsSegments[i]->GetSegmentData() << endl;
+		}
+		ResFile << "\t" << mvDsSegments[mvDsSegments.size() - 1]->GetSegmentData() ;
+		ResFile.close();
+	}
+	catch (CError& Err) {
+		Err.AddID("CText", __FUNCTION__);
+		throw Err;
+	}
+}
+
+void CText::CreateResultsFileForCL(pair<int, map<int, int> > ClustersPair)
+{
+	try 
+	{
+		ofstream ResFile;
+		string DSpath = mPathToTempFiles;
+		DSpath.append("\\Results\\CL_Results.txt");
+		ResFile.open(DSpath);
+
+		for (int i = 0; i < mvClSegments.size() ; ++i)
+		{
+			ResFile << ClustersPair.second[i] << "\t";
+			ResFile << mvClSegments[i]->GetSegmentData() << endl;
+		}
+		ResFile.close();
 	}
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);
@@ -274,8 +393,8 @@ void CText::CompleteClProcess(void)
 void CText::BuildTmeas(void)
 {
 	try {
-		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CText", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		// implementation here
 		arma::mat Res, Temp;
@@ -290,7 +409,7 @@ void CText::BuildTmeas(void)
 		Res /= (mvDsSegments.size() - 1);
 
 		string filename = mPathToTempFiles;
-		filename.append("\\TMeasMatrix");
+		filename.append("\\TMeasMatrix.txt");
 		Res.save(filename, arma::arma_ascii);
 		msTmeasMatricesfileName = filename;
 
@@ -308,8 +427,8 @@ void CText::BuildTmeas(void)
 void CText::SetApproximationErrorBetweenSegments(void)
 {
 	try {
-		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CText", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		arma::mat TMmeas, T1, T2;
 		TMmeas.load(msTmeasMatricesfileName);
@@ -333,8 +452,8 @@ void CText::SetApproximationErrorBetweenSegments(void)
 map<int, double> CText::GetSegmentsApproximationErrorMap(void)
 {
 	try {
-		CError Err(""); Err.AddID("CText", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CText", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		return mmSegmentsApproximationError;
 	}

@@ -16,8 +16,8 @@ CDynamicSystemSegment::CDynamicSystemSegment(string  SegmentData, int NgramSize,
 	: CSegment(SegmentData, NgramSize, pathTempFiles, vDictionary)
 {
 	try {
-		CError Err(""); Err.AddID("CDynamicSystemSegment", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CDynamicSystemSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 	}
 	catch (CError& Err) {
@@ -29,8 +29,8 @@ CDynamicSystemSegment::CDynamicSystemSegment(string  SegmentData, int NgramSize,
 
 CDynamicSystemSegment::~CDynamicSystemSegment()
 {
-		CError Err(""); Err.AddID("CDynamicSystemSegment", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CDynamicSystemSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 }
 
 void CDynamicSystemSegment::DivideIntoNgrams()
@@ -73,8 +73,8 @@ void CDynamicSystemSegment::DivideIntoNgrams()
 void CDynamicSystemSegment::CalcTransitionMatrix(string FileToSPMat)
 {
 	try {
-		CError Err(""); Err.AddID("CDynamicSystemSegment", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CDynamicSystemSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		arma::mat A, B;
 		B.load(FileToSPMat);
@@ -82,7 +82,7 @@ void CDynamicSystemSegment::CalcTransitionMatrix(string FileToSPMat)
 		arma::mat X = arma::solve(A, B);
 
 		string filename = mfSegmentNgramsfilepath;
-		filename.append("\\TM's\\segTM" + std::to_string(miSegmentNumber));
+		filename.append("\\TM's\\segTM" + std::to_string(miSegmentNumber) + ".txt");
 		X.save(filename, arma::arma_ascii);
 		msSegmentTmFileName = filename;
 	}
@@ -95,8 +95,8 @@ void CDynamicSystemSegment::CalcTransitionMatrix(string FileToSPMat)
 string CDynamicSystemSegment::GetSegmentTmFileName(void)
 {
 	try {
-		CError Err(""); Err.AddID("CDynamicSystemSegment", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CDynamicSystemSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		return msSegmentTmFileName;
 
@@ -124,8 +124,8 @@ void CDynamicSystemSegment::SetSegmentTmFileName(string & FileName)
 double CDynamicSystemSegment::GetApproximationError(void)
 {
 	try {
-		CError Err(""); Err.AddID("CDynamicSystemSegment", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CDynamicSystemSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		return mfApproximationError;
 	}
@@ -138,8 +138,8 @@ double CDynamicSystemSegment::GetApproximationError(void)
 void CDynamicSystemSegment::SetApproximationError(double ApproximationError)
 {
 	try {
-		CError Err(""); Err.AddID("CDynamicSystemSegment", __FUNCTION__);
-		CLogger::GetLogger()->Log(Err.GetErrMsg());
+		//CError Err(""); Err.AddID("CDynamicSystemSegment", __FUNCTION__);
+		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		mfApproximationError = ApproximationError;
 	}

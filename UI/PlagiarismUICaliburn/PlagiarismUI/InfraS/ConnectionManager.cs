@@ -95,13 +95,29 @@ namespace PlagiarismUI.InfraS
 
 
     }
+    
     public class saveData
     {
+        private static saveData instance;
+
+        public static saveData Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new saveData();
+                }
+                return instance;
+            }
+        }
+
         public string TextName;
         public string segSize;
         public string NGramSize;
         public string ClustersNum;
-        public string stopWordsLanguage;
+        public string Language;
+
 
     }
 

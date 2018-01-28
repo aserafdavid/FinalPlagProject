@@ -1,8 +1,10 @@
 #include "Logger.h"
 //#include"Utilities.h"
-const string CLogger::m_sFileName = "Log.txt";
+
 CLogger* CLogger::m_pThis = NULL;
 ofstream CLogger::m_Logfile;
+static string m_sFileName = "Log.txt";
+
 CLogger::CLogger()
 {
 
@@ -14,6 +16,12 @@ CLogger* CLogger::GetLogger() {
 		m_Logfile.open(m_sFileName.c_str(), ios::out | ios::app);
 	}
 	return m_pThis;
+}
+
+void CLogger::SetLogPath(string path)
+{
+	path.append("//Log.txt");
+	m_sFileName = path;
 }
 
 void CLogger::Log(const char * format, ...)
