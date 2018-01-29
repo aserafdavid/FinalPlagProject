@@ -9,7 +9,8 @@
 
      xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
         mc:Ignorable="d"
-        Title="ResultsWindow"  Height="450" Width="600">
+        Title="ResultsWindow"  Height="450" Width="600"
+        ResizeMode="NoResize">
     <Grid Background ="{Binding GridBackGround}">
         <TabControl Background="DarkGray" Margin="0,0,0,-2.5" Height="425"  VerticalAlignment="Top" >
             <TabItem Header="DS">
@@ -41,8 +42,11 @@
 
                     <Button x:Name="button3" Content="Button" HorizontalAlignment="Left" Height="45" Margin="12,330,0,0" VerticalAlignment="Top" Width="140" Grid.ColumnSpan="3"/>
 
-                    <DataGrid  x:Name="GraphGrid"  HorizontalAlignment="Left" Height="230" Margin="217,40,0,0" VerticalAlignment="Top" Width="360">
-                    </DataGrid>
+                    <!--<DataGrid  x:Name="GraphGrid"  HorizontalAlignment="Left" Height="230" Margin="217,40,0,0" VerticalAlignment="Top" Width="360">
+                    </DataGrid>-->
+                    <FlowDocumentReader Margin="204,10,10,21">
+                        <FlowDocument x:Name="FlowDocument"></FlowDocument>
+                    </FlowDocumentReader>
 
                 </Grid>
             </TabItem>
