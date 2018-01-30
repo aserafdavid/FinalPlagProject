@@ -15,7 +15,7 @@ namespace PlagiarismUI.ViewModels
     class LoadingWindowViewModel : UserControl, INotifyPropertyChanged
     {
 
-
+        
 
         private void ConnectLoadingPipe()
         {
@@ -140,9 +140,27 @@ namespace PlagiarismUI.ViewModels
                         ExamineCLResult = Brushes.Blue;
                         break;
 
-                    case "FinishLoadingStage":                        
-                        return;
-                    case "CancelRUN":                        
+
+                    case "FinishLoadingStage":
+                        {
+                            string ResPath;
+                            
+                            ResPath = ConnectionManager.GetUIengineMessage();
+                            while (ResPath == "")
+                                ResPath = ConnectionManager.GetUIengineMessage();
+
+
+                            ConnectionManager.GetUIenginePipe().sendEngineMove("ACCEPTED");
+                            //TODODAVID ResultPath
+                            ResultPath = ResPath;
+                            ExamineResult = Brushes.Blue;
+                            ShowResults = true;
+                            return;
+                        }
+
+
+                    case "CancelRUN":
+                        
                         break;
 
                     default:
@@ -188,6 +206,13 @@ namespace PlagiarismUI.ViewModels
         {
             get { return _ShowResults; }
             set { _ShowResults = value; RaisePropertyChanged("ShowResults"); }
+        }
+
+        public static volatile string ResultPath = "";
+
+        public string GETResultPath()
+        {
+            return ResultPath;
         }
 
         public Brush EvmCreationFinished

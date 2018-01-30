@@ -13,36 +13,9 @@ namespace PlagiarismUI
     /// </summary>
     public partial class MainShellView : Window
     {
-        private ICommand _saveCommand;
         public Pipe enginePipe;
         public volatile bool varsSended = false;
 
-
-        public ICommand SaveCommand
-        {
-            get
-            {
-                if (_saveCommand == null)
-                {
-                    _saveCommand = new RelayCommand(
-                        param => this.SaveObject(),
-                        param => this.CanSave()
-                    );
-                }
-                return _saveCommand;
-            }
-        }
-
-        private bool CanSave()
-        {
-            // Verify command can be executed here
-            return true;
-        }
-
-        private void SaveObject()
-        {
-            // Save command execution logic
-        }
 
         
         public MainShellView()
@@ -52,11 +25,6 @@ namespace PlagiarismUI
             //this.Hide();
             //rw.ShowDialog();
 
-
-            //for debug
-            //   enginePipe = new Pipe("PlagPipe");
-            //   enginePipe.connect();
-            // System.Diagnostics.Process.GetCurrentProcess().PriorityClass = System.Diagnostics.ProcessPriorityClass.RealTime;
             Thread newPipe = new Thread(connectNewPipe);
             newPipe.IsBackground = true;
             newPipe.Start();
@@ -85,7 +53,7 @@ namespace PlagiarismUI
                 enginePipe.sendEngineMove("EXAMINEPATHFILE");
                 enginePipe.sendEngineMove(DC.PathToStopWordsFile);
                 enginePipe.sendEngineMove("STARTWORK");
-                //DC.save();
+                //
                 return true;
             }
             else
@@ -106,8 +74,11 @@ namespace PlagiarismUI
             
             if (true == StartBackgroundWork())
             {
+                var DC = this.DataContext as MainShellViewModel;
+                ConnectionManager.saveData(DC.ChoosenLanguage, DC.NgramSize, DC.PathToMainInputFile, DC.SegmentSize);
                 enginePipe.close();
-
+                //         DC.save();
+                
                 LoadingWindow LW = new LoadingWindow(this);
             
                 var Location = this.PointToScreen(new Point(0, 0));

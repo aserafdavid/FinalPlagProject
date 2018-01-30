@@ -17,25 +17,26 @@ namespace PlagiarismUI
 
         /*fields*/
         #region Vars
-        saveData sd;
         private string _PathToMainInputFile = "No File Choosen";
         private string _PathToStopWordsFile = "No File Choosen";
         private ObservableCollection<string> _RunSelection = new ObservableCollection<string> { "BOTH", "Clustered","Dynamical"};
         private ObservableCollection<string> _LanguageSelection = new ObservableCollection<string> { "English", "Hebrew" };
         private string _ChoosenRun = "Dynamical";
         private string _ChoosenLanguage = "English";
-        private int _StopWordsListChecked,_NgramSize,_SegmentSize;
+        private int _StopWordsListChecked;
+        private int _NgramSize = 3;
+        private int _SegmentSize = 40;
         private bool _AnalyzeEnabled = true; //TODO
         #endregion
 
-        public void save()
-        {
-            saveData sd = new saveData();
-            sd.NGramSize = NgramSize;
-            sd.segSize = SegmentSize;
-            sd.TextName = PathToMainInputFile.Substring(PathToMainInputFile.LastIndexOf("/"));
-            sd.Language = ChoosenLanguage;
-        }
+        //public void save()
+        //{
+        //    saveData sd = new saveData();
+        //    sd.NGramSize = NgramSize;
+        //    sd.segSize = SegmentSize;
+        //    sd.TextName = PathToMainInputFile.Substring(PathToMainInputFile.LastIndexOf("/"));
+        //    sd.Language = ChoosenLanguage;
+        //}
 
 
         #region Properties
