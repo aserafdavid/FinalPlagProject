@@ -1,6 +1,7 @@
 #include "CText.h"
 #include <stdlib.h>
 #include <thread>
+#include "main.h"
 
 CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile, AprroachModel Aprroach,
 				int SegmentSize, int NgramSize, int ClusterNumberRequested)
@@ -17,7 +18,15 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 		vector<string> TempNgramSeg;
 		readStopWordFile();
 		RemoveStopWordList();
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		UpdateStates(OmitStopWordsStepFinished);
+
+		//*CurrStatePtr = OmitStopWordsStepFinished;
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		DivideTextIntoSegments();
+		//std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		UpdateStates(DevideTextToSegStepFinished);
+		//*CurrStatePtr = DevideTextToSegStepFinished;
 
 		//in this step - all Segments NGrams created , mvDictionary is fully updated 
 		// time to build CFM and SP's for each segment by DSeg.BuildSegmentCFM(vector<string>& vDictionary);
@@ -46,11 +55,6 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 			t = new std::thread[MINT];
 			miConcurrentThreadsNumber = MINT;
 		}
-		
-		
-		//miConcurrentThreadsNumber = 4; 
-		//std::thread t[4];
-		//cout << miConcurrentThreadsNumber << " concurrent threads are supported.\n";
 
 		/*fill the correct segments vector according to Aprroach Model*/
 		if (DS_Aprroach == meAprroach || Both_Aprroaches == meAprroach)
@@ -64,6 +68,16 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 			{
 				t[i].join();
 			}
+			//*CurrStatePtr = ExtractNgramsStepFinished;
+			//*CurrStatePtr = BuildVocStepFinished;
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+			UpdateStates(ExtractNgramsStepFinished);
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+			UpdateStates(BuildVocStepFinished);
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+			UpdateStates(BuldCFMsStepFinished);
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+			UpdateStates(BuildSPsStepFinished);
 
 			CompleteDsProcess();
 		}
@@ -300,6 +314,7 @@ void CText::CompleteDsProcess(void)
 		{
 			mvDsSegments[i]->CalcTransitionMatrix(mvDsSegments[i + 1]->GetSegmentSPfileName());
 		}
+		UpdateStates(BuildQsStepFinished);
 
 		//in this step - all TM's created 
 		// time to build TM(Transition Matrix) for each segment except the last 
@@ -307,13 +322,21 @@ void CText::CompleteDsProcess(void)
 		//checkinh mvSegments.size() > 2 - for verify there is any TM between 2 segments
 		if (mvDsSegments.size() > 2)
 			BuildTmeas();
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		UpdateStates(CalcAQMeasureStepFinished);
+
 
 		//in this step - Tmeas created
 		// time to build set approximation error between each two segment except the last 
 		// implement by SetApproximationErrorBetweenSegments() , and save approximation error in mmSegmentsApproximationError 
 		SetApproximationErrorBetweenSegments();
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		UpdateStates(CalcApproxMeasStepFinished);
 
 		CreateResultsFileForDS();
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		UpdateStates(ExamineResult);
+
 		// print Aproximation Errors
 		cout << "Aproximation Errors by Segments:\n";
 		map<int, double> ApproximationErrorMap = GetSegmentsApproximationErrorMap();

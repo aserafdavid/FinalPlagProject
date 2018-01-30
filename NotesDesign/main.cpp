@@ -3,7 +3,6 @@
 #include "main.h"
 #include "CText.h"
 //#include "CAlgorithms.h"
-#include "Cpipe.h"
 #include <thread> 
 #include <mutex>
 #include <condition_variable>
@@ -27,7 +26,6 @@ int segSize, NgramSize;
 static pipe_out CurrState = Initialize;
 volatile pipe_out* CurrStatePtr = &CurrState;
 static pipe_out PrevState = Initialize;
-
 
 static std::map<std::string, pipe_in> s_mapInPipeValues;
 static std::map<std::string, pipe_out> s_mapOutPipeValues;
@@ -66,18 +64,14 @@ void InithashPipe()
 //TODO : add volatile var to tell background worker to stop work and 
 void BackgroundEngine(string argv)
 {
-
-	////SetThreadPriority(GetCurrentThread(), HIGH_PRIORITY_CLASS);//set high priority to the thread
-	                                                                                                                         
-	//printf("threadstart\n");
+	////SetThreadPriority(GetCurrentThread(), HIGH_PRIORITY_CLASS);//set high priority to the thread                          //printf("threadstart\n");
 	//static unsigned int count = 0;                                  
 	//static unsigned int changeState = 0;
 	//while (true)
 	//{
 	//	printf("alive");
 	//	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	//	count++;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-	//	if (count % 11 == 0)
+	//	count++;                                                                                                            	//	if (count % 11 == 0)
 	//	{
 	//		*CurrStatePtr = OmitStopWordsStepFinished;
 	//		if(count ==22)
@@ -94,10 +88,8 @@ void BackgroundEngine(string argv)
 	//		printf("Worker aborted\n");
 	//		HANDLE t = GetCurrentThread();
 	//		TerminateThread(t, 0);
-
 	//	}
 	//};
-
 	path = argv;
 	string ext = "x64\\Debug\\PlagiarismDetection.exe";
 	if (path != ext &&
@@ -120,60 +112,132 @@ void BackgroundEngine(string argv)
 
 
 
-void StatesUpdate(Pipe &Pipe_UpdateUI)
+//void StatesUpdate(Pipe &Pipe_UpdateUI)
+//{
+//	char *temp;
+//	while (*abortRun != true)//CurrState != FinishLoadingStage && PrevState!= FinishLoadingStage)//*abortRun != true && 
+//	{
+//		/*Handle out Messages */
+//		if (PrevState != CurrState)
+//		{
+//			switch (CurrState)
+//			{
+//			case OmitStopWordsStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("OmitStopWordsStepFinished");
+//				break;
+//			case DevideTextToSegStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("DevideTextToSegStepFinished");
+//				break;
+//			case BuildVocStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("BuildVocStepFinished");
+//				break;
+//			case BuldCFMsStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("BuldCFMsStepFinished");
+//				break;
+//			case ExtractNgramsStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("ExtractNgramsStepFinished");
+//				break;
+//			case CalcApproxMeasStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("CalcApproxMeasStepFinished");
+//				break;
+//			case BuildQsStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("BuildQsStepFinished");
+//				break;
+//			case BuildSPsStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("BuildSPsStepFinished");
+//				break;
+//			case ExamineResult:
+//				Pipe_UpdateUI.sendMessageToGraphics("ExamineResult");
+//				break;
+//			case FinishLoadingStage:
+//				Pipe_UpdateUI.sendMessageToGraphics("FinishLoadingStage");
+//				temp = new char[path.size()+1];
+//				strcpy(temp, path.c_str());
+//				Pipe_UpdateUI.sendMessageToGraphics(temp);//TODO Add FULL Path to results file
+//				return;
+//				break;
+//			case CancelRUN:
+//				Pipe_UpdateUI.sendMessageToGraphics("CancelRUN");
+//				break;
+//
+//
+//
+//			default:
+//				break;
+//			}
+//
+//			PrevState = CurrState;//Dont Forget update PrevState
+//			std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+//
+//		}
+//
+//		if (*abortRun == true)/*Should be implanted in algorithm code*/
+//		{
+//
+//			printf("StatesUpdate  aborted\n");
+//			return;
+//
+//		}
+//	}
+//	//Pipe_UpdateUI.close();
+//}
+
+static int counter = 0;
+
+void UpdateStates(pipe_out State)
 {
 	char *temp;
-	while (*abortRun != true)//CurrState != FinishLoadingStage && PrevState!= FinishLoadingStage)//*abortRun != true && 
+
+	//CurrState != FinishLoadingStage && PrevState!= FinishLoadingStage)//*abortRun != true && 
+	if (*abortRun != true)
 	{
-		/*Handle out Messages */
-		if (PrevState != CurrState)
+		switch (State)
 		{
-			switch (CurrState)
-			{
-			case OmitStopWordsStepFinished:
-				Pipe_UpdateUI.sendMessageToGraphics("OmitStopWordsStepFinished");
-				break;
-			case BuildVocStepFinished:
-				Pipe_UpdateUI.sendMessageToGraphics("BuildVocStepFinished");
-				break;
-			case BuldCFMsStepFinished:
-				Pipe_UpdateUI.sendMessageToGraphics("BuldCFMsStepFinished");
-				break;
-			case ExtractNgramsStepFinished:
-				Pipe_UpdateUI.sendMessageToGraphics("ExtractNgramsStepFinished");
-				break;
-			case CalcApproxMeasStepFinished:
-				Pipe_UpdateUI.sendMessageToGraphics("CalcApproxMeasStepFinished");
-				break;
-			case BuildQsStepFinished:
-				Pipe_UpdateUI.sendMessageToGraphics("BuildQsStepFinished");
-				break;
-			case BuildSPsStepFinished:
-				Pipe_UpdateUI.sendMessageToGraphics("BuildSPsStepFinished");
-				break;
-			case ExamineResult:
-				Pipe_UpdateUI.sendMessageToGraphics("ExamineResult");
-				break;
-			case FinishLoadingStage:
-				Pipe_UpdateUI.sendMessageToGraphics("FinishLoadingStage");
-				temp = new char[path.size()+1];
-				strcpy(temp, path.c_str());
-				Pipe_UpdateUI.sendMessageToGraphics(temp);//TODO Add FULL Path to results file
-				return;
-				break;
-			case CancelRUN:
-				Pipe_UpdateUI.sendMessageToGraphics("CancelRUN");
-				break;
+		case OmitStopWordsStepFinished:
+			//Pipe_UpdateUI.flush();
+			Pipe_UpdateUI.sendMessageToGraphics("OmitStopWordsStepFinished");
+			break;
+		case DevideTextToSegStepFinished:
+			//Pipe_UpdateUI.flush();
+			Pipe_UpdateUI.sendMessageToGraphics("DevideTextToSegStepFinished");
+			break;
+		case ExtractNgramsStepFinished:
+			Pipe_UpdateUI.sendMessageToGraphics("ExtractNgramsStepFinished");
+			break;
+		case BuildVocStepFinished:
+			Pipe_UpdateUI.sendMessageToGraphics("BuildVocStepFinished");
+			break;
+		case BuldCFMsStepFinished:
+			Pipe_UpdateUI.sendMessageToGraphics("BuldCFMsStepFinished");
+			break;
+		case BuildSPsStepFinished:
+			Pipe_UpdateUI.sendMessageToGraphics("BuildSPsStepFinished");
+			break;
+		case BuildQsStepFinished:
+			Pipe_UpdateUI.sendMessageToGraphics("BuildQsStepFinished");
+			break;
+		case CalcAQMeasureStepFinished:
+			Pipe_UpdateUI.sendMessageToGraphics("CalcAQMeasureStepFinished");
+			break;
+		case CalcApproxMeasStepFinished:
+			Pipe_UpdateUI.sendMessageToGraphics("CalcApproxMeasStepFinished");
+			break;
+		case ExamineResult:
+			Pipe_UpdateUI.sendMessageToGraphics("ExamineResult");
+			break;
+		case FinishLoadingStage:
+			Pipe_UpdateUI.sendMessageToGraphics("FinishLoadingStage");
+			temp = new char[path.size() + 1];
+			strcpy(temp, path.c_str());
+			Pipe_UpdateUI.sendMessageToGraphics(temp);//TODO Add FULL Path to results file
+			return;
+			break;
+		case CancelRUN:
+			Pipe_UpdateUI.sendMessageToGraphics("CancelRUN");
+			break;
 
-
-
-			default:
-				break;
-			}
-
-			PrevState = CurrState;//Dont Forget update PrevState
-			std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
+		default:
+			break;
 		}
 
 		if (*abortRun == true)/*Should be implanted in algorithm code*/
@@ -184,10 +248,8 @@ void StatesUpdate(Pipe &Pipe_UpdateUI)
 
 		}
 	}
-	//Pipe_UpdateUI.close();
 }
 
-static int counter = 0;
 int main(int argc, const char **argv) {
 
 	static bool FirstTimePipeInit = false;
@@ -249,7 +311,7 @@ int main(int argc, const char **argv) {
 
 
 
-				std::thread States(StatesUpdate, Pipe_UpdateUI);
+				//std::thread States(StatesUpdate, Pipe_UpdateUI);
 
 				while (isOnLoadingStage)
 				{
@@ -263,12 +325,13 @@ int main(int argc, const char **argv) {
 						{
 						case CANCELRUN:
 							*abortRun = true;
-							CurrState = CancelRUN;
+							//CurrState = CancelRUN;
+							UpdateStates(CancelRUN);
 							//LOGGER->GetLogger()->Log("CANCELRUN Message from app");
 							L.sendMessageToGraphics("ACCEPTED");
 							isOnLoadingStage = false;
 							L.close();
-							States.join();
+							//States.join();
 							Pipe_UpdateUI.close();
 
 							isConnect = p.connect();

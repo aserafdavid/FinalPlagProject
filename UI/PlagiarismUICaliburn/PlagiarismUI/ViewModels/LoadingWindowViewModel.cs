@@ -30,56 +30,52 @@ namespace PlagiarismUI.ViewModels
 
                     case "OmitStopWordsStepFinished":
                         OmitStopWordsStepFinished = Brushes.Blue;
-                        ShowResults = true;
-                        return;
-                     
-
-                    case "BuldCFMsStepFinished":
-                        BuldCFMsStepFinished = Brushes.Blue;
-                        break;
-
-                    case "ExtractNgramsStepFinished":
-                        ExtractNgramsStepFinished = Brushes.Blue;
-                        break;
-
-                    case "ExamineResult":
-                        ExamineResult = Brushes.Blue;
+                        //ShowResults = true;
+                        //return;
                         break;
 
                     case "DevideTextToSegStepFinished":
                         DevideTextToSegStepFinished = Brushes.Blue;
                         break;
 
-                    case "CalcApproxMeasStepFinished":
-                        CalcApproxMeasStepFinished = Brushes.Blue;
-                        break;
-
-                    case "BuildSPsStepFinished":
-                        BuildSPsStepFinished = Brushes.Blue;
-
-                        break;
-                    case "BuildQsStepFinished":
-                        BuildQsStepFinished = Brushes.Blue;
-
-                        break;
-                    case "CalcAQMeasureStepFinished":
-                        CalcAQMeasureStepFinished = Brushes.Blue;
+                    case "ExtractNgramsStepFinished":
+                        ExtractNgramsStepFinished = Brushes.Blue;
                         break;
 
                     case "BuildVocStepFinished":
                         BuildVocStepFinished = Brushes.Blue;
                         break;
 
+                    case "BuldCFMsStepFinished":
+                        BuldCFMsStepFinished = Brushes.Blue;
+                        break;
 
-                    case "FinishLoadingStage":
-                        
+                    case "BuildSPsStepFinished":
+                        BuildSPsStepFinished = Brushes.Blue;
+                        break;
+
+                    case "BuildQsStepFinished":
+                        BuildQsStepFinished = Brushes.Blue;
+                        break;
+
+                    case "CalcAQMeasureStepFinished":
+                        CalcAQMeasureStepFinished = Brushes.Blue;
+                        break;
+
+                    case "CalcApproxMeasStepFinished":
+                        CalcApproxMeasStepFinished = Brushes.Blue;
+                        break;
+
+                    case "ExamineResult":
+                        ExamineResult = Brushes.Blue;
+                        break;
+
+                    case "FinishLoadingStage":                        
                         return;
 
 
-                    case "CancelRUN":
-                        
+                    case "CancelRUN":                        
                         break;
-
 
                     default:
                         break;

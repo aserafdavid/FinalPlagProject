@@ -25,17 +25,17 @@ enum pipe_in {  /*messages from the UI*/
 };
 
 enum pipe_out {
-	Initialize,
-	OmitStopWordsStepFinished
-	, BuldCFMsStepFinished
-	, BuildVocStepFinished
-	, ExtractNgramsStepFinished
-	, ExamineResult
+	Initialize
+	, OmitStopWordsStepFinished
 	, DevideTextToSegStepFinished
-	, CalcApproxMeasStepFinished
-	, CalcAQMeasureStepFinished
-	, BuildQsStepFinished
+	, ExtractNgramsStepFinished
+	, BuildVocStepFinished
+	, BuldCFMsStepFinished
 	, BuildSPsStepFinished
+	, BuildQsStepFinished
+	, CalcAQMeasureStepFinished
+	, CalcApproxMeasStepFinished
+	, ExamineResult
 	, FinishLoadingStage
 	, CancelRUN
 };
@@ -82,7 +82,7 @@ public:
 			strPipeName,			// Pipe name 
 			GENERIC_READ |			// Read and write access 
 			GENERIC_WRITE | PIPE_WAIT |PIPE_ACCESS_DUPLEX,
-			0,						// No sharing 
+			1,						// No sharing 
 			NULL,					// Default security attributes
 			OPEN_EXISTING,			// Opens existing pipe 
 			0,						// Default attributes 
