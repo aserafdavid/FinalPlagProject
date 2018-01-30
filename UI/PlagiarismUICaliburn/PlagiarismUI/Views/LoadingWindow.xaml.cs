@@ -21,7 +21,7 @@ namespace PlagiarismUI.Views
             InitializeComponent();
             _previousWindow =  window;
              DataContext = new LoadingWindowViewModel();
-
+           
 
         }
 
@@ -62,8 +62,10 @@ namespace PlagiarismUI.Views
 
         private void ShowResults_Click(object sender, RoutedEventArgs e)
         {
+            var DC = this.DataContext as LoadingWindowViewModel;
+            string ResultPATH = DC.GETResultPath() ; 
             this.Close();
-            ResultsWindow RW = new ResultsWindow(_previousWindow);
+            ResultsWindow RW = new ResultsWindow(_previousWindow , ResultPATH);
             
             RW.ShowDialog();
             

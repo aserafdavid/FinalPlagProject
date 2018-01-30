@@ -94,31 +94,26 @@ namespace PlagiarismUI.InfraS
         }
 
 
+        public static string Lang = "";
+        public static string NgramSize = "";
+        public static string fileName = "";
+        public static string segSize = "";
+
+
+
+
+    public static void saveData( string Language, string NGSIZE, string textName, string SegSize)
+        {
+            int temp = textName.LastIndexOf("\\");
+            Lang = Language;
+             NgramSize = NGSIZE;
+           // 
+            segSize = SegSize;
+            
+            fileName = textName.Substring(temp);
+        }
     }
     
-    public class saveData
-    {
-        private static saveData instance;
 
-        public static saveData Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new saveData();
-                }
-                return instance;
-            }
-        }
-
-        public string TextName;
-        public string segSize;
-        public string NGramSize;
-        public string ClustersNum;
-        public string Language;
-
-
-    }
 
 }

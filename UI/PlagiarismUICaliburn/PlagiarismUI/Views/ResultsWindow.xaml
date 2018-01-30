@@ -16,12 +16,11 @@
             <TabItem Header="DS">
                 <Grid>
 
-                    <DVC:Chart  Name="MyChart" Margin="197,0,-3,92" Background="LightGray" Height="305" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="395">
-                        <DVC:Chart.Series>
-                            <DVC:LineSeries IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}">
+                    <DVC:Chart  Name="MyChart" LegendTitle="Mid"  Margin="197,0,-4,67" Background="LightGray" Height="330" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="395">
+                        <DVC:Chart.Series  >
+                            <DVC:LineSeries  IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}">
 
                             </DVC:LineSeries>
-                            <DVC:ScatterSeries  Margin="-10,-105,-115,28" HorizontalAlignment="Right" Width="390" RenderTransformOrigin="0.344,0.505" Height="300" VerticalAlignment="Bottom"/>
                         </DVC:Chart.Series>
                     </DVC:Chart>
                     <!--<Frame x:Name="frame" BorderThickness="10"  BorderBrush="Black" FontWeight="Bold" Content="Algorithm Details:" Margin="-3,0,392,102"/>-->
@@ -32,13 +31,7 @@
                 <Grid>
 
 
-                    <!--<DVC:Chart  Name="SecChart" Margin="120,0,-3,97" Background="LightGray" Height="300" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="395" Grid.Column="2">
-                        <DVC:Chart.Series>
-                            <DVC:ScatterSeries  Margin="-28,-54,-115,0" HorizontalAlignment="Left" Width="363" Height="232" VerticalAlignment="Bottom">
 
-                            </DVC:ScatterSeries>
-                        </DVC:Chart.Series>
-                    </DVC:Chart>-->
 
                     <Button x:Name="button3" Content="Button" HorizontalAlignment="Left" Height="45" Margin="12,330,0,0" VerticalAlignment="Top" Width="140" Grid.ColumnSpan="3"/>
 
@@ -50,13 +43,14 @@
 
                 </Grid>
             </TabItem>
+           
         </TabControl>
         <Frame x:Name="frame2" BorderThickness="10"  BorderBrush="Black" FontWeight="Bold"  Content="Algorithm Details:"   Margin="-5,25,394,0" Height="280" VerticalAlignment="Top"/>
-        <Label x:Name="label5" Content="{Binding TextName}" HorizontalAlignment="Left" Height="30" Margin="112,35,0,0" VerticalAlignment="Top" Width="70"/>
-        <Label x:Name="label6" Content="{Binding SegSize}" HorizontalAlignment="Left" Height="30" Margin="112,75,0,0" VerticalAlignment="Top" Width="70"/>
-        <Label x:Name="label7" Content="{Binding NGramSize}"  HorizontalAlignment="Left" Height="30" Margin="112,120,0,0" VerticalAlignment="Top" Width="70"/>
-        <Label x:Name="label7_Copy" Content="{Binding Clusters}"  HorizontalAlignment="Left" Height="30" Margin="112,155,0,0" VerticalAlignment="Top" Width="70"/>
-        <Label x:Name="label7_Copy1" Content="{Binding Lang}" HorizontalAlignment="Left" Height="30" Margin="112,200,0,0" VerticalAlignment="Top" Width="70"/>
+        <Label x:Name="label5" Content="{Binding TextName}" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="112,61,0,0" VerticalAlignment="Top" Width="70"/>
+        <Label x:Name="label6" Content="{Binding SegSize}" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="112,100,0,0" VerticalAlignment="Top" Width="70"/>
+        <Label x:Name="label7" Content="{Binding NGramSize}" FontWeight="Bold"  HorizontalAlignment="Left" Height="30" Margin="112,140,0,0" VerticalAlignment="Top" Width="70"/>
+        <Label x:Name="label7_Copy" Content="{Binding Clusters}" FontWeight="Bold"  HorizontalAlignment="Left" Height="30" Margin="112,183,0,0" VerticalAlignment="Top" Width="70"/>
+        <Label x:Name="label7_Copy1" Content="{Binding Lang}" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="112,231,0,0" VerticalAlignment="Top" Width="70"/>
         <Label x:Name="label" Content="Text Name:" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="10,60,0,0" VerticalAlignment="Top" Width="85"/>
         <Label x:Name="label1" Content="Segment Size:" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="10,100,0,0" VerticalAlignment="Top" Width="90"/>
         <Label x:Name="label2" Content="Ngram Size:" HorizontalAlignment="Left" FontWeight="Bold" Height="30" Margin="10,140,0,0" VerticalAlignment="Top" Width="90"/>

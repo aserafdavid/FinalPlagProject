@@ -47,18 +47,14 @@ namespace PlagiarismUI.ViewModels
             set { _Lang = value; }
         }
 
-        private void setAlgorithmInput()
+
+        public ResultwindowViewModel(string clusterNum, string Language, string NGSIZE, string textName, string segSize)
         {
-            saveData sv = new saveData();
-            Clusters=sv.ClustersNum;
-            Lang = sv.Language;
-            NGramSize = sv.NGramSize;
-            TextName = sv.TextName;
-            SegSize = sv.segSize;
-        }
-        public ResultwindowViewModel()
-        {
-            setAlgorithmInput();
+            TextName = textName;
+            SegSize = segSize;
+            NGramSize = NGSIZE;
+            Clusters = clusterNum;
+            Lang = Language;
         }
 
         public ObservableCollection<Data> Items { get; } = new ObservableCollection<Data>();

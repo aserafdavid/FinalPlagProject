@@ -106,12 +106,15 @@ void BackgroundEngine(string argv)
 		path.substr(path.size() - ext.size()) == ext)
 		path = path.substr(0, path.size() - ext.size());
 
+	
 	if (Setinfrastructure(&path))
 	{
+
 		Global_PathToTempFiles = path;
 		CText ct(fileNamePath, StopwordsNamePath, path, Both_Aprroaches, segSize, NgramSize);
+		
 	}
-
+	*CurrStatePtr = FinishLoadingStage;
 
 	cout << "\n\nThe End! \n\n ";
 	getchar();
@@ -123,6 +126,7 @@ void BackgroundEngine(string argv)
 void StatesUpdate(Pipe &Pipe_UpdateUI)
 {
 	char *temp;
+	string t;
 	while (*abortRun != true)//CurrState != FinishLoadingStage && PrevState!= FinishLoadingStage)//*abortRun != true && 
 	{
 		/*Handle out Messages */
@@ -154,13 +158,15 @@ void StatesUpdate(Pipe &Pipe_UpdateUI)
 			case ExamineResult:
 				Pipe_UpdateUI.sendMessageToGraphics("ExamineResult");
 				break;
-			case FinishLoadingStage:
-				Pipe_UpdateUI.sendMessageToGraphics("FinishLoadingStage");
-				temp = new char[path.size()+1];
+			case FinishLoadingStage: {
+				temp = new char[path.size() + 1];
 				strcpy(temp, path.c_str());
-				Pipe_UpdateUI.sendMessageToGraphics(temp);//TODO Add FULL Path to results file
+				Pipe_UpdateUI.sendMessageToGraphics("FinishLoadingStage");
+				Pipe_UpdateUI.sendMessageToGraphics(temp);
+				Pipe_UpdateUI.getMessageFromGraphics();
 				return;
-				break;
+				
+			}break;
 			case CancelRUN:
 				Pipe_UpdateUI.sendMessageToGraphics("CancelRUN");
 				break;
@@ -184,7 +190,6 @@ void StatesUpdate(Pipe &Pipe_UpdateUI)
 
 		}
 	}
-	//Pipe_UpdateUI.close();
 }
 
 static int counter = 0;
@@ -197,7 +202,7 @@ int main(int argc, const char **argv) {
 	int workID;
 	bool isConnect = p.connect();
 	Sleep(3000);//Avoid engine trying to connect bfore App loaded
-	//SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL);
+
 	while (!isConnect)
 	{
 		cout << "trying connect again.." << endl; /* move to Logger*/
@@ -208,7 +213,7 @@ int main(int argc, const char **argv) {
 	char msgToGraphics[1024];
 	string msgFromGraphics = "";
 	char buffer[1024];
-	//std::thread work(BackgroundConnectionManager, argv[0]);
+
 	while (true)
 	{
 
