@@ -3,6 +3,7 @@
 
 #include "Cpipe.h"
 
+void TerminateIfNeeds(void);
 void UpdateStates(pipe_out State);
 
 #endif

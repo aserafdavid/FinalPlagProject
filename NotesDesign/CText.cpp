@@ -20,13 +20,13 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 		RemoveStopWordList();
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		UpdateStates(OmitStopWordsStepFinished);
+		TerminateIfNeeds();
 
 		//*CurrStatePtr = OmitStopWordsStepFinished;
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		DivideTextIntoSegments();
-		//std::this_thread::sleep_for(std::chrono::milliseconds(1));
 		UpdateStates(DevideTextToSegStepFinished);
-		//*CurrStatePtr = DevideTextToSegStepFinished;
+		TerminateIfNeeds();
 
 		//in this step - all Segments NGrams created , mvDictionary is fully updated 
 		// time to build CFM and SP's for each segment by DSeg.BuildSegmentCFM(vector<string>& vDictionary);
@@ -34,7 +34,6 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 		miConcurrentThreadsNumber = std::thread::hardware_concurrency();
 		cout << "hardware_concurrency() = " << miConcurrentThreadsNumber << endl;
 		std::thread* t;
-		//std::thread t[MAXT];
 		if (miConcurrentThreadsNumber >= MAXT)
 		{
 			t= new std::thread[MAXT];
@@ -72,14 +71,18 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 			//*CurrStatePtr = BuildVocStepFinished;
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			UpdateStates(ExtractNgramsStepFinished);
+			TerminateIfNeeds();
+
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			UpdateStates(BuildVocStepFinished);
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			UpdateStates(BuldCFMsStepFinished);
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			UpdateStates(BuildSPsStepFinished);
+			TerminateIfNeeds();
 
 			CompleteDsProcess();
+			TerminateIfNeeds();
 		}
 		else if (CL_Aprroach == meAprroach)
 		{
@@ -93,6 +96,7 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 				t[i].join();
 			}
 			CompleteClProcess();
+			TerminateIfNeeds();
 		}
 		if (Both_Aprroaches == meAprroach)
 		{
@@ -105,6 +109,7 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 				mvClSegments.push_back(make_shared<CClusteredSegment>(ClSeg));
 			}
 			CompleteClProcess();
+			TerminateIfNeeds();
 		}
 
 		
@@ -121,6 +126,7 @@ void CText::BuildSegmentCFMandSPThreadDS()
 	for (int i = miInitForThreads++ ; i < mvDsSegments.size(); i += miConcurrentThreadsNumber)
 	{
 		mvDsSegments[i]->BuildSegmentCFMandSP(mvDictionary);
+		TerminateIfNeeds();
 	}
 }
 
@@ -315,6 +321,7 @@ void CText::CompleteDsProcess(void)
 			mvDsSegments[i]->CalcTransitionMatrix(mvDsSegments[i + 1]->GetSegmentSPfileName());
 		}
 		UpdateStates(BuildQsStepFinished);
+		TerminateIfNeeds();
 
 		//in this step - all TM's created 
 		// time to build TM(Transition Matrix) for each segment except the last 
@@ -324,6 +331,7 @@ void CText::CompleteDsProcess(void)
 			BuildTmeas();
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		UpdateStates(CalcAQMeasureStepFinished);
+		TerminateIfNeeds();
 
 
 		//in this step - Tmeas created
@@ -332,10 +340,12 @@ void CText::CompleteDsProcess(void)
 		SetApproximationErrorBetweenSegments();
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		UpdateStates(CalcApproxMeasStepFinished);
+		TerminateIfNeeds();
 
 		CreateResultsFileForDS();
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		UpdateStates(ExamineResult);
+		TerminateIfNeeds();
 
 		// print Aproximation Errors
 		cout << "Aproximation Errors by Segments:\n";
@@ -374,6 +384,8 @@ void CText::CompleteClProcess(void)
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		UpdateStates(EvmCreationFinished);
+		TerminateIfNeeds();
+
 		//in this step - EVM created.
 		// time to call to Kmeas algorithm with EVM and CL_num as parameters and save all the clustering results.
 		// CL_num - const number - 2..9
@@ -383,10 +395,13 @@ void CText::CompleteClProcess(void)
 		CAlgorithms::FindBestClusterization(mEVM, BestClustersMap, miClusterNumberRequested);
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		UpdateStates(ClusterizationFinished);
+		TerminateIfNeeds();
 
 		CreateResultsFileForCL(BestClustersMap);
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		UpdateStates(ExamineCLResult);
+		TerminateIfNeeds();
+
 		//print BestClustersMap
 		cout << endl << "Number of clusters for Best Clusterization: " << BestClustersMap.first << endl;
 		for (map<int,int>::iterator it = BestClustersMap.second.begin(); it != BestClustersMap.second.end(); ++it)

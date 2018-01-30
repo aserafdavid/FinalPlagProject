@@ -38,6 +38,7 @@
     <ClInclude Include="..\NotesDesign\CSegment.h" />
     <ClInclude Include="..\NotesDesign\CText.h" />
     <ClInclude Include="..\NotesDesign\Logger.h" />
+    <ClInclude Include="..\NotesDesign\main.h" />
     <ClInclude Include="..\NotesDesign\Utilities.h" />
   </ItemGroup>
   <ItemGroup>

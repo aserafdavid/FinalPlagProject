@@ -22,11 +22,6 @@ volatile bool* abortRun = &AbortRunner;
 string fileNamePath, StopwordsNamePath;
 int segSize, NgramSize;
 
-
-static pipe_out CurrState = Initialize;
-volatile pipe_out* CurrStatePtr = &CurrState;
-static pipe_out PrevState = Initialize;
-
 static std::map<std::string, pipe_in> s_mapInPipeValues;
 static std::map<std::string, pipe_out> s_mapOutPipeValues;
 
@@ -62,9 +57,16 @@ void InithashPipe()
 	s_mapOutPipeValues["ExamineCLResult"] = ExamineCLResult;
 
 }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-                                                                                                                                          
-//TODO : add volatile var to tell background worker to stop work and 
+void TerminateIfNeeds(void)
+{
+	if (*abortRun == true)/*Should be implanted in algorithm code*/
+	{
+		printf("Worker aborted\n");
+		HANDLE t = GetCurrentThread();
+		TerminateThread(t, 0);
+	}
+}
+
 void BackgroundEngine(string argv)
 {
 	////SetThreadPriority(GetCurrentThread(), HIGH_PRIORITY_CLASS);//set high priority to the thread                          //printf("threadstart\n");
@@ -85,12 +87,6 @@ void BackgroundEngine(string argv)
 	//		//	*CurrStatePtr = FinishLoadingStage;
 	//		//cout << changeState;
 	//		
-	//	}
-	//	if (*abortRun == true)/*Should be implanted in algorithm code*/
-	//	{
-	//		printf("Worker aborted\n");
-	//		HANDLE t = GetCurrentThread();
-	//		TerminateThread(t, 0);
 	//	}
 	//};
 	path = argv;
@@ -121,7 +117,6 @@ void UpdateStates(pipe_out State)
 {
 	char *temp;
 
-	//CurrState != FinishLoadingStage && PrevState!= FinishLoadingStage)//*abortRun != true && 
 	if (*abortRun != true)
 	{
 		switch (State)
@@ -172,15 +167,6 @@ void UpdateStates(pipe_out State)
 			Pipe_UpdateUI.sendMessageToGraphics("ExamineCLResult");
 			break;
 
-
-		//case FinishLoadingStage:
-		//	Pipe_UpdateUI.sendMessageToGraphics("FinishLoadingStage");
-		//	temp = new char[path.size() + 1];
-		//	strcpy(temp, path.c_str());
-		//	Pipe_UpdateUI.sendMessageToGraphics(temp);//TODO Add FULL Path to results file
-		//	return;
-		//	break;
-
 		case FinishLoadingStage:
 		{
 			temp = new char[path.size() + 1];
@@ -198,14 +184,14 @@ void UpdateStates(pipe_out State)
 			break;
 		}
 
-		if (*abortRun == true)/*Should be implanted in algorithm code*/
-		{
+	if (*abortRun == true)/*Should be implanted in algorithm code*/
+	{
 
-			printf("StatesUpdate  aborted\n");
-			return;
+		printf("StatesUpdate  aborted\n");
+		return;
 
-		}
 	}
+  }
 }
 
 int main(int argc, const char **argv) {
@@ -266,10 +252,6 @@ int main(int argc, const char **argv) {
 					}
 				
 				thread *t = new std::thread(BackgroundEngine, argv[0]);
-
-
-
-				//std::thread States(StatesUpdate, Pipe_UpdateUI);
 
 				while (isOnLoadingStage)
 				{
