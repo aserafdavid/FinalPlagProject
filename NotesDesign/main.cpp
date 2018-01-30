@@ -68,7 +68,7 @@ void BackgroundEngine(string argv)
 {
 
 	////SetThreadPriority(GetCurrentThread(), HIGH_PRIORITY_CLASS);//set high priority to the thread
-	                                                                                                                                 
+	                                                                                                                         
 	//printf("threadstart\n");
 	//static unsigned int count = 0;                                  
 	//static unsigned int changeState = 0;
@@ -82,7 +82,6 @@ void BackgroundEngine(string argv)
 	//		*CurrStatePtr = OmitStopWordsStepFinished;
 	//		if(count ==22)
 	//			*CurrStatePtr = FinishLoadingStage;
-
 	//		//changeState++;
 	//		//*CurrStatePtr = static_cast<pipe_out>(changeState);
 	//		//if (count == 30)
@@ -109,6 +108,7 @@ void BackgroundEngine(string argv)
 	if (Setinfrastructure(&path))
 	{
 		Global_PathToTempFiles = path;
+		CLogger::SetLogPath(path);
 		CText ct(fileNamePath, StopwordsNamePath, path, Both_Aprroaches, segSize, NgramSize);
 	}
 
@@ -223,7 +223,7 @@ int main(int argc, const char **argv) {
 			{
 				*abortRun = false;
 				isOnLoadingStage = true;
-				LOGGER->GetLogger()->Log("STARTWORK Message from app");
+				//LOGGER->GetLogger()->Log("STARTWORK Message from app");
 				p.close();
 
 				
@@ -264,7 +264,7 @@ int main(int argc, const char **argv) {
 						case CANCELRUN:
 							*abortRun = true;
 							CurrState = CancelRUN;
-							LOGGER->GetLogger()->Log("CANCELRUN Message from app");
+							//LOGGER->GetLogger()->Log("CANCELRUN Message from app");
 							L.sendMessageToGraphics("ACCEPTED");
 							isOnLoadingStage = false;
 							L.close();
@@ -284,7 +284,7 @@ int main(int argc, const char **argv) {
 						case QUIT:
 							*abortRun = true;
 							isOnLoadingStage = false;
-							LOGGER->GetLogger()->Log("QUIT Message from app");
+							//LOGGER->GetLogger()->Log("QUIT Message from app");
 							L.sendMessageToGraphics("ACCEPTED");
 							exit(1);
 							break;
@@ -301,28 +301,28 @@ int main(int argc, const char **argv) {
 
 			case EXAMINEPATHFILE:
 				StopwordsNamePath = p.getMessageFromGraphics();
-				LOGGER->GetLogger()->Log("EXAMINEPATHFILE Message from app");
+				//LOGGER->GetLogger()->Log("EXAMINEPATHFILE Message from app");
 				break;
 
 			case EXAMINESTOPWORDFILE:
 				
 				fileNamePath = p.getMessageFromGraphics();
-				LOGGER->GetLogger()->Log("EXAMINESTOPWORDFILE Message from app");
+				//LOGGER->GetLogger()->Log("EXAMINESTOPWORDFILE Message from app");
 				break;
 
 			case NGRAMSIZE:
 				NgramSize = stoi(p.getMessageFromGraphics().c_str());
-				LOGGER->GetLogger()->Log("NGRAMSIZE Message from app");
+				//LOGGER->GetLogger()->Log("NGRAMSIZE Message from app");
 				break;
 
 			case SEGMENTSIZE:
 				segSize = stoi(p.getMessageFromGraphics().c_str());
-				LOGGER->GetLogger()->Log("SEGMENTSIZE Message from app");
+				//LOGGER->GetLogger()->Log("SEGMENTSIZE Message from app");
 				break;
 
 			case QUIT:
 
-				LOGGER->GetLogger()->Log("QUIT Message from app");
+				//LOGGER->GetLogger()->Log("QUIT Message from app");
 				exit(1);
 				break;
 
@@ -363,17 +363,4 @@ int main(int argc, const char **argv) {
 	//	//CText ct("Bildschirmtext1.txt", "StopWords.txt", path, DS_Aprroach);
 	//	//CText ct("Bildschirmtext1.txt", "StopWords.txt", path, CL_Aprroach);
 	//	CText ct("Bildschirmtext1.txt", "StopWords.txt", path, Both_Aprroaches);
-
-
-	//	cout << "Aproximation Errors by Segments:\n";
-	//	map<int, double> ApproximationErrorMap = ct.GetSegmentsApproximationErrorMap();
-	//	for (std::map<int, double>::iterator it = ApproximationErrorMap.begin(); it != ApproximationErrorMap.end(); ++it)
-	//		cout << it->first << " => " << it->second << '\n';
-	//}
-
-
-	//cout << "\n\nThe End! \n\n ";
-	//getchar();
-	//return 0;
-
 }

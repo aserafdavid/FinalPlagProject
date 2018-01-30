@@ -48,9 +48,9 @@ namespace PlagiarismUI
         public MainShellView()
         {
             ////for debug
-            ResultsWindow rw = new ResultsWindow(this);
-            this.Hide();
-            rw.ShowDialog();
+            //ResultsWindow rw = new ResultsWindow(this);
+            //this.Hide();
+            //rw.ShowDialog();
 
 
             //for debug
