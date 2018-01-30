@@ -33,47 +33,115 @@ namespace PlagiarismUI.ViewModels
                         //ShowResults = true;
                         //return;
                         break;
-
                     case "DevideTextToSegStepFinished":
+                        OmitStopWordsStepFinished = Brushes.Blue;
                         DevideTextToSegStepFinished = Brushes.Blue;
                         break;
-
                     case "ExtractNgramsStepFinished":
+                        OmitStopWordsStepFinished = Brushes.Blue;
+                        DevideTextToSegStepFinished = Brushes.Blue;
                         ExtractNgramsStepFinished = Brushes.Blue;
                         break;
-
                     case "BuildVocStepFinished":
+                        OmitStopWordsStepFinished = Brushes.Blue;
+                        DevideTextToSegStepFinished = Brushes.Blue;
+                        ExtractNgramsStepFinished = Brushes.Blue;
                         BuildVocStepFinished = Brushes.Blue;
                         break;
-
                     case "BuldCFMsStepFinished":
+                        OmitStopWordsStepFinished = Brushes.Blue;
+                        DevideTextToSegStepFinished = Brushes.Blue;
+                        ExtractNgramsStepFinished = Brushes.Blue;
+                        BuildVocStepFinished = Brushes.Blue;
                         BuldCFMsStepFinished = Brushes.Blue;
                         break;
-
                     case "BuildSPsStepFinished":
+                        OmitStopWordsStepFinished = Brushes.Blue;
+                        DevideTextToSegStepFinished = Brushes.Blue;
+                        ExtractNgramsStepFinished = Brushes.Blue;
+                        BuildVocStepFinished = Brushes.Blue;
+                        BuldCFMsStepFinished = Brushes.Blue;
                         BuildSPsStepFinished = Brushes.Blue;
                         break;
 
+
                     case "BuildQsStepFinished":
+                        OmitStopWordsStepFinished = Brushes.Blue;
+                        DevideTextToSegStepFinished = Brushes.Blue;
+                        ExtractNgramsStepFinished = Brushes.Blue;
+                        BuildVocStepFinished = Brushes.Blue;
+                        BuldCFMsStepFinished = Brushes.Blue;
+                        BuildSPsStepFinished = Brushes.Blue;
                         BuildQsStepFinished = Brushes.Blue;
                         break;
-
                     case "CalcAQMeasureStepFinished":
+                        OmitStopWordsStepFinished = Brushes.Blue;
+                        DevideTextToSegStepFinished = Brushes.Blue;
+                        ExtractNgramsStepFinished = Brushes.Blue;
+                        BuildVocStepFinished = Brushes.Blue;
+                        BuldCFMsStepFinished = Brushes.Blue;
+                        BuildSPsStepFinished = Brushes.Blue;
+                        BuildQsStepFinished = Brushes.Blue;
                         CalcAQMeasureStepFinished = Brushes.Blue;
                         break;
-
                     case "CalcApproxMeasStepFinished":
+                        OmitStopWordsStepFinished = Brushes.Blue;
+                        DevideTextToSegStepFinished = Brushes.Blue;
+                        ExtractNgramsStepFinished = Brushes.Blue;
+                        BuildVocStepFinished = Brushes.Blue;
+                        BuldCFMsStepFinished = Brushes.Blue;
+                        BuildSPsStepFinished = Brushes.Blue;
+                        BuildQsStepFinished = Brushes.Blue;
+                        CalcAQMeasureStepFinished = Brushes.Blue;
                         CalcApproxMeasStepFinished = Brushes.Blue;
                         break;
-
                     case "ExamineResult":
+                        OmitStopWordsStepFinished = Brushes.Blue;
+                        DevideTextToSegStepFinished = Brushes.Blue;
+                        ExtractNgramsStepFinished = Brushes.Blue;
+                        BuildVocStepFinished = Brushes.Blue;
+                        BuldCFMsStepFinished = Brushes.Blue;
+                        BuildSPsStepFinished = Brushes.Blue;
+                        BuildQsStepFinished = Brushes.Blue;
+                        CalcAQMeasureStepFinished = Brushes.Blue;
+                        CalcApproxMeasStepFinished = Brushes.Blue;
                         ExamineResult = Brushes.Blue;
+                        break;
+
+
+                    case "EvmCreationFinished":
+                        OmitStopWordsStepFinished = Brushes.Blue;
+                        DevideTextToSegStepFinished = Brushes.Blue;
+                        ExtractNgramsStepFinished = Brushes.Blue;
+                        BuildVocStepFinished = Brushes.Blue;
+                        BuldCFMsStepFinished = Brushes.Blue;
+                        BuildSPsStepFinished = Brushes.Blue;
+                        EvmCreationFinished = Brushes.Blue;
+                        break;
+                    case "ClusterizationFinished":
+                        OmitStopWordsStepFinished = Brushes.Blue;
+                        DevideTextToSegStepFinished = Brushes.Blue;
+                        ExtractNgramsStepFinished = Brushes.Blue;
+                        BuildVocStepFinished = Brushes.Blue;
+                        BuldCFMsStepFinished = Brushes.Blue;
+                        BuildSPsStepFinished = Brushes.Blue;
+                        EvmCreationFinished = Brushes.Blue;
+                        ClusterizationFinished = Brushes.Blue;
+                        break;
+                    case "ExamineCLResult":
+                        OmitStopWordsStepFinished = Brushes.Blue;
+                        DevideTextToSegStepFinished = Brushes.Blue;
+                        ExtractNgramsStepFinished = Brushes.Blue;
+                        BuildVocStepFinished = Brushes.Blue;
+                        BuldCFMsStepFinished = Brushes.Blue;
+                        BuildSPsStepFinished = Brushes.Blue;
+                        EvmCreationFinished = Brushes.Blue;
+                        ClusterizationFinished = Brushes.Blue;
+                        ExamineCLResult = Brushes.Blue;
                         break;
 
                     case "FinishLoadingStage":                        
                         return;
-
-
                     case "CancelRUN":                        
                         break;
 
@@ -96,15 +164,20 @@ namespace PlagiarismUI.ViewModels
         }
 
         private Brush _OmitStopWordsStepFinished = Brushes.White;
-        private Brush _BuldCFMsStepFinished = Brushes.White;
-        private Brush _ExtractNgramsStepFinished = Brushes.White;
-        private Brush _ExamineResult = Brushes.White;
         private Brush _DevideTextToSegStepFinished = Brushes.White;
-        private Brush _CalcApproxMeasStepFinished = Brushes.White;
+        private Brush _ExtractNgramsStepFinished = Brushes.White;
+        private Brush _BuildVocStepFinished = Brushes.White;
+        private Brush _BuldCFMsStepFinished = Brushes.White;
         private Brush _BuildSPsStepFinished = Brushes.White;
+
         private Brush _BuildQsStepFinished = Brushes.White;
         private Brush _CalcAQMeasureStepFinished = Brushes.White;
-        private Brush _BuildVocStepFinished = Brushes.White;
+        private Brush _CalcApproxMeasStepFinished = Brushes.White;
+        private Brush _ExamineResult = Brushes.White;
+
+        private Brush _EvmCreationFinished = Brushes.White;
+        private Brush _ClusterizationFinished = Brushes.White;
+        private Brush _ExamineCLResult = Brushes.White;
 
         private bool _ShowResults = false;
 
@@ -117,6 +190,42 @@ namespace PlagiarismUI.ViewModels
             set { _ShowResults = value; RaisePropertyChanged("ShowResults"); }
         }
 
+        public Brush EvmCreationFinished
+        {
+            get
+            {
+                return _EvmCreationFinished;
+            }
+            set
+            {
+                _EvmCreationFinished = value;
+                RaisePropertyChanged("EvmCreationFinished");
+            }
+        }
+        public Brush ClusterizationFinished
+        {
+            get
+            {
+                return _ClusterizationFinished;
+            }
+            set
+            {
+                _ClusterizationFinished = value;
+                RaisePropertyChanged("ClusterizationFinished");
+            }
+        }
+        public Brush ExamineCLResult
+        {
+            get
+            {
+                return _ExamineCLResult;
+            }
+            set
+            {
+                _ExamineCLResult = value;
+                RaisePropertyChanged("ExamineCLResult");
+            }
+        }
         public Brush OmitStopWordsStepFinished
         {
             get

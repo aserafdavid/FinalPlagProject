@@ -44,8 +44,6 @@ void InithashPipe()
 	s_mapInPipeValues["QUIT"] = QUIT;
 	s_mapInPipeValues["CANCELRUN"] = CANCELRUN;
 
-
-
 	s_mapOutPipeValues["Initialize"] = Initialize;
 	s_mapOutPipeValues["OmitStopWordsStepFinished"] = OmitStopWordsStepFinished;
 	s_mapOutPipeValues["BuldCFMsStepFinished"] = BuldCFMsStepFinished;
@@ -58,6 +56,11 @@ void InithashPipe()
 	s_mapOutPipeValues["BuildQsStepFinished"] = BuildQsStepFinished;
 	s_mapOutPipeValues["BuildSPsStepFinished"] = BuildSPsStepFinished;
 	s_mapOutPipeValues["FinishLoadingStage"] = FinishLoadingStage;
+
+	s_mapOutPipeValues["EvmCreationFinished"] = EvmCreationFinished;
+	s_mapOutPipeValues["ClusterizationFinished"] = ClusterizationFinished;
+	s_mapOutPipeValues["ExamineCLResult"] = ExamineCLResult;
+
 }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
                                                                                                                                           
@@ -213,6 +216,8 @@ void UpdateStates(pipe_out State)
 		case BuildSPsStepFinished:
 			Pipe_UpdateUI.sendMessageToGraphics("BuildSPsStepFinished");
 			break;
+
+
 		case BuildQsStepFinished:
 			Pipe_UpdateUI.sendMessageToGraphics("BuildQsStepFinished");
 			break;
@@ -225,6 +230,19 @@ void UpdateStates(pipe_out State)
 		case ExamineResult:
 			Pipe_UpdateUI.sendMessageToGraphics("ExamineResult");
 			break;
+
+
+		case EvmCreationFinished:
+			Pipe_UpdateUI.sendMessageToGraphics("EvmCreationFinished");
+			break;
+		case ClusterizationFinished:
+			Pipe_UpdateUI.sendMessageToGraphics("ClusterizationFinished");
+			break;
+		case ExamineCLResult:
+			Pipe_UpdateUI.sendMessageToGraphics("ExamineCLResult");
+			break;
+
+
 		case FinishLoadingStage:
 			Pipe_UpdateUI.sendMessageToGraphics("FinishLoadingStage");
 			temp = new char[path.size() + 1];

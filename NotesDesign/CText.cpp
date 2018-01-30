@@ -322,7 +322,7 @@ void CText::CompleteDsProcess(void)
 		//checkinh mvSegments.size() > 2 - for verify there is any TM between 2 segments
 		if (mvDsSegments.size() > 2)
 			BuildTmeas();
-		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		UpdateStates(CalcAQMeasureStepFinished);
 
 
@@ -372,6 +372,8 @@ void CText::CompleteClProcess(void)
 		}
 		CLogger::GetLogger()->Log("EVM created successfully.");
 
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		UpdateStates(EvmCreationFinished);
 		//in this step - EVM created.
 		// time to call to Kmeas algorithm with EVM and CL_num as parameters and save all the clustering results.
 		// CL_num - const number - 2..9
@@ -379,8 +381,12 @@ void CText::CompleteClProcess(void)
 		// implement by CAlgorithms::FindBestClusterization, result save in mat means.
 		pair<int ,map<int, int> > BestClustersMap;
 		CAlgorithms::FindBestClusterization(mEVM, BestClustersMap, miClusterNumberRequested);
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		UpdateStates(ClusterizationFinished);
 
 		CreateResultsFileForCL(BestClustersMap);
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		UpdateStates(ExamineCLResult);
 		//print BestClustersMap
 		cout << endl << "Number of clusters for Best Clusterization: " << BestClustersMap.first << endl;
 		for (map<int,int>::iterator it = BestClustersMap.second.begin(); it != BestClustersMap.second.end(); ++it)

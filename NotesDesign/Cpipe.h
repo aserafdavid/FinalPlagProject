@@ -32,10 +32,16 @@ enum pipe_out {
 	, BuildVocStepFinished
 	, BuldCFMsStepFinished
 	, BuildSPsStepFinished
+
 	, BuildQsStepFinished
 	, CalcAQMeasureStepFinished
 	, CalcApproxMeasStepFinished
 	, ExamineResult
+
+	, EvmCreationFinished
+	, ClusterizationFinished
+	, ExamineCLResult
+
 	, FinishLoadingStage
 	, CancelRUN
 };
