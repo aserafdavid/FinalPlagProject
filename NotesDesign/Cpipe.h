@@ -21,7 +21,8 @@ enum pipe_in {  /*messages from the UI*/
 	, STARTWORK
 	, QUIT
 	, CANCELRUN
-
+	, CHOSENRUN
+	, PREFEREDCLUSTERSNUMBER
 };
 
 enum pipe_out {

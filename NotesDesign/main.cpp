@@ -20,7 +20,8 @@ static string path;
 static bool AbortRunner = false;
 volatile bool* abortRun = &AbortRunner;
 string fileNamePath, StopwordsNamePath;
-int segSize, NgramSize;
+int segSize, NgramSize, PreferedClustersNumber;
+AprroachModel ChosenAprroachModel;
 
 static std::map<std::string, pipe_in> s_mapInPipeValues;
 static std::map<std::string, pipe_out> s_mapOutPipeValues;
@@ -38,6 +39,8 @@ void InithashPipe()
 	s_mapInPipeValues["SEGMENTSIZE"] = SEGMENTSIZE;
 	s_mapInPipeValues["QUIT"] = QUIT;
 	s_mapInPipeValues["CANCELRUN"] = CANCELRUN;
+	s_mapInPipeValues["CHOSENRUN"] = CHOSENRUN;
+	s_mapInPipeValues["PREFEREDCLUSTERSNUMBER"] = PREFEREDCLUSTERSNUMBER;
 
 	s_mapOutPipeValues["Initialize"] = Initialize;
 	s_mapOutPipeValues["OmitStopWordsStepFinished"] = OmitStopWordsStepFinished;
@@ -99,11 +102,9 @@ void BackgroundEngine(string argv)
 	
 	if (Setinfrastructure(&path))
 	{
-
 		Global_PathToTempFiles = path;
 		CLogger::SetLogPath(path);
-		CText ct(fileNamePath, StopwordsNamePath, path, Both_Aprroaches, segSize, NgramSize);
-		
+		CText ct(fileNamePath, StopwordsNamePath, path, ChosenAprroachModel, segSize, NgramSize, PreferedClustersNumber);
 	}
 	UpdateStates(FinishLoadingStage);
 
@@ -322,6 +323,28 @@ int main(int argc, const char **argv) {
 				segSize = stoi(p.getMessageFromGraphics().c_str());
 				//LOGGER->GetLogger()->Log("SEGMENTSIZE Message from app");
 				break;
+
+			case CHOSENRUN:
+				{
+				string ChosenRunStr = p.getMessageFromGraphics();
+				if (ChosenRunStr == "Dynamical")
+					ChosenAprroachModel = DS_Aprroach;
+				else if (ChosenRunStr == "Clustered")
+					ChosenAprroachModel = CL_Aprroach;
+				else 
+					ChosenAprroachModel = Both_Aprroaches;
+				break;
+				}
+
+			case PREFEREDCLUSTERSNUMBER:
+			{
+				string PreferedClusteresNumberStr = p.getMessageFromGraphics();
+				if (PreferedClusteresNumberStr == "Examine in algorithm")
+					PreferedClustersNumber = 0;
+				else 
+					PreferedClustersNumber = stoi(PreferedClusteresNumberStr.c_str());
+				break;
+			}
 
 			case QUIT:
 

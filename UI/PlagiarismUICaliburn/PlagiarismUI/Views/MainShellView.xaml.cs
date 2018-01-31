@@ -52,6 +52,10 @@ namespace PlagiarismUI
                 enginePipe.sendEngineMove(DC.PathToMainInputFile);
                 enginePipe.sendEngineMove("EXAMINEPATHFILE");
                 enginePipe.sendEngineMove(DC.PathToStopWordsFile);
+                enginePipe.sendEngineMove("CHOSENRUN");
+                enginePipe.sendEngineMove(DC.ChoosenRun.ToString());
+                enginePipe.sendEngineMove("PREFEREDCLUSTERSNUMBER");
+                enginePipe.sendEngineMove(DC.ChoosenClustersNumber.ToString());
                 enginePipe.sendEngineMove("STARTWORK");
                 //
                 return true;

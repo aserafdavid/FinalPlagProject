@@ -21,6 +21,8 @@ namespace PlagiarismUI
         private string _PathToStopWordsFile = "No File Choosen";
         private ObservableCollection<string> _RunSelection = new ObservableCollection<string> { "BOTH", "Clustered","Dynamical"};
         private string _ChoosenRun = "Dynamical";
+        private ObservableCollection<string> _PreferedClustersNumberSelection = new ObservableCollection<string> { "Examine in algorithm", "2", "3", "4", "5", "6", "7", "8", "9"};
+        private string _ChoosenClustersNumber = "Examine in algorithm";
         private int _StopWordsListChecked=3;
         private int _NgramSize = 3;
         private int _SegmentSize = 40;
@@ -28,7 +30,8 @@ namespace PlagiarismUI
         private bool _SegmentSizeError = false; 
         private bool _NgramSizeError = false; 
         private bool _NgramGreaterThanSegmentError = false; 
-        private bool _StopWordsEnabledCheckBoxChecked = true; 
+        private bool _StopWordsEnabledCheckBoxChecked = true;
+        private bool _ClusteredOrBothRunChecked = false;
 
 
         #endregion
@@ -171,9 +174,33 @@ namespace PlagiarismUI
         public string ChoosenRun
         {
             get { return _ChoosenRun; }
-            set { _ChoosenRun = value; }
+            set {
+                    _ChoosenRun = value;
+                    if (value == "Clustered" || value == "BOTH")
+                    {
+                        ClusteredOrBothRunChecked = true;
+                    }
+                    else
+                    {
+                        ClusteredOrBothRunChecked = false;
+                    }
+                }
+        }
+        public string ChoosenClustersNumber
+        {
+            get { return _ChoosenClustersNumber; }
+            set { _ChoosenClustersNumber = value; }
         }
 
+        public bool ClusteredOrBothRunChecked
+        {
+            get { return _ClusteredOrBothRunChecked; }
+            set
+            {
+                _ClusteredOrBothRunChecked = value;
+                RaisePropertyChanged("ClusteredOrBothRunChecked");
+            }
+        }
         public ObservableCollection<string> RunSelection
         {
             get
@@ -181,6 +208,14 @@ namespace PlagiarismUI
                 return _RunSelection;
             }
         }
+        public ObservableCollection<string> PreferedClustersNumberSelection
+        {
+            get
+            {
+                return _PreferedClustersNumberSelection;
+            }
+        }
+        
         public string PathToStopWordsFile
         {
             get { return _PathToStopWordsFile; }

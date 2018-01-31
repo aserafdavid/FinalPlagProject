@@ -102,5 +102,7 @@
           Visibility="{Binding Path=NgramSizeError, Converter={StaticResource BoolToVisConverter} }"/>
         <Label x:Name="PathToMainFile_Copy2" Content="Invalid! Ngram size must be less than Segment Size." Foreground="red"   HorizontalAlignment="Left" Height="29" Margin="233,117,0,0" VerticalAlignment="Top" Width="295" RenderTransformOrigin="0.476,0.2"
           Visibility="{Binding Path=NgramGreaterThanSegmentError, Converter={StaticResource BoolToVisConverter} }"/>
+        <Label x:Name="LoadTextLabl_Copy1" Content="Prefered Clusters Number:"  HorizontalAlignment="Left" Height="35" Margin="24,366,0,0" VerticalAlignment="Top" Width="150" Visibility="{Binding Path=ClusteredOrBothRunChecked, Converter={StaticResource BoolToVisConverter} }"/>
+        <ComboBox x:Name="expander_Copy" ItemsSource="{Binding PreferedClustersNumberSelection}" SelectedItem ="{Binding ChoosenClustersNumber}"  HorizontalAlignment="Left" Height="25" Margin="174,368,0,0" VerticalAlignment="Top" Width="147" RenderTransformOrigin="0.81,0.143" Visibility="{Binding Path=ClusteredOrBothRunChecked, Converter={StaticResource BoolToVisConverter} }"/>
     </Grid>
 </Window>

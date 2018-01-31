@@ -153,7 +153,6 @@ namespace PlagiarismUI.ViewModels
                             ConnectionManager.GetUIenginePipe().sendEngineMove("ACCEPTED");
                             //TODODAVID ResultPath
                             ResultPath = ResPath;
-                            ExamineResult = Brushes.Blue;
                             ShowResults = true;
                             return;
                         }
