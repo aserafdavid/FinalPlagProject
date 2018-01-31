@@ -20,7 +20,6 @@ namespace PlagiarismUI.ViewModels
        private string _SegSize;
        private string _NGramSize;
        private string _Clusters;
-       private string _Lang;
         public string TextName
         {
             get { return _TextName; }
@@ -41,20 +40,12 @@ namespace PlagiarismUI.ViewModels
             get { return _Clusters; }
             set { _Clusters = value; }
         }
-        public string Lang
-        {
-            get { return _Lang; }
-            set { _Lang = value; }
-        }
-
-
-        public ResultwindowViewModel(string clusterNum, string Language, string NGSIZE, string textName, string segSize)
+        public ResultwindowViewModel(string clusterNum, string NGSIZE, string textName, string segSize)
         {
             TextName = textName;
             SegSize = segSize;
             NGramSize = NGSIZE;
             Clusters = clusterNum;
-            Lang = Language;
         }
 
         public ObservableCollection<Data> Items { get; } = new ObservableCollection<Data>();

@@ -6,69 +6,101 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlagiarismUI"
         mc:Ignorable="d"
-        Title="MainShellView" Height="400" Width="600"
-        Closing="OnWindowClosing">
+        Title="MainShellView" Height="450" Width="600"
+        Closing="OnWindowClosing" 
+        ResizeMode="NoResize">
     <Window.DataContext>
         <local:MainShellViewModel></local:MainShellViewModel>
 
     </Window.DataContext>
     <Window.Resources>
         <local:RadioBoolToIntConverter x:Key="radioBoolToIntConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+        <local:MultiBooleanToVisibilityConverter x:Key="Converter" />
     </Window.Resources>
 
     <Grid Background="DarkGray" >
 
         <!--<Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="120" Margin="15,15,0,0" VerticalAlignment="Top" Width="555">-->
-        <Image x:Name="infoImage" Source ="/Images/infoIcon.png" HorizontalAlignment="Left" Height="62" Margin="483,34,-7,0" VerticalAlignment="Top" Width="77" RenderTransformOrigin="0.519,0.919">
+        <Image x:Name="infoImage" Source ="/Images/infoIcon.png" HorizontalAlignment="Left" Height="62" Margin="486,22,0,0" VerticalAlignment="Top" Width="77" RenderTransformOrigin="0.519,0.919">
             <Image.ToolTip>
                 <ToolTip  ContentStringFormat ="This Application using math for analyze your text/article and trying to find Plagiarism"></ToolTip>
             </Image.ToolTip>
         </Image>
         <!--</Border>-->
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="120" Margin="5,175,0,0" VerticalAlignment="Top" Width="465">
-            <ComboBox x:Name="comboBox"  ItemsSource="{Binding LanguageSelection}" SelectedItem ="{Binding ChoosenLanguage}" HorizontalAlignment="Left" Height="25" Margin="164,4,0,0" VerticalAlignment="Top" Width="120"/>
-
-        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="115" Margin="10,214,0,0" VerticalAlignment="Top" Width="465" IsEnabled="{Binding ElementName=chkEnableSW, Path=IsChecked}"/>
 
 
         <Label x:Name="LoadTextLabl" FontWeight="Bold" Content="Examination Text File:"  HorizontalAlignment="Left" Height="35" Margin="15,20,0,0" VerticalAlignment="Top" Width="145"/>
-        <Button x:Name="FileBrowse" Content="Browse " HorizontalAlignment="Left" Height="25" Margin="165,20,0,0" VerticalAlignment="Top" Width="95" Click="BrowseFileClicked" >
+        <Button x:Name="FileBrowse" Content="Browse " HorizontalAlignment="Left" Height="25" Margin="150,22,0,0" VerticalAlignment="Top" Width="95" Click="BrowseFileClicked" >
             <Button.ToolTip>
                 <ToolTip>
                     <TextBlock>You must upload a file in a .txt format.</TextBlock>
                 </ToolTip>
             </Button.ToolTip>
         </Button>
-        <Label x:Name="PathToMainFile" Content="{Binding PathToMainInputFile}" Foreground="red"   HorizontalAlignment="Left" Height="25" Margin="260,20,0,0" VerticalAlignment="Top" Width="300" RenderTransformOrigin="0.476,0.2"/>
-        <Label x:Name="SegSizeLabel" Content="Segment Size"  FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="20,50,0,0" VerticalAlignment="Top" Width="115"/>
+        <Label x:Name="PathToMainFile" Content="{Binding PathToMainInputFile}" Foreground="red"   HorizontalAlignment="Left" Height="25" Margin="16,46,0,0" VerticalAlignment="Top" Width="459" RenderTransformOrigin="0.476,0.2"/>
+        <Label x:Name="SegSizeLabel" Content="Segment Size"  FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="15,72,0,0" VerticalAlignment="Top" Width="115"/>
 
-        <Label x:Name="NgramSizeLabel" Content="Ngram Size" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="15,85,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="NgramSizeLabel" Content="Ngram Size" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="14,113,0,0" VerticalAlignment="Top" Width="120"/>
 
-        <TextBox x:Name="SegSizeInput" PreviewTextInput="NumberValidationTextBox" Text="{Binding SegmentSize}" HorizontalAlignment="Left" Height="30" Margin="165,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
+        <TextBox x:Name="SegSizeInput" PreviewTextInput="NumberValidationTextBox" Text="{Binding SegmentSize}" HorizontalAlignment="Left" Height="30" Margin="150,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
 
         <!--<IntegerUpDown></IntegerUpDown>-->
 
-        <TextBox x:Name="NgramSizeInput" PreviewTextInput="NumberValidationTextBox" Text="{Binding NgramSize}" HorizontalAlignment="Left" Height="29" Margin="165,91,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="80"/>
+        <TextBox x:Name="NgramSizeInput" PreviewTextInput="NumberValidationTextBox" Text="{Binding NgramSize}" HorizontalAlignment="Left" Height="29" Margin="150,117,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="80"/>
 
 
 
-        <Label x:Name="LoadTextLabl_Copy" FontWeight="Bold" Content="Stop Words TextFile:"  HorizontalAlignment="Left" Height="35" Margin="15,250,0,0" VerticalAlignment="Top" Width="140"/>
-        <Button x:Name="FileBrowseStopWordsButton" Content="Browse " HorizontalAlignment="Left" Height="25" Margin="165,250,0,0" VerticalAlignment="Top" Width="95" Click="BrowseFileClicked" RenderTransformOrigin="0.474,2"/>
-        <Label x:Name="PathToStopWordsFile" Content="{Binding PathToStopWordsFile}" Foreground="red"   HorizontalAlignment="Left" Height="25" Margin="260,250,0,0" VerticalAlignment="Top" Width="210" RenderTransformOrigin="0.476,0.2"/>
-        <RadioButton x:Name="radioButton" Content="Defult" HorizontalAlignment="Left" Margin="334,155,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="LoadTextLabl_Copy" FontWeight="Bold" Content="Stop Words TextFile:"  HorizontalAlignment="Left" Height="35" Margin="20,251,0,0" VerticalAlignment="Top" Width="140">
+            <Label.Visibility>
+                <MultiBinding Converter="{StaticResource Converter}">
+                    <Binding ElementName="Custom" Path="IsChecked" />
+                    <Binding ElementName="chkEnableSW" Path="IsChecked" />
+                </MultiBinding>
+            </Label.Visibility>
+        </Label>
+        <Button x:Name="FileBrowseStopWordsButton" Content="Browse " HorizontalAlignment="Left" Height="25" Margin="149,253,0,0" VerticalAlignment="Top" Width="95" Click="BrowseFileClicked" RenderTransformOrigin="0.474,2" >
+            <Button.Visibility>
+                <MultiBinding Converter="{StaticResource Converter}">
+                    <Binding ElementName="Custom" Path="IsChecked" />
+                    <Binding ElementName="chkEnableSW" Path="IsChecked" />
+                </MultiBinding>
+            </Button.Visibility>
+        </Button>
+        <Label x:Name="PathToStopWordsFile" Content="{Binding PathToStopWordsFile}" Foreground="red"   HorizontalAlignment="Left" Height="25" Margin="20,278,0,0" VerticalAlignment="Top" Width="448" RenderTransformOrigin="0.476,0.2">
+            <Label.Visibility>
+                <MultiBinding Converter="{StaticResource Converter}">
+                    <Binding ElementName="Custom" Path="IsChecked" />
+                    <Binding ElementName="chkEnableSW" Path="IsChecked" />
+                </MultiBinding>
+            </Label.Visibility>
+        </Label>
+          
+        <ComboBox x:Name="expander" ItemsSource="{Binding RunSelection}" SelectedItem ="{Binding ChoosenRun}"  HorizontalAlignment="Left" Height="25" Margin="363,368,0,0" VerticalAlignment="Top" Width="105" RenderTransformOrigin="0.81,0.143"></ComboBox>
 
-        <ComboBox x:Name="expander" ItemsSource="{Binding RunSelection}" SelectedItem ="{Binding ChoosenRun}"  HorizontalAlignment="Left" Height="25" Margin="345,325,0,0" VerticalAlignment="Top" Width="105" RenderTransformOrigin="0.81,0.143"></ComboBox>
-
-        <Button x:Name="Run" IsEnabled="{Binding AnalyzeEnabled}" Content="Analyze Text" FontWeight="Bold"  Background="red" HorizontalAlignment="Left" Height="40" Margin="470,315,0,0" VerticalAlignment="Top" Width="90" Click="AnalyzeTextButton"/>
+        <Button x:Name="Run" IsEnabled="{Binding AnalyzeEnabled}" Content="Analyze Text" FontWeight="Bold"  Background="red" HorizontalAlignment="Left" Height="40" Margin="478,359,0,0" VerticalAlignment="Top" Width="90" Click="AnalyzeTextButton"/>
 
 
         <TextBlock x:Name="InputSection" Foreground ="red" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Algorithm input Section" VerticalAlignment="Top" Margin="20,0,0,0"/>
-        <TextBlock x:Name="StopWordsSection" Foreground ="red" HorizontalAlignment="Left" Height="15" Margin="10,155,0,0" TextWrapping="Wrap" Text="StopWords Input Section" VerticalAlignment="Top" Width="150"/>
-        <Image x:Name="image" Source="/Images/MainPageImage.jpg" HorizontalAlignment="Left" Height="120" Margin="475,175,0,0" VerticalAlignment="Top" Width="98" RenderTransformOrigin="0.607,0.783"/>
+        <TextBlock x:Name="StopWordsSection" Foreground ="red" HorizontalAlignment="Left" Height="15" Margin="10,189,0,0" TextWrapping="Wrap" Text="StopWords Input Section" VerticalAlignment="Top" Width="150"/>
+        <Image x:Name="image" Source="/Images/MainPageImage.jpg" HorizontalAlignment="Left" Height="127" Margin="483,213,0,0" VerticalAlignment="Top" Width="98" RenderTransformOrigin="0.607,0.783"/>
 
-        <RadioButton x:Name="Academic" IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=1}" Content="Academic Stopword List" HorizontalAlignment="Left" Height="20" Margin="5,220,0,132.5" Width="155"/>
-        <RadioButton x:Name="Literature"  IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=2}"  Content="Literature Stopwords List" HorizontalAlignment="Left" Height="20" Margin="160,220,0,132.5" Width="160" RenderTransformOrigin="2.158,-0.5"/>
-        <RadioButton x:Name="Custom"  IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=3}" Content="Custom StopWords List" HorizontalAlignment="Left" Height="20" Margin="315,220,0,132.5" Width="155" RenderTransformOrigin="2.158,-0.5"/>
-        <Label x:Name="LanguageLabel" FontWeight="Bold"   Content="Stop Words Language:"  HorizontalAlignment="Left" Height="35" Margin="20,180,0,0" VerticalAlignment="Top" Width="210" RenderTransformOrigin="0.429,-1.143"/>
+        <CheckBox x:Name="chkEnableSW" Content="CheckBox" HorizontalAlignment="Left" Height="18" Margin="17,166,0,0" VerticalAlignment="Top" Width="19"
+                  IsChecked="{Binding StopWordsEnabledCheckBoxChecked}"/>
+        <Label x:Name="NgramSizeLabel_Copy" Content="Enable Stop Words Filter" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="33,160,0,0" VerticalAlignment="Top" Width="158" />
+        
+        <RadioButton x:Name="Academic" IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=1}" Content="Academic Stopword List" HorizontalAlignment="Left" Height="20" Margin="16,227,0,173" Width="155"
+          IsEnabled="{Binding ElementName=chkEnableSW, Path=IsChecked}" />
+        <RadioButton x:Name="Literature"  IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=2}"  Content="Literature Stopwords List" HorizontalAlignment="Left" Height="20" Margin="171,227,0,173" Width="160" RenderTransformOrigin="2.158,-0.5"
+          IsEnabled="{Binding ElementName=chkEnableSW, Path=IsChecked}" />
+        <RadioButton x:Name="Custom"  IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=3}" Content="Custom StopWords List" HorizontalAlignment="Left" Height="20" Margin="326,227,0,173" Width="155" RenderTransformOrigin="2.158,-0.5"
+          IsEnabled="{Binding ElementName=chkEnableSW, Path=IsChecked}" />
+        <Label x:Name="PathToMainFile_Copy" Content="Invalid! Enter integer greater than 11." Foreground="red"   HorizontalAlignment="Left" Height="29" Margin="234,76,0,0" VerticalAlignment="Top" Width="220" RenderTransformOrigin="0.476,0.2"
+          Visibility="{Binding Path=SegmentSizeError, Converter={StaticResource BoolToVisConverter} }"/>
+        <Label x:Name="PathToMainFile_Copy1" Content="Invalid! Enter integer greater than 2." Foreground="red"   HorizontalAlignment="Left" Height="29" Margin="233,117,0,0" VerticalAlignment="Top" Width="220" RenderTransformOrigin="0.476,0.2"
+          Visibility="{Binding Path=NgramSizeError, Converter={StaticResource BoolToVisConverter} }"/>
+        <Label x:Name="PathToMainFile_Copy2" Content="Invalid! Ngram size must be less than Segment Size." Foreground="red"   HorizontalAlignment="Left" Height="29" Margin="233,117,0,0" VerticalAlignment="Top" Width="295" RenderTransformOrigin="0.476,0.2"
+          Visibility="{Binding Path=NgramGreaterThanSegmentError, Converter={StaticResource BoolToVisConverter} }"/>
     </Grid>
 </Window>

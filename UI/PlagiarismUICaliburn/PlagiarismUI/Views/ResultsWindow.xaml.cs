@@ -84,8 +84,7 @@ namespace PlagiarismUI.Views
             // string fileName = dc.PathToMainInputFile.Substring(dc.PathToMainInputFile.LastIndexOf("/"));
             string segSize = InfraS.ConnectionManager.segSize;
             string fileName = InfraS.ConnectionManager.fileName;
-            string SelectedLanguage = InfraS.ConnectionManager.Lang;
-            DataContext = new ResultwindowViewModel("5", SelectedLanguage, NgramSize, fileName, segSize);
+            DataContext = new ResultwindowViewModel("5", NgramSize, fileName, segSize);
 
             // DataContext = new ResultwindowViewModel("5, dc.Language,dc.NgramSize,dc.PathToMainInputFile,dc.SegmentSize);
 

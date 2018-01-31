@@ -75,7 +75,7 @@ namespace PlagiarismUI
             if (true == StartBackgroundWork())
             {
                 var DC = this.DataContext as MainShellViewModel;
-                ConnectionManager.saveData(DC.ChoosenLanguage, DC.NgramSize, DC.PathToMainInputFile, DC.SegmentSize);
+                ConnectionManager.saveData(DC.NgramSize, DC.PathToMainInputFile, DC.SegmentSize);
                 enginePipe.close();
                 //         DC.save();
                 

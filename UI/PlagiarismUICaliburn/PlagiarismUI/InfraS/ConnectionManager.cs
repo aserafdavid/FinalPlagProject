@@ -93,23 +93,17 @@ namespace PlagiarismUI.InfraS
             is_UIenginePipeConnected = true;
         }
 
-
-        public static string Lang = "";
         public static string NgramSize = "";
         public static string fileName = "";
         public static string segSize = "";
 
 
-
-
-    public static void saveData( string Language, string NGSIZE, string textName, string SegSize)
+    public static void saveData(string NGSIZE, string textName, string SegSize)
         {
             int temp = textName.LastIndexOf("\\");
-            Lang = Language;
              NgramSize = NGSIZE;
-           // 
             segSize = SegSize;
-            
+
             fileName = textName.Substring(temp);
         }
     }

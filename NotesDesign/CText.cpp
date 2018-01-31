@@ -7,8 +7,6 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 				int SegmentSize, int NgramSize, int ClusterNumberRequested)
 	: miSegmentSize(SegmentSize), miNgramSize(NgramSize), mfInputFile(InputFileName), mfStopWordFile(stopWordFilePATH), meAprroach(Aprroach)
 {
-
-
 	try {
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
 		CLogger::GetLogger()->Log(Err.GetErrMsg());
@@ -142,9 +140,27 @@ void CText::readStopWordFile(void)
 {
 	ifstream StopWordFile;
 	
-	if (!mfInputFile.empty())
+	if (!mfInputFile.empty() && mfStopWordFile!="EMPTY")
 	{
-		StopWordFile.open(mfStopWordFile);
+		string path = mPathToTempFiles;
+		string ext = "tempFiles";
+		path = path.substr(0, path.size() - 30);
+
+		if (mfStopWordFile == "ACADEMIC")
+		{
+			path.append("\\PlagiarismDetection\\StopWordsAcademic.txt");
+			StopWordFile.open(path);
+		}
+		else if (mfStopWordFile == "LITERATURE")
+		{
+			path.append("\\PlagiarismDetection\\StopWordsLitrearture.txt");
+			StopWordFile.open(path);
+		}
+		else
+		{
+			StopWordFile.open(mfStopWordFile);
+		}
+
 		if (!StopWordFile.is_open())
 		{
 			CLogger::GetLogger()->Log("Error While trying ot read stopWords list");
@@ -161,11 +177,6 @@ void CText::readStopWordFile(void)
 			mvStopWordList.push_back(temp);
 		}
 		StopWordFile.close();
-
-		//if (!stopWordList.empty())/*remove stopwords  from file*/
-		//{
-		//	fileManager::RemoveStopWordList(fileNamePATH);
-		//}
 
 		CLogger::GetLogger()->Log("Stop words list file created succesfully");
 	}
@@ -195,41 +206,47 @@ void CText::RemoveStopWordList(void)
 #define NEW_FILE_NAME_AFTER_STOP_WORDS_REM "_withoutStopWord.txt"
 
 	try {
-		CError Err(""); Err.AddID("CText", __FUNCTION__);
+		//CError Err(""); Err.AddID("CText", __FUNCTION__);
 		//CLogger::GetLogger()->Log(Err.GetErrMsg());
-
-
-		std::ifstream readStream;
-		ofstream writeStream(mfInputFile + NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
-		std::string lineData;
-		std::vector<char*> fileData;
-		readStream.open(mfInputFile);
-
-		if (!readStream.is_open() || !writeStream.is_open())
+		
+		if (mfStopWordFile == "EMPTY")
 		{
-			CLogger::GetLogger()->Log("Cant open file for removing stop words -exit(1)");
-			exit(1);
+			mfInputFileWithoutstopWord = mfInputFile;
 		}
-		while (!readStream.eof())
+		else
 		{
-			std::getline(readStream, lineData);
-			if (!lineData.empty())
+			std::ifstream readStream;
+			ofstream writeStream(mfInputFile + NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
+			std::string lineData;
+			std::vector<char*> fileData;
+			readStream.open(mfInputFile);
+
+			if (!readStream.is_open() || !writeStream.is_open())
 			{
-				for (int i = 0; i < mvStopWordList.size(); i++)
-				{
-					removeSubstrs(lineData, mvStopWordList[i]);
-				}
-				writeStream << lineData << endl;
+				CLogger::GetLogger()->Log("Cant open file for removing stop words -exit(1)");
+				exit(1);
 			}
-		}
+			while (!readStream.eof())
+			{
+				std::getline(readStream, lineData);
+				if (!lineData.empty())
+				{
+					for (int i = 0; i < mvStopWordList.size(); i++)
+					{
+						removeSubstrs(lineData, mvStopWordList[i]);
+					}
+					writeStream << lineData << endl;
+				}
+			}
 
-		//CLogger::GetLogger()->Log("A new File Created ,named %s%s ", mfInputFile.c_str(), NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
-		readStream.close();
-		writeStream.close();
+			//CLogger::GetLogger()->Log("A new File Created ,named %s%s ", mfInputFile.c_str(), NEW_FILE_NAME_AFTER_STOP_WORDS_REM);
+			readStream.close();
+			writeStream.close();
 
-		/*Set the new file as the input file*/
-		// save TextWithoutstopWord to mfInputFileWithoutstopWord
-		mfInputFileWithoutstopWord = mfInputFile + NEW_FILE_NAME_AFTER_STOP_WORDS_REM;
+			/*Set the new file as the input file*/
+			// save TextWithoutstopWord to mfInputFileWithoutstopWord
+			mfInputFileWithoutstopWord = mfInputFile + NEW_FILE_NAME_AFTER_STOP_WORDS_REM;
+		}	
 	}
 	catch (CError& Err) {
 		Err.AddID("CText", __FUNCTION__);
@@ -250,8 +267,6 @@ void CText::DivideTextIntoSegments(void)
 		CError Err(""); Err.AddID("CText", __FUNCTION__);
 		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
-		//string temp("asd");
-		//CSegment TempSeg(temp, 3, mvDictionary);
 		int available=0;
 		string reader, block;
 		int readerSize;

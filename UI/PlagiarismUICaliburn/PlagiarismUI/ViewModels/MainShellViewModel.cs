@@ -20,13 +20,17 @@ namespace PlagiarismUI
         private string _PathToMainInputFile = "No File Choosen";
         private string _PathToStopWordsFile = "No File Choosen";
         private ObservableCollection<string> _RunSelection = new ObservableCollection<string> { "BOTH", "Clustered","Dynamical"};
-        private ObservableCollection<string> _LanguageSelection = new ObservableCollection<string> { "English", "Hebrew" };
         private string _ChoosenRun = "Dynamical";
-        private string _ChoosenLanguage = "English";
-        private int _StopWordsListChecked;
+        private int _StopWordsListChecked=3;
         private int _NgramSize = 3;
         private int _SegmentSize = 40;
         private bool _AnalyzeEnabled = true; //TODO
+        private bool _SegmentSizeError = false; 
+        private bool _NgramSizeError = false; 
+        private bool _NgramGreaterThanSegmentError = false; 
+        private bool _StopWordsEnabledCheckBoxChecked = true; 
+
+
         #endregion
 
         //public void save()
@@ -54,8 +58,30 @@ namespace PlagiarismUI
             }
             set
             {
-                _SegmentSize = int.Parse(value);
-                RaisePropertyChanged("SegmentSize");
+                int res = int.Parse(value);
+                if (res > 11)
+                {
+                    _SegmentSize = res;
+                    RaisePropertyChanged("SegmentSize");
+                    SegmentSizeError = false;
+                }
+                else
+                {
+                    SegmentSizeError = true;
+                }
+                
+            }
+        }
+        public bool SegmentSizeError
+        {
+            get
+            {
+                return _SegmentSizeError;
+            }
+            set
+            {
+                _SegmentSizeError = value;
+                RaisePropertyChanged("SegmentSizeError");
             }
         }
         public string NgramSize
@@ -66,14 +92,81 @@ namespace PlagiarismUI
             }
             set
             {
-                _NgramSize = int.Parse(value); RaisePropertyChanged("NgramSize");
+                int NgramRes = int.Parse(value);
+                int SegmentRes = int.Parse(SegmentSize);
+                if (NgramRes > 2 && NgramRes < SegmentRes)
+                {
+                    _NgramSize = NgramRes;
+                    RaisePropertyChanged("NgramSize");
+                    NgramSizeError = false;
+                    NgramGreaterThanSegmentError = false;
+                }
+                else
+                {
+                    if (NgramRes <= 2)
+                    {
+                        NgramGreaterThanSegmentError = false;
+                        NgramSizeError = true;
+                    }
+                    else
+                    {
+                        NgramSizeError = false;
+                        NgramGreaterThanSegmentError = true;
+                    }
+                }
+            }
+        }
+        public bool NgramSizeError
+        {
+            get
+            {
+                return _NgramSizeError;
+            }
+            set
+            {
+                _NgramSizeError = value;
+                RaisePropertyChanged("NgramSizeError");
+            }
+        }
+        public bool NgramGreaterThanSegmentError
+        {
+            get
+            {
+                return _NgramGreaterThanSegmentError;
+            }
+            set
+            {
+                _NgramGreaterThanSegmentError = value;
+                RaisePropertyChanged("NgramGreaterThanSegmentError");
             }
         }
 
+        public bool StopWordsEnabledCheckBoxChecked
+        {
+            get { return _StopWordsEnabledCheckBoxChecked; }
+            set
+            {
+                _StopWordsEnabledCheckBoxChecked = value;
+                RaisePropertyChanged("StopWordsEnabledCheckBoxChecked");
+                if (value == false)
+                    PathToStopWordsFile = "EMPTY";
+                else
+                    PathToStopWordsFile = "No File Choosen";
+            }
+        }
         public int StopWordsListChecked
         {
             get { return _StopWordsListChecked; }
-            set { _StopWordsListChecked = value; RaisePropertyChanged("StopWordsListChecked"); }
+            set {
+                    _StopWordsListChecked = value;
+                    RaisePropertyChanged("StopWordsListChecked");
+                if (value == 1)
+                    PathToStopWordsFile = "ACADEMIC";
+                if (value == 2)
+                    PathToStopWordsFile = "LITERATURE";
+                if (value == 3)
+                    PathToStopWordsFile = "No File Choosen";
+            }
         }
         public string ChoosenRun
         {
@@ -81,19 +174,6 @@ namespace PlagiarismUI
             set { _ChoosenRun = value; }
         }
 
-        public string ChoosenLanguage
-        {
-            get { return _ChoosenLanguage; }
-            set { _ChoosenLanguage = value; }
-        }
-
-        public ObservableCollection<string> LanguageSelection
-        {
-            get
-            {
-                return _LanguageSelection;
-            }
-        }
         public ObservableCollection<string> RunSelection
         {
             get
@@ -153,6 +233,33 @@ namespace PlagiarismUI
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return parameter;
+        }
+    }
+
+    class MultiBooleanToVisibilityConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values,
+                                Type targetType,
+                                object parameter,
+                                System.Globalization.CultureInfo culture)
+        {
+            bool visible = true;
+            foreach (object value in values)
+                if (value is bool)
+                    visible = visible && (bool)value;
+
+            if (visible)
+                return System.Windows.Visibility.Visible;
+            else
+                return System.Windows.Visibility.Hidden;
+        }
+
+        public object[] ConvertBack(object value,
+                                    Type[] targetTypes,
+                                    object parameter,
+                                    System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }
