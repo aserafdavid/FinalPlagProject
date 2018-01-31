@@ -24,6 +24,10 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		DivideTextIntoSegments();
 		UpdateStates(DevideTextToSegStepFinished);
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		UpdateStates(ExtractNgramsStepFinished);
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		UpdateStates(BuildVocStepFinished);
 		TerminateIfNeeds();
 
 		//in this step - all Segments NGrams created , mvDictionary is fully updated 
@@ -67,13 +71,7 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 			}
 			//*CurrStatePtr = ExtractNgramsStepFinished;
 			//*CurrStatePtr = BuildVocStepFinished;
-			std::this_thread::sleep_for(std::chrono::milliseconds(50));
-			UpdateStates(ExtractNgramsStepFinished);
-			TerminateIfNeeds();
 
-			std::this_thread::sleep_for(std::chrono::milliseconds(50));
-			UpdateStates(BuildVocStepFinished);
-			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			UpdateStates(BuldCFMsStepFinished);
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			UpdateStates(BuildSPsStepFinished);
