@@ -35,7 +35,7 @@ namespace PlagiarismUI.Views
         {
             
 
-            this.Close();
+            //this.Close();
             
 
             //this.Hide();
@@ -54,6 +54,10 @@ namespace PlagiarismUI.Views
             }
             MainShellView MV = _previousWindow as MainShellView;
             MV.LoadAgain();
+            this.Close();
+            MV.Show();
+            //  MV.LoadAgain();
+
         }
 
         private void ShowResults_Click(object sender, RoutedEventArgs e)

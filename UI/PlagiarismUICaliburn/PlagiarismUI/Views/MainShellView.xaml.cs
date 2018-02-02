@@ -93,10 +93,7 @@ namespace PlagiarismUI
                 enginePipe.close();
                 
                 LoadingWindow LW = new LoadingWindow(this);
-            
-                var Location = this.PointToScreen(new Point(0, 0));
-                LW.Left = Location.X;
-                LW.Top = Location.Y;
+         
                 this.Hide();
                 LW.Show();
 

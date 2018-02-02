@@ -90,7 +90,8 @@ namespace PlagiarismUI.Views
             _MainWindow = mainWindow;
             
             InitializeComponent();
-
+            if (ConnectionManager.AlgToRun == "Clustered")
+                  ((TabItem)tabControl.Items[1]).IsSelected = true;
             string NgramSize = InfraS.ConnectionManager.NgramSize;
             string segSize = InfraS.ConnectionManager.segSize;
             string fileName = InfraS.ConnectionManager.fileName;
