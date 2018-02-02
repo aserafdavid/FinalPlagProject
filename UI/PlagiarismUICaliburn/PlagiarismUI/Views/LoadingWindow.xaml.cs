@@ -6,9 +6,6 @@ using System.Windows;
 
 namespace PlagiarismUI.Views
 {
-    /// <summary>
-    /// Interaction logic for LoadingWindow.xaml
-    /// </summary>
     public partial class LoadingWindow : Window
     {
         private Window  _previousWindow;
@@ -35,7 +32,7 @@ namespace PlagiarismUI.Views
         {
             
 
-            //this.Close();
+            this.Close();
             
 
             //this.Hide();

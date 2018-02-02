@@ -57,12 +57,6 @@ namespace PlagiarismUI.ViewModels
             set { _Clusters = value; }
         }
         private string _defaulTab;
-        //private Brush _GridBackGround;
-        //public Brush GridBackGround
-        //{
-        //    get { return _GridBackGround; }
-        //    set { _GridBackGround = value; }
-        //}
 
         private string defaulTab
         {

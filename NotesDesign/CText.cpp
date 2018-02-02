@@ -20,7 +20,6 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 		UpdateStates(OmitStopWordsStepFinished);
 		TerminateIfNeeds();
 
-		//*CurrStatePtr = OmitStopWordsStepFinished;
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		DivideTextIntoSegments();
 		UpdateStates(DevideTextToSegStepFinished);
@@ -33,7 +32,7 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 		//in this step - all Segments NGrams created , mvDictionary is fully updated 
 		// time to build CFM and SP's for each segment by DSeg.BuildSegmentCFM(vector<string>& vDictionary);
 
-		miConcurrentThreadsNumber = std::thread::hardware_concurrency();
+		miConcurrentThreadsNumber = std::thread::hardware_concurrency() * 2;
 		cout << "hardware_concurrency() = " << miConcurrentThreadsNumber << endl;
 		std::thread* t;
 		if (miConcurrentThreadsNumber >= MAXT)
@@ -69,8 +68,6 @@ CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile
 			{
 				t[i].join();
 			}
-			//*CurrStatePtr = ExtractNgramsStepFinished;
-			//*CurrStatePtr = BuildVocStepFinished;
 
 			UpdateStates(BuldCFMsStepFinished);
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));

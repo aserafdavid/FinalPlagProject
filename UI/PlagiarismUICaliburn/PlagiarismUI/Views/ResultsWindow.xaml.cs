@@ -26,9 +26,6 @@ namespace PlagiarismUI.Views
         public int Id { get; set; }
         public double Data { get; set; }
     }
-    /// <summary>
-    /// Interaction logic for ResultsWindow.xaml
-    /// </summary>
     public partial class ResultsWindow : Window
     {
         static bool XClicked = true;
