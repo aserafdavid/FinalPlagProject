@@ -7,8 +7,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.DataVisualization.Charting;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 namespace PlagiarismUI.ViewModels
@@ -20,6 +22,20 @@ namespace PlagiarismUI.ViewModels
        private string _SegSize;
        private string _NGramSize;
        private string _Clusters;
+
+        Visibility _ClusterTabVisibility;
+        Visibility _DSVisibility;
+
+        public Visibility DSVisibility
+        {
+            get { return _DSVisibility; }
+            set { _DSVisibility = value; RaisePropertyChanged("DSVisibility"); }
+        }
+        public Visibility ClusterTabVisibility
+        {
+            get { return _ClusterTabVisibility; }
+            set { _ClusterTabVisibility = value; RaisePropertyChanged("ClusterTabVisibility"); }
+        }
         public string TextName
         {
             get { return _TextName; }
@@ -40,12 +56,29 @@ namespace PlagiarismUI.ViewModels
             get { return _Clusters; }
             set { _Clusters = value; }
         }
+        private string _defaulTab;
+
+        private string defaulTab
+        {
+            get { return _defaulTab; }
+            set { _defaulTab = value; RaisePropertyChanged("defaulTab"); }
+        }
         public ResultwindowViewModel(string clusterNum, string NGSIZE, string textName, string segSize)
         {
             TextName = textName;
             SegSize = segSize;
             NGramSize = NGSIZE;
             Clusters = clusterNum;
+            if (ConnectionManager.AlgToRun == "Clustered")
+            {
+                DSVisibility = Visibility.Hidden;
+                defaulTab = "DS";
+            }
+            else if (ConnectionManager.AlgToRun == "Dynamical")
+            {
+                ClusterTabVisibility = Visibility.Hidden;
+                defaulTab = "Clustered";
+            }
         }
 
         public ObservableCollection<Data> Items { get; } = new ObservableCollection<Data>();
@@ -59,21 +92,6 @@ namespace PlagiarismUI.ViewModels
            Items.Add(new Data() { background = Brushes.Blue }); 
            Items.Add(new Data() { background = Brushes.Red });
             Items.Add(new Data() { background = Brushes.Blue });
-        }
-
-
-        public void SetGraph()
-        {
-
-        }
-
-
-
-        private Brush _GridBackGround;
-       public Brush GridBackGround
-        {
-            get { return _GridBackGround; }
-            set { _GridBackGround = value; }
         }
 
 

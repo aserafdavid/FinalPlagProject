@@ -1,12 +1,15 @@
-﻿using PlagiarismUI.ViewModels;
+﻿using PlagiarismUI.InfraS;
+using PlagiarismUI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.DataVisualization.Charting;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Media;
 
 namespace PlagiarismUI.Views
@@ -23,11 +26,9 @@ namespace PlagiarismUI.Views
         public int Id { get; set; }
         public double Data { get; set; }
     }
-    /// <summary>
-    /// Interaction logic for ResultsWindow.xaml
-    /// </summary>
     public partial class ResultsWindow : Window
     {
+        static bool XClicked = true;
         private Window _MainWindow;
 
         public List<ClusterString> ClusteredStrings { get; set; } = new List<ClusterString>();
@@ -54,42 +55,54 @@ namespace PlagiarismUI.Views
         public ResultsWindow(Window mainWindow, string ResultPATH)
         {
              string FilePath = ResultPATH;
-
-
-           // string FilePath = "D:\\finalProjectPlagiarism\\tempFiles\\2018_01_28-22_08_34\\Results";
-            FilePath += "\\Results\\CL_Results.txt";
-            StreamReader sr = new StreamReader(FilePath);
-            string line = sr.ReadLine();
-            while (line != null && line.Length > 2)
+            int clusterdCounter = 0;
+            if (ConnectionManager.AlgToRun == "Clustered" || ConnectionManager.AlgToRun == "BOTH")
             {
-                string[] split = line.Split('\t');
-                if (split.Length == 2)
+                
+                List <int> ClusteredNums = new List<int>();
+                FilePath += "\\Results\\CL_Results.txt";
+                StreamReader sr = new StreamReader(FilePath);
+                string line = sr.ReadLine();
+                while (line != null && line.Length > 2)
                 {
-                    int Id = int.Parse(split[0]);
-                    ClusteredStrings.Add(new ClusterString { ClusterId = Id, Data = split[1] });
+                    string[] split = line.Split('\t');
+                    if (split.Length == 2)
+                    {
+                        int Id = int.Parse(split[0]);
+                        if(! ClusteredNums.Contains(Id))
+                        {
+                            clusterdCounter++;
+                            ClusteredNums.Add(Id);
+                        }
+                        ClusteredStrings.Add(new ClusterString { ClusterId = Id, Data = split[1] });
+                    }
+                    else
+                    {
+                        int Id = int.Parse(split[0]);
+                        ClusteredStrings.Add(new ClusterString { ClusterId = Id, Data = line.Substring(split[0].Length, line.Length - split[0].Length) });
+                    }
+                    line = sr.ReadLine();
                 }
-                else
-                {
-                    int Id = int.Parse(split[0]);
-                    ClusteredStrings.Add(new ClusterString { ClusterId = Id, Data = line.Substring(split[0].Length, line.Length - split[0].Length) });
-                }
-                line = sr.ReadLine();
             }
-
             _MainWindow = mainWindow;
             
             InitializeComponent();
 
             string NgramSize = InfraS.ConnectionManager.NgramSize;
-            // string fileName = dc.PathToMainInputFile.Substring(dc.PathToMainInputFile.LastIndexOf("/"));
             string segSize = InfraS.ConnectionManager.segSize;
             string fileName = InfraS.ConnectionManager.fileName;
-            DataContext = new ResultwindowViewModel("5", NgramSize, fileName, segSize);
+            DataContext = new ResultwindowViewModel(clusterdCounter.ToString(), NgramSize, fileName, segSize);
+            
+            if (ConnectionManager.AlgToRun == "Clustered" || ConnectionManager.AlgToRun == "BOTH")
+            {
+                
+                LoadDSChart();
 
-            // DataContext = new ResultwindowViewModel("5, dc.Language,dc.NgramSize,dc.PathToMainInputFile,dc.SegmentSize);
-
-            LoadLineChartData(ResultPATH);
-            LoadDSChart();
+            }
+            if (ConnectionManager.AlgToRun == "Dynamical" || ConnectionManager.AlgToRun == "BOTH")
+            {
+                LoadLineChartData(ResultPATH);
+            }
         }
 
 
@@ -124,13 +137,41 @@ namespace PlagiarismUI.Views
                 Source[i] = new KeyValuePair<int, double>(DSstrings[i].Id, DSstrings[i].Data);
             }
             ((LineSeries)MyChart.Series[0]).ItemsSource = Source;
-         //   ((LineSeries)MyChart.Series[0]).Te = false;
+         
 
         }
-        
 
+        private void BackToMain(object sender, RoutedEventArgs e)
+        {
+            ConnectionManager.GetEnginePipe().sendEngineMove("CANCELRUN");
+              string ans = ConnectionManager.GetEnginePipe().getEngineMessage();
+            if (ans == "ACCEPTED")
+            {
+                ConnectionManager.GetEnginePipe().close();
+                ConnectionManager.GetUIenginePipe().close();
+            }
+            else
+            {
+                //Pop up message and exit
+            }
 
+            MainShellView MV = _MainWindow as MainShellView;
+            MV.LoadAgain();
+            this.Close();
+            MV.Show();
+           
+        }
 
+        private void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (XClicked)
+            {
+                ConnectionManager.GetEnginePipe().sendEngineMove("QUIT");
+                ConnectionManager.GetEnginePipe().getEngineMessage();
+            }
+
+            XClicked = true;
+        }
 
     }
 

@@ -24,7 +24,6 @@ namespace PlagiarismUI
             //ResultsWindow rw = new ResultsWindow(this);
             //this.Hide();
             //rw.ShowDialog();
-
             Thread newPipe = new Thread(connectNewPipe);
             newPipe.IsBackground = true;
             newPipe.Start();
@@ -32,18 +31,29 @@ namespace PlagiarismUI
             this.DataContext = new MainShellViewModel();
         }
 
-        private bool ValidateInput()
-        {
-            return true;
-        }
+
 
 
         private bool StartBackgroundWork()
         {
-            if (ValidateInput())
+            bool res = true;
+            var DC = this.DataContext as MainShellViewModel;
+            //int ngramSize = int.Parse(DC.NgramSize);
+            //int segSize = int.Parse(DC.SegmentSize);
+            if (DC.PathToMainInputFile == "No File Choosen")
             {
-                var DC = this.DataContext as MainShellViewModel;
-
+                MessageBox.Show("Please Insert Examination File input", "Invalid input", MessageBoxButton.OK);
+                res = false;
+            }
+            if(DC.StopWordsListChecked == 3 && DC.PathToStopWordsFile == "No File Choosen")
+            {
+                MessageBox.Show("Please Insert StopWords List File input or Choose an existing one \n Note: you can run algorithm without omitting stop words by unchecking the StopWords CheckBox", "Invalid input", MessageBoxButton.OK);
+                res = false;
+            }
+            if (res)
+            {
+                
+              
                 enginePipe.sendEngineMove("NGRAMSIZE");
                 enginePipe.sendEngineMove(DC.NgramSize.ToString());
                 enginePipe.sendEngineMove("SEGMENTSIZE");
@@ -57,7 +67,7 @@ namespace PlagiarismUI
                 enginePipe.sendEngineMove("PREFEREDCLUSTERSNUMBER");
                 enginePipe.sendEngineMove(DC.ChoosenClustersNumber.ToString());
                 enginePipe.sendEngineMove("STARTWORK");
-                //
+                
                 return true;
             }
             else
@@ -79,9 +89,8 @@ namespace PlagiarismUI
             if (true == StartBackgroundWork())
             {
                 var DC = this.DataContext as MainShellViewModel;
-                ConnectionManager.saveData(DC.NgramSize, DC.PathToMainInputFile, DC.SegmentSize);
+                ConnectionManager.saveData(DC.NgramSize, DC.PathToMainInputFile, DC.SegmentSize, DC.ChoosenRun);
                 enginePipe.close();
-                //         DC.save();
                 
                 LoadingWindow LW = new LoadingWindow(this);
             
@@ -91,16 +100,14 @@ namespace PlagiarismUI
                 this.Hide();
                 LW.Show();
 
-                //Thread newPipe = new Thread(connectNewPipe);
-               // newPipe.Start();
 
             }
-            else
-            {
-                //pop up error message
-                MessageBox.Show("Please Fill all fields", "Invalid input", MessageBoxButton.OK);
-            }
-           
+            //else
+            //{
+            //    //pop up error message
+            //    MessageBox.Show("Please Fill all fields", "Invalid input", MessageBoxButton.OK);
+            //}
+
         }
         
         public void LoadAgain()
