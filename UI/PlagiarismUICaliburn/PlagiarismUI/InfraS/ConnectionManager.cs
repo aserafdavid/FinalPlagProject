@@ -34,17 +34,17 @@ namespace PlagiarismUI.InfraS
 
         public static Pipe GetEnginePipe()
         {
-            if (!is_UIenginePipeConnected)
+            if (!is_enginePipeConnected)
             {
                 ConnectEnginePipe();
-
+                is_enginePipeConnected = true;
             }
             return enginePipe;
         }
 
         public static Pipe GetUIenginePipe()
         {
-            if (!is_enginePipeConnected)
+            if (!is_UIenginePipeConnected)
             {
                 ConnectUIenginePipe();
             }
@@ -96,15 +96,15 @@ namespace PlagiarismUI.InfraS
         public static string NgramSize = "";
         public static string fileName = "";
         public static string segSize = "";
+        public static string AlgToRun = "";
 
-
-    public static void saveData(string NGSIZE, string textName, string SegSize)
+    public static void saveData(string NGSIZE, string textName, string SegSize,string ChoosenRun)
         {
             int temp = textName.LastIndexOf("\\");
              NgramSize = NGSIZE;
             segSize = SegSize;
-
-            fileName = textName.Substring(temp);
+            AlgToRun = ChoosenRun;
+            fileName = textName.Substring(temp+1);
         }
     }
     

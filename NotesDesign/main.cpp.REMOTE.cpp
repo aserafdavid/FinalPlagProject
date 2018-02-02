@@ -6,10 +6,6 @@
 #include <thread> 
 #include <mutex>
 #include <condition_variable>
-#define _WIN32_WINNT 0x0500
-
-#define DEBUG
-
 
 using namespace std;
 using namespace arma;
@@ -24,8 +20,12 @@ static string path;
 static bool AbortRunner = false;
 volatile bool* abortRun = &AbortRunner;
 string fileNamePath, StopwordsNamePath;
-int segSize, NgramSize, PreferedClustersNumber;
-AprroachModel ChosenAprroachModel;
+int segSize, NgramSize;
+
+
+static pipe_out CurrState = Initialize;
+volatile pipe_out* CurrStatePtr = &CurrState;
+static pipe_out PrevState = Initialize;
 
 static std::map<std::string, pipe_in> s_mapInPipeValues;
 static std::map<std::string, pipe_out> s_mapOutPipeValues;
@@ -43,8 +43,6 @@ void InithashPipe()
 	s_mapInPipeValues["SEGMENTSIZE"] = SEGMENTSIZE;
 	s_mapInPipeValues["QUIT"] = QUIT;
 	s_mapInPipeValues["CANCELRUN"] = CANCELRUN;
-	s_mapInPipeValues["CHOSENRUN"] = CHOSENRUN;
-	s_mapInPipeValues["PREFEREDCLUSTERSNUMBER"] = PREFEREDCLUSTERSNUMBER;
 
 	s_mapOutPipeValues["Initialize"] = Initialize;
 	s_mapOutPipeValues["OmitStopWordsStepFinished"] = OmitStopWordsStepFinished;
@@ -64,19 +62,37 @@ void InithashPipe()
 	s_mapOutPipeValues["ExamineCLResult"] = ExamineCLResult;
 
 }
-void TerminateIfNeeds(void)
-{
-	if (*abortRun == true)/*Should be implanted in algorithm code*/
-	{
-		printf("Worker aborted\n");
-		HANDLE t = GetCurrentThread();
-		TerminateThread(t, 0);
-	}
-}
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+                                                                                                                                          
+//TODO : add volatile var to tell background worker to stop work and 
 void BackgroundEngine(string argv)
 {
-
+	////SetThreadPriority(GetCurrentThread(), HIGH_PRIORITY_CLASS);//set high priority to the thread                          //printf("threadstart\n");
+	//static unsigned int count = 0;                                  
+	//static unsigned int changeState = 0;
+	//while (true)
+	//{
+	//	printf("alive");
+	//	std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	//	count++;                                                                                                            	//	if (count % 11 == 0)
+	//	{
+	//		*CurrStatePtr = OmitStopWordsStepFinished;
+	//		if(count ==22)
+	//			*CurrStatePtr = FinishLoadingStage;
+	//		//changeState++;
+	//		//*CurrStatePtr = static_cast<pipe_out>(changeState);
+	//		//if (count == 30)
+	//		//	*CurrStatePtr = FinishLoadingStage;
+	//		//cout << changeState;
+	//		
+	//	}
+	//	if (*abortRun == true)/*Should be implanted in algorithm code*/
+	//	{
+	//		printf("Worker aborted\n");
+	//		HANDLE t = GetCurrentThread();
+	//		TerminateThread(t, 0);
+	//	}
+	//};
 	path = argv;
 	string ext = "x64\\Debug\\PlagiarismDetection.exe";
 	if (path != ext &&
@@ -84,18 +100,90 @@ void BackgroundEngine(string argv)
 		path.substr(path.size() - ext.size()) == ext)
 		path = path.substr(0, path.size() - ext.size());
 
-	
 	if (Setinfrastructure(&path))
 	{
 		Global_PathToTempFiles = path;
 		CLogger::SetLogPath(path);
-		CText ct(fileNamePath, StopwordsNamePath, path, ChosenAprroachModel, segSize, NgramSize, PreferedClustersNumber);
+		CText ct(fileNamePath, StopwordsNamePath, path, Both_Aprroaches, segSize, NgramSize);
 	}
-	UpdateStates(FinishLoadingStage);
+
 
 	cout << "\n\nThe End! \n\n ";
 	getchar();
 }
+
+
+
+
+//void StatesUpdate(Pipe &Pipe_UpdateUI)
+//{
+//	char *temp;
+//	while (*abortRun != true)//CurrState != FinishLoadingStage && PrevState!= FinishLoadingStage)//*abortRun != true && 
+//	{
+//		/*Handle out Messages */
+//		if (PrevState != CurrState)
+//		{
+//			switch (CurrState)
+//			{
+//			case OmitStopWordsStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("OmitStopWordsStepFinished");
+//				break;
+//			case DevideTextToSegStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("DevideTextToSegStepFinished");
+//				break;
+//			case BuildVocStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("BuildVocStepFinished");
+//				break;
+//			case BuldCFMsStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("BuldCFMsStepFinished");
+//				break;
+//			case ExtractNgramsStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("ExtractNgramsStepFinished");
+//				break;
+//			case CalcApproxMeasStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("CalcApproxMeasStepFinished");
+//				break;
+//			case BuildQsStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("BuildQsStepFinished");
+//				break;
+//			case BuildSPsStepFinished:
+//				Pipe_UpdateUI.sendMessageToGraphics("BuildSPsStepFinished");
+//				break;
+//			case ExamineResult:
+//				Pipe_UpdateUI.sendMessageToGraphics("ExamineResult");
+//				break;
+//			case FinishLoadingStage:
+//				Pipe_UpdateUI.sendMessageToGraphics("FinishLoadingStage");
+//				temp = new char[path.size()+1];
+//				strcpy(temp, path.c_str());
+//				Pipe_UpdateUI.sendMessageToGraphics(temp);//TODO Add FULL Path to results file
+//				return;
+//				break;
+//			case CancelRUN:
+//				Pipe_UpdateUI.sendMessageToGraphics("CancelRUN");
+//				break;
+//
+//
+//
+//			default:
+//				break;
+//			}
+//
+//			PrevState = CurrState;//Dont Forget update PrevState
+//			std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+//
+//		}
+//
+//		if (*abortRun == true)/*Should be implanted in algorithm code*/
+//		{
+//
+//			printf("StatesUpdate  aborted\n");
+//			return;
+//
+//		}
+//	}
+//	//Pipe_UpdateUI.close();
+//}
 
 static int counter = 0;
 
@@ -103,6 +191,7 @@ void UpdateStates(pipe_out State)
 {
 	char *temp;
 
+	//CurrState != FinishLoadingStage && PrevState!= FinishLoadingStage)//*abortRun != true && 
 	if (*abortRun != true)
 	{
 		switch (State)
@@ -153,15 +242,14 @@ void UpdateStates(pipe_out State)
 			Pipe_UpdateUI.sendMessageToGraphics("ExamineCLResult");
 			break;
 
+
 		case FinishLoadingStage:
-		{
+			Pipe_UpdateUI.sendMessageToGraphics("FinishLoadingStage");
 			temp = new char[path.size() + 1];
 			strcpy(temp, path.c_str());
-			Pipe_UpdateUI.sendMessageToGraphics("FinishLoadingStage");
-			Pipe_UpdateUI.sendMessageToGraphics(temp);
-			Pipe_UpdateUI.getMessageFromGraphics();
-		}break;
-
+			Pipe_UpdateUI.sendMessageToGraphics(temp);//TODO Add FULL Path to results file
+			return;
+			break;
 		case CancelRUN:
 			Pipe_UpdateUI.sendMessageToGraphics("CancelRUN");
 			break;
@@ -170,24 +258,17 @@ void UpdateStates(pipe_out State)
 			break;
 		}
 
-	if (*abortRun == true)/*Should be implanted in algorithm code*/
-	{
+		if (*abortRun == true)/*Should be implanted in algorithm code*/
+		{
 
-		printf("StatesUpdate  aborted\n");
-		return;
+			printf("StatesUpdate  aborted\n");
+			return;
 
+		}
 	}
-  }
 }
 
 int main(int argc, const char **argv) {
-
-#ifndef DEBUG
-	HWND hWnd = GetConsoleWindow();
-	ShowWindow(hWnd, SW_HIDE);
-#endif // DEBUG
-
-
 
 	static bool FirstTimePipeInit = false;
 	bool CloseApp = false;
@@ -195,28 +276,27 @@ int main(int argc, const char **argv) {
 	InithashPipe();
 	int workID;
 	bool isConnect = p.connect();
-	//Sleep(3000);//Avoid engine trying to connect bfore App loaded
-
+	Sleep(3000);//Avoid engine trying to connect bfore App loaded
+	//SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL);
 	while (!isConnect)
 	{
 		cout << "trying connect again.." << endl; /* move to Logger*/
-		Sleep(50);
+		Sleep(1000);
 		isConnect = p.connect();
 	}
 
 	char msgToGraphics[1024];
 	string msgFromGraphics = "";
 	char buffer[1024];
-
+	//std::thread work(BackgroundConnectionManager, argv[0]);
 	while (true)
 	{
-		printf("Cstart Pipes");
+
 		FlushFileBuffers(p.hPipe);
 		msgFromGraphics = p.getMessageFromGraphics();
 
 		if (msgFromGraphics != "")
 		{
-			printf("Cstart Pipes");
 			switch (s_mapInPipeValues[msgFromGraphics])
 			{
 			case STARTWORK:
@@ -232,7 +312,7 @@ int main(int argc, const char **argv) {
 					while (!isConnect)
 					{
 						cout << "trying connect again.." << endl; /* move to Logger*/
-						Sleep(50);
+						Sleep(5000);
 						isConnect = L.connect();
 					}
 
@@ -241,11 +321,15 @@ int main(int argc, const char **argv) {
 					while (!isConnect)
 					{
 						cout << "trying connect again.." << endl; /* move to Logger*/
-						Sleep(50);
+						Sleep(5000);
 						isConnect = Pipe_UpdateUI.connect();
 					}
 				
 				thread *t = new std::thread(BackgroundEngine, argv[0]);
+
+
+
+				//std::thread States(StatesUpdate, Pipe_UpdateUI);
 
 				while (isOnLoadingStage)
 				{
@@ -258,8 +342,8 @@ int main(int argc, const char **argv) {
 						switch (s_mapInPipeValues[msgFromGraphics])
 						{
 						case CANCELRUN:
-						{
 							*abortRun = true;
+							//CurrState = CancelRUN;
 							UpdateStates(CancelRUN);
 							//LOGGER->GetLogger()->Log("CANCELRUN Message from app");
 							L.sendMessageToGraphics("ACCEPTED");
@@ -267,14 +351,15 @@ int main(int argc, const char **argv) {
 							L.close();
 							//States.join();
 							Pipe_UpdateUI.close();
+
 							isConnect = p.connect();
 							while (!isConnect)
 							{
 								cout << "trying connect again.." << endl; /* move to Logger*/
-								Sleep(10);
+								Sleep(1000);
 								isConnect = p.connect();
 							}
-						}
+
 							break;
 
 						case QUIT:
@@ -282,8 +367,6 @@ int main(int argc, const char **argv) {
 							isOnLoadingStage = false;
 							//LOGGER->GetLogger()->Log("QUIT Message from app");
 							L.sendMessageToGraphics("ACCEPTED");
-							L.close();
-							Pipe_UpdateUI.close();
 							exit(1);
 							break;
 
@@ -299,43 +382,28 @@ int main(int argc, const char **argv) {
 
 			case EXAMINEPATHFILE:
 				StopwordsNamePath = p.getMessageFromGraphics();
+				//LOGGER->GetLogger()->Log("EXAMINEPATHFILE Message from app");
 				break;
 
-			case EXAMINESTOPWORDFILE:			
+			case EXAMINESTOPWORDFILE:
+				
 				fileNamePath = p.getMessageFromGraphics();
+				//LOGGER->GetLogger()->Log("EXAMINESTOPWORDFILE Message from app");
 				break;
 
 			case NGRAMSIZE:
 				NgramSize = stoi(p.getMessageFromGraphics().c_str());
+				//LOGGER->GetLogger()->Log("NGRAMSIZE Message from app");
 				break;
 
 			case SEGMENTSIZE:
 				segSize = stoi(p.getMessageFromGraphics().c_str());
+				//LOGGER->GetLogger()->Log("SEGMENTSIZE Message from app");
 				break;
-
-			case CHOSENRUN:
-				{
-				string ChosenRunStr = p.getMessageFromGraphics();
-				if (ChosenRunStr == "Dynamical")
-					ChosenAprroachModel = DS_Aprroach;
-				else if (ChosenRunStr == "Clustered")
-					ChosenAprroachModel = CL_Aprroach;
-				else 
-					ChosenAprroachModel = Both_Aprroaches;
-				break;
-				}
-
-			case PREFEREDCLUSTERSNUMBER:
-			{
-				string PreferedClusteresNumberStr = p.getMessageFromGraphics();
-				if (PreferedClusteresNumberStr == "Examine in algorithm")
-					PreferedClustersNumber = 0;
-				else 
-					PreferedClustersNumber = stoi(PreferedClusteresNumberStr.c_str());
-				break;
-			}
 
 			case QUIT:
+
+				//LOGGER->GetLogger()->Log("QUIT Message from app");
 				exit(1);
 				break;
 
@@ -348,5 +416,32 @@ int main(int argc, const char **argv) {
 
 	}
 
+	//std:CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)BackgroundConnectionManager,0,0);
+	//std::thread t(&BackgroundConnectionManager);
 
+	//std::unique_lock<std::mutex> lk(m);
+	//cv.wait(lk, [] {return startWork; });
+	//cv.notify_one();
+
+
+	/*std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+	p.sendMessageToGraphics("HandshakCPPStart");*/
+
+	//string path = argv[0];
+	//string ext = "x64\\Debug\\PlagiarismDetection.exe";
+	//if (path != ext &&
+	//	path.size() > ext.size() &&
+	//	path.substr(path.size() - ext.size()) == ext)
+	//	path = path.substr(0, path.size() - ext.size());
+
+	//if (Setinfrastructure(&path))
+	//{
+	//	while (!startWork)
+	//	{
+	//		std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+	//	}
+	//	Global_PathToTempFiles = path;
+	//	//CText ct("Bildschirmtext1.txt", "StopWords.txt", path, DS_Aprroach);
+	//	//CText ct("Bildschirmtext1.txt", "StopWords.txt", path, CL_Aprroach);
+	//	CText ct("Bildschirmtext1.txt", "StopWords.txt", path, Both_Aprroaches);
 }

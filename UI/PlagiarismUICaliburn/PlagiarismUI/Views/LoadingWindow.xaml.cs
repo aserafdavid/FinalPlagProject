@@ -12,7 +12,7 @@ namespace PlagiarismUI.Views
     public partial class LoadingWindow : Window
     {
         private Window  _previousWindow;
-        
+        static bool XClicked = true;
 
         public LoadingWindow(Window window )
         {
@@ -30,14 +30,10 @@ namespace PlagiarismUI.Views
 
         }
 
-        private void InitProperties()
-        {
 
-        }
         private void backFromLoading_Click(object sender, EventArgs e)
         {
-
-            InitProperties();
+            
 
             this.Close();
             
@@ -48,8 +44,8 @@ namespace PlagiarismUI.Views
             string s = ConnectionManager.GetEnginePipe().getEngineMessage();
             if (s == "ACCEPTED")
             {
-                ConnectionManager.GetEnginePipe().close();
-                ConnectionManager.GetUIenginePipe().close();
+              ConnectionManager.GetEnginePipe().close();
+              ConnectionManager.GetUIenginePipe().close();
 
             }
             else
@@ -63,13 +59,25 @@ namespace PlagiarismUI.Views
         private void ShowResults_Click(object sender, RoutedEventArgs e)
         {
             var DC = this.DataContext as LoadingWindowViewModel;
-            string ResultPATH = DC.GETResultPath() ; 
+            string ResultPATH = DC.GETResultPath() ;
+            XClicked = false;
             this.Close();
             ResultsWindow RW = new ResultsWindow(_previousWindow , ResultPATH);
             
             RW.ShowDialog();
             
         }
+        private void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (XClicked)
+            {
+                ConnectionManager.GetEnginePipe().sendEngineMove("QUIT");
+                ConnectionManager.GetEnginePipe().getEngineMessage();
+            }
+
+            XClicked = true;
+        }
     }
 }
+
 

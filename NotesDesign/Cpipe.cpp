@@ -17,25 +17,18 @@ void Pipe::Test()
 	{
 
 			printf(ANSI_COLOR_RED "trying connect again..\n" ANSI_COLOR_RED ); /* move to Logger*/
-			Sleep(5000);
+			Sleep(50);
 			isConnect = p.connect();
 	}
 
 	char msgToGraphics[1024];
-	// msgToGraphics should contain the board string accord the protocol
-	// YOUR CODE
 
-	//strcpy_s(msgToGraphics, "tziziz kfizti"); // just example...
-
-	//p.sendMessageToGraphics(msgToGraphics);   // send the board string
 
 											  // get message from graphics
 	string msgFromGraphics = p.getMessageFromGraphics();
 
 	while (msgFromGraphics != "quit")
 	{
-		// should handle the string the sent from graphics
-		// according the protocol. Ex: e2e4           (move e2 to e4)
 
 		// YOUR CODE
 		strcpy_s(msgToGraphics, "YOUR CODE"); // msgToGraphics should contain the result of the operation

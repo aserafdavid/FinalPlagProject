@@ -9,53 +9,59 @@
 
      xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
         mc:Ignorable="d"
-        Title="ResultsWindow"  Height="450" Width="600"
+        Title="ResultsWindow"  Height="450" Width="650" Closing="OnWindowClosing"
         ResizeMode="NoResize">
-    <Grid Background ="{Binding GridBackGround}">
-        <TabControl Background="DarkGray" Margin="0,0,0,-2.5" Height="425"  VerticalAlignment="Top" >
-            <TabItem Header="DS">
+    <Grid Background ="black">
+        <TabControl Name="tabControl" Background="Black" SelectedItem="{Binding defaulTab}" Margin="0,0,0,-2.5" Height="425"  VerticalAlignment="Top" >
+            <TabItem Header="DS" Visibility="{Binding DSVisibility}">
                 <Grid>
 
-                    <DVC:Chart  Name="MyChart" LegendTitle="Mid"  Margin="197,0,-4,67" Background="LightGray" Height="330" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="395">
+                    <DVC:Chart  Name="MyChart"  LegendTitle="Mid"   Margin="242,-30,0,47" Background="black" Foreground="white" Height="380" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="385">
+                        <DVC:Chart.LegendStyle>
+                            <Style TargetType="Control">
+                                <Setter Property="Width" Value="0"/>
+                                <Setter Property="Height" Value="0"/>
+                            </Style>
+                        </DVC:Chart.LegendStyle>
                         <DVC:Chart.Series  >
-                            <DVC:LineSeries  IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}">
+                            <DVC:LineSeries Foreground="white"  IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}" RenderTransformOrigin="0.547,0.461" Margin="0,-15,0,-17">
 
                             </DVC:LineSeries>
                         </DVC:Chart.Series>
                     </DVC:Chart>
                     <!--<Frame x:Name="frame" BorderThickness="10"  BorderBrush="Black" FontWeight="Bold" Content="Algorithm Details:" Margin="-3,0,392,102"/>-->
-                    <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Height="45" Margin="12,330,0,0" VerticalAlignment="Top" Width="140"/>
+                    <Button x:Name="button" Content="Back To Main Window" HorizontalAlignment="Left" Height="45" Margin="12,330,0,0" VerticalAlignment="Top" Width="140" Click="BackToMain"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Clustered" >
+            <TabItem Header="Clustered" Visibility="{Binding ClusterTabVisibility}">
                 <Grid>
 
 
 
 
-                    <Button x:Name="button3" Content="Button" HorizontalAlignment="Left" Height="45" Margin="12,330,0,0" VerticalAlignment="Top" Width="140" Grid.ColumnSpan="3"/>
+                    <Button x:Name="Back_Button" Content="Back To Main Window" HorizontalAlignment="Left" Height="45" Margin="12,330,0,0" VerticalAlignment="Top" Width="140" Grid.ColumnSpan="3" Click="BackToMain"/>
 
-                    <!--<DataGrid  x:Name="GraphGrid"  HorizontalAlignment="Left" Height="230" Margin="217,40,0,0" VerticalAlignment="Top" Width="360">
-                    </DataGrid>-->
-                    <FlowDocumentReader Margin="204,10,10,21">
+
+                    <FlowDocumentReader Foreground="white" Margin="232,5,2,26">
                         <FlowDocument x:Name="FlowDocument"></FlowDocument>
                     </FlowDocumentReader>
-
+                    <Label x:Name="label3" Content="#Clusters:" Foreground="White" HorizontalAlignment="Left" Height="30" FontWeight="Bold" Margin="10,165,0,0" VerticalAlignment="Top" Width="95"/>
+                    <Label x:Name="label7_Copy" Content="{Binding Clusters}" Foreground="White" FontWeight="Bold"  HorizontalAlignment="Left" Height="30" Margin="112,165,0,0" VerticalAlignment="Top" Width="70"/>
                 </Grid>
-            </TabItem>
-           
+
+            </TabItem >
+
         </TabControl>
-        <Frame x:Name="frame2" BorderThickness="10"  BorderBrush="Black" FontWeight="Bold"  Content="Algorithm Details:"   Margin="-5,25,394,0" Height="280" VerticalAlignment="Top"/>
-        <Label x:Name="label5" Content="{Binding TextName}" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="112,61,0,0" VerticalAlignment="Top" Width="70"/>
-        <Label x:Name="label6" Content="{Binding SegSize}" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="112,100,0,0" VerticalAlignment="Top" Width="70"/>
-        <Label x:Name="label7" Content="{Binding NGramSize}" FontWeight="Bold"  HorizontalAlignment="Left" Height="30" Margin="112,140,0,0" VerticalAlignment="Top" Width="70"/>
-        <Label x:Name="label7_Copy" Content="{Binding Clusters}" FontWeight="Bold"  HorizontalAlignment="Left" Height="30" Margin="112,183,0,0" VerticalAlignment="Top" Width="70"/>
-        <Label x:Name="label7_Copy1" Content="{Binding Lang}" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="112,231,0,0" VerticalAlignment="Top" Width="70"/>
-        <Label x:Name="label" Content="Text Name:" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="10,60,0,0" VerticalAlignment="Top" Width="85"/>
-        <Label x:Name="label1" Content="Segment Size:" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="10,100,0,0" VerticalAlignment="Top" Width="90"/>
-        <Label x:Name="label2" Content="Ngram Size:" HorizontalAlignment="Left" FontWeight="Bold" Height="30" Margin="10,140,0,0" VerticalAlignment="Top" Width="90"/>
-        <Label x:Name="label3" Content="#Clusters:" HorizontalAlignment="Left" Height="30" FontWeight="Bold" Margin="10,185,0,0" VerticalAlignment="Top" Width="95"/>
-        <Label x:Name="label4" Content="Language:" HorizontalAlignment="Left" FontWeight="Bold" Height="30" Margin="10,230,0,0" VerticalAlignment="Top" Width="90"/>
+        <Frame x:Name="frame2" BorderThickness="10"  BorderBrush="white" FontWeight="Bold"  Content="Algorithm Details:" Foreground="White"   Margin="0,25,389,0" Height="280" VerticalAlignment="Top"/>
+        <Label x:Name="label5" Foreground="White" Content="{Binding TextName}" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="112,61,0,0" VerticalAlignment="Top" Width="123"/>
+        <Label x:Name="label6" Foreground="White" Content="{Binding SegSize}" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="112,100,0,0" VerticalAlignment="Top" Width="70"/>
+        <Label x:Name="label7" Foreground="White" Content="{Binding NGramSize}" FontWeight="Bold"  HorizontalAlignment="Left" Height="30" Margin="112,140,0,0" VerticalAlignment="Top" Width="70"/>
+
+        <Label x:Name="label"  Foreground="White" Content="Text Name:" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="10,60,0,0" VerticalAlignment="Top" Width="85"/>
+        <Label x:Name="label1" Foreground="White" Content="Segment Size:" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="10,100,0,0" VerticalAlignment="Top" Width="90"/>
+        <Label x:Name="label2" Foreground="White" Content="Ngram Size:" HorizontalAlignment="Left" FontWeight="Bold" Height="30" Margin="10,140,0,0" VerticalAlignment="Top" Width="90"/>
+
+
 
     </Grid>
 </Window>

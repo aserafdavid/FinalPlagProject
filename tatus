@@ -1,0 +1,448 @@
+[33mcommit f7a40a6f532f2775f1da99d0573be40a7e7d2d72[m[33m ([m[1;36mHEAD -> [m[1;32mresults_screen_little_changes[m[33m, [m[1;32mmaster[m[33m)[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Tue Jan 30 20:43:32 2018 +0200
+
+    Graphs and Vars Save
+    
+    Signed-off-by: aserafdavid <DavidAseraf@gmail.com>
+
+[33mcommit 7d6f94600c83ebf74dba08cb12428e7ca4c516af[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Tue Jan 30 20:43:19 2018 +0200
+
+    states for CL alg + reorder states screen
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 64f7f4eebb72d3a0d79555a06231df00a46e48eb[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Tue Jan 30 18:35:12 2018 +0200
+
+    update steps in loading window by c++ alg
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit e1760950675e6707034bafee429af6bad35c989d[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Tue Jan 30 13:02:16 2018 +0200
+
+    little change log path by version
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit fc409e694532362032e35975a99087a0bdb60edd[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Mon Jan 29 09:27:04 2018 +0200
+
+    Idan changes- CL Graph - need to fill after read the CL res file
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 89f52c709f1a3c005856f5506209da55c9cd8bfb[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sun Jan 28 21:44:53 2018 +0200
+
+    improve threads
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 82c9f085d689c7381aad521584e23c558d37cb21[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sun Jan 28 21:39:11 2018 +0200
+
+    Result path to UI pipe
+    
+    Signed-off-by: aserafdavid <DavidAseraf@gmail.com>
+
+[33mcommit 8a5d1b54d96a75bc9dcfaf50c8f2536ce038dead[m
+Merge: b144ed6 8c5701c
+Author: adirno <adirno@zahav.net.il>
+Date:   Sun Jan 28 19:24:40 2018 +0200
+
+    Fix David 2
+
+[33mcommit b144ed6dc1ad8056184c45db147afdc90fd7f1a1[m
+Merge: 6550681 0a82052
+Author: adirno <adirno@zahav.net.il>
+Date:   Sun Jan 28 19:20:14 2018 +0200
+
+    work version unite
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 8c5701c7e68032ead1f7161c87c9a88380cf25a2[m[33m ([m[1;31morigin/cs-cpp-Com[m[33m)[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sun Jan 28 19:19:38 2018 +0200
+
+    MergeWithAdir
+
+[33mcommit 65506810b95afa9eb571baf662c6784893f79e5e[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Wed Jan 24 23:05:07 2018 +0200
+
+    DS Graph and load data from file left .
+
+[33mcommit 6cface09d7167394b170f05cc9b6f5560ceea373[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sun Jan 21 23:12:23 2018 +0200
+
+    PipesFix + Graphs without Content
+
+[33mcommit 0a820521e6e942fd9cdcafecbc3c8c601f10aad8[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sun Jan 21 03:04:23 2018 +0200
+
+    improve SP creation time using threads
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 8e89e0fc863863eb7db26b22c0c72415ef6d42d7[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sat Jan 20 21:10:10 2018 +0200
+
+    Remove unnecessary Log reports and give priority to less number of clusters
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 56c88084a30f78e842e3ba54b5752d0101239095[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sun Jan 14 16:08:19 2018 +0200
+
+    Log now generated per version in temp files, in addition all temp files with .txt postfix
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit fcec610209ff2672b07a83b4bca1844bafc30f6c[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sun Jan 14 13:57:08 2018 +0200
+
+    add ability to run CL alg with input num of clusters + test on Harry Potter and the new bible
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 623c9f5551f8cd2314a53aaab74d3046f4717a63[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sun Jan 14 08:44:11 2018 +0200
+
+    Generate result file for both DS and CL approach in temp files for each run
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 78a12dcfc461c55b4f719dc0432d26a537c5584c[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sun Jan 14 00:00:32 2018 +0200
+
+    Fix Silhouette alg and get clusters vector
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 1ab70765297fd1d0cd5fa63b3baa7e634ceaee6f[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sun Jan 7 00:22:06 2018 +0200
+
+    calling Kmeans alg and examine results by Silhouette
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 2a645d7cb92831f98b3ead01df93f0b115b0aaa6[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sat Jan 6 17:04:18 2018 +0200
+
+    EVM creation by QR algotithm
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit bb821230af5d2eba2bb1a6f4a9ad0bc2b1a8f2a7[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sun Dec 31 11:27:05 2017 +0200
+
+    changes
+
+[33mcommit 2b3f13e26db56823815c8a821ae2d8c28c8fe14a[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Fri Dec 29 21:13:03 2017 +0200
+
+    Handling start input
+
+[33mcommit a197395bcf64081eb2f7c73ad90a31790c1cd47d[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sun Dec 24 19:58:37 2017 +0200
+
+    just for test"
+
+[33mcommit 14363ee0d94ed059ee3afff2081782c29e30730d[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sun Dec 24 09:51:54 2017 +0200
+
+    "pipe"
+
+[33mcommit 1f3dbdafe48ec5e9d4c5e07827f7c319150fec37[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sun Dec 24 00:27:34 2017 +0200
+
+    System suppot some Approach - DS, CL ,Both
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit d0fe7d23685b00df76365c5088c51da28171f01b[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Fri Dec 22 14:52:26 2017 +0200
+
+    Calc Aproximation Errors - end of DS implementation
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit ab6c1e3cd89aaf163aae9765e440664cbda49563[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Fri Dec 22 13:28:51 2017 +0200
+
+    Navigation Between Window , Language choose and radio button functionality added
+
+[33mcommit aa7fc9e3768cb3b7f9d5e7e534f08d8786c5a528[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Thu Dec 21 22:57:00 2017 +0200
+
+    UI First And Secong Windows with partial functionality
+
+[33mcommit f9ea976c98646fc5e48623f25e3f490ee30d87c1[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Mon Dec 18 23:21:07 2017 +0200
+
+    Build Tmeas matrix supported in CText
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 0ca80ccade94ec5460b00e8ff5649489ba9f11a7[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Mon Dec 18 16:58:05 2017 +0200
+
+    Version creation for each run in tempFiles directory, base on Time
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit d8de61e2a536cd77d6cef4c70f5e1897602dd38e[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Mon Dec 18 03:38:44 2017 +0200
+
+    TM created in Tempfiles directory
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 1f175fdb64cc84d4a7ee8360fac192d4e97f71c7[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Mon Dec 18 01:05:36 2017 +0200
+
+    Remove Ref returns from static function.--> it will be empty because the string is deleted when the function  is out from the stack
+
+[33mcommit 2ff2d2b6c097dd6a8b12544b18ab1ae839f50d20[m
+Merge: 3c17055 bd5427f
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Mon Dec 18 00:42:41 2017 +0200
+
+    Merge branch 'master' of https://github.com/aserafdavid/FinalPlagProject
+
+[33mcommit 3c1705508ffcc73a9f2052558908096d5669f608[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Mon Dec 18 00:40:48 2017 +0200
+
+    Improve Run Soeed in Conf
+
+[33mcommit bd5427f76a4cce16d736bee21c61ea8abe757d45[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sun Dec 17 23:57:29 2017 +0200
+
+    SP creation by R.h dir added
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit aa62c035af546654c921c108f7e6741c0acab1b6[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sun Dec 17 23:13:30 2017 +0200
+
+    Transition matrix Q method inside CSegment.
+
+[33mcommit 93135751baa407b78f34f26ff52d78df8cb9071e[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sat Dec 16 23:39:29 2017 +0200
+
+    Creating Folders in project + Fix double calls + NgramFiles Opening and closing for no reason
+
+[33mcommit 86a4a2f5541abc0bf62ddade0760031728a163a9[m
+Merge: 5a952e6 cafb5bb
+Author: adirno <adirno@zahav.net.il>
+Date:   Sat Dec 16 17:40:03 2017 +0200
+
+    Merge branch 'master' of https://github.com/aserafdavid/FinalPlagProject into Adir_CFM
+    
+    # Conflicts:
+    #       NotesDesign/CSegment.h
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 5a952e6436d1623d28002f5b341d0b5fd1c26422[m[33m ([m[1;31morigin/Adir_CFM[m[33m)[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sat Dec 16 16:56:57 2017 +0200
+
+    CFM mege adir
+
+[33mcommit cafb5bbb073c46c9e346511c8af0ff278a8e2cf0[m[33m ([m[1;31morigin/HEAD[m[33m)[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sat Dec 16 16:54:05 2017 +0200
+
+    before merge
+
+[33mcommit 901bf4c62008e546dbd620c9a6d0ca954f045b0b[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sat Dec 16 16:18:59 2017 +0200
+
+    remove try catch ~CSegment
+
+[33mcommit c8a6d88dab81c1215b324a266e8da4793f11e010[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sat Dec 16 16:14:46 2017 +0200
+
+    Fix CSegment Null on vector
+
+[33mcommit e0ba876a56c1b1bd3107a0e119553c66559a3d77[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sat Dec 16 13:47:59 2017 +0200
+
+    remove unnecacery files
+    
+    Signed-off-by: aserafdavid <DavidAseraf@gmail.com>
+
+[33mcommit 4279e8df142b263b8fa13ddf3596531d8038a569[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sat Dec 16 13:33:10 2017 +0200
+
+    making order
+    
+    Signed-off-by: aserafdavid <DavidAseraf@gmail.com>
+
+[33mcommit 6926747959f0230145d9257346e67a61f85def5f[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sat Dec 16 13:22:15 2017 +0200
+
+    delete vc
+    
+    Signed-off-by: aserafdavid <DavidAseraf@gmail.com>
+
+[33mcommit 599aa4d777318852ac840cffeb7c4ab591c50b68[m
+Author: aserafdavid <aserafdavid@gmail.com>
+Date:   Sat Dec 16 13:14:05 2017 +0200
+
+    vc remove
+
+[33mcommit e81055da80a82bc794cedc7776e7349d05e0d22f[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sat Dec 16 11:53:18 2017 +0200
+
+    remove try/catch blocks from destructors
+
+[33mcommit 3730a5c9eb3a0a2323cd88a52f891eaa2372b769[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Fri Dec 15 00:19:30 2017 +0200
+
+    Merge all Work with the new design beside CFM
+
+[33mcommit b5de7fc63e9944e5f8842ae9e04af087f33ec575[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sun Dec 10 23:33:11 2017 +0200
+
+    NOTES Design Working
+
+[33mcommit 85ac4106d90a6dc99382af35b32eb0e57e374f78[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sun Dec 10 23:12:09 2017 +0200
+
+    fd
+
+[33mcommit a80c47702fd709a8dc2b63586fb003bc89c5ed8e[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sun Dec 10 22:43:00 2017 +0200
+
+    arma.natvis For auto debug with arma
+
+[33mcommit aef73ec4ad08aff37f73decaba85dfa03ce876e2[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sat Dec 9 22:03:48 2017 +0200
+
+    Directory Clean and Check  Added
+
+[33mcommit 70304aee1de1779e65ce6578522dafd8d50ff00c[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Sat Dec 9 17:12:47 2017 +0200
+
+    Bugs Fix + add Writing and loading arma Mat from File
+
+[33mcommit abfabc81df02bb5e39687a1cd57c02608f7137e7[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Fri Dec 8 12:03:56 2017 +0200
+
+    Creating Dictionary and CFM Matrix for one segment in the UTilities.
+
+[33mcommit 2cf845c1309270cbfa47367a4bcb3e53c8b11afc[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Thu Dec 7 10:41:24 2017 +0200
+
+    Test Try
+
+[33mcommit cd3113dc03cc5c3bf524f79851e7ae6a90e9058c[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Thu Dec 7 10:39:15 2017 +0200
+
+    test
+
+[33mcommit daf7623acf380a0e643dcb4c31664fd3ad94f081[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Thu Dec 7 10:37:33 2017 +0200
+
+    A litle Fix and Change reading File Concept
+
+[33mcommit 4c6c4d901f15b45e8240db6a15282044504dafa3[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Wed Dec 6 22:34:55 2017 +0200
+
+    mkl
+
+[33mcommit 6e10c2f5b3c10dde8cbe0395650154c51f7370bf[m
+Author: aserafdavid <DavidAseraf@gmail.com>
+Date:   Wed Dec 6 22:34:01 2017 +0200
+
+    ציצי קפיצי
+
+[33mcommit 64e1aad31000c2a937cfa6ef9a5e44375bfdf7d2[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sat Dec 2 19:04:06 2017 +0200
+
+    mkl upload
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit de41650aff9e5103bc0f7564bebb5960e4a55afc[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sat Dec 2 17:23:22 2017 +0200
+
+    .vs , armadilo, Debug and x64 directories
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 224ac68b462bf7b15b5851e1071a88ffd7ad70fa[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sat Dec 2 17:18:22 2017 +0200
+
+    alg.vc.db upload
+
+[33mcommit 3b9db45bbedf8edc33da4ea458802a9a081aa715[m
+Author: adirno <adirno@zahav.net.il>
+Date:   Sat Dec 2 17:09:33 2017 +0200
+
+    alg directory
+    
+    Signed-off-by: adirno <adirno@zahav.net.il>
+
+[33mcommit 3da75649c1e7d2042de6e2ae74480b83ed5b7489[m
+Author: aserafdavid <aserafdavid@gmail.com>
+Date:   Sun Nov 5 22:44:16 2017 +0200
+
+    Initial commit

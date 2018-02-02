@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlagiarismUI"
         mc:Ignorable="d"
-        Title="MainShellView" Height="450" Width="600"
+        Title="MainShellView" Height="450" Width="650"
         Closing="OnWindowClosing" 
         ResizeMode="NoResize">
     <Window.DataContext>
@@ -19,18 +19,18 @@
         <local:MultiBooleanToVisibilityConverter x:Key="Converter" />
     </Window.Resources>
 
-    <Grid Background="DarkGray" >
-        <Image x:Name="infoImage" Source ="/Images/infoIcon.png" HorizontalAlignment="Left" Height="62" Margin="486,22,0,0" VerticalAlignment="Top" Width="77" RenderTransformOrigin="0.519,0.919">
+    <Grid Background="Black" >
+        <Image x:Name="infoImage" Source ="/Images/infoIcon.png" HorizontalAlignment="Left" Height="78" Margin="516,17,0,0" VerticalAlignment="Top" Width="109" RenderTransformOrigin="0.519,0.919">
             <Image.ToolTip>
                 <ToolTip>
                     <TextBlock>This Application using math for analyze your text/article and trying to find Plagiarism</TextBlock>
                 </ToolTip>
             </Image.ToolTip>
         </Image>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="115" Margin="10,214,0,0" VerticalAlignment="Top" Width="465" IsEnabled="{Binding ElementName=chkEnableSW, Path=IsChecked}"/>
+        <Border BorderBrush="White" BorderThickness="1" HorizontalAlignment="Left" Height="115" Margin="10,214,0,0" VerticalAlignment="Top" Width="465" IsEnabled="{Binding ElementName=chkEnableSW, Path=IsChecked}"/>
 
 
-        <Label x:Name="LoadTextLabl" FontWeight="Bold" Content="Examination Text File:"  HorizontalAlignment="Left" Height="35" Margin="15,20,0,0" VerticalAlignment="Top" Width="145"/>
+        <Label x:Name="LoadTextLabl"  FontWeight="Bold" Foreground="White" Content="Examination Text File:"  HorizontalAlignment="Left" Height="35" Margin="15,20,0,0" VerticalAlignment="Top" Width="145"/>
         <Button x:Name="FileBrowse" Content="Browse " HorizontalAlignment="Left" Height="25" Margin="150,22,0,0" VerticalAlignment="Top" Width="95" Click="BrowseFileClicked" >
             <Button.ToolTip>
                 <ToolTip>
@@ -39,9 +39,9 @@
             </Button.ToolTip>
         </Button>
         <Label x:Name="PathToMainFile" Content="{Binding PathToMainInputFile}" Foreground="red"   HorizontalAlignment="Left" Height="25" Margin="16,46,0,0" VerticalAlignment="Top" Width="459" RenderTransformOrigin="0.476,0.2"/>
-        <Label x:Name="SegSizeLabel" Content="Segment Size"  FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="15,72,0,0" VerticalAlignment="Top" Width="115"/>
+        <Label x:Name="SegSizeLabel" Foreground="White" Content="Segment Size"  FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="15,72,0,0" VerticalAlignment="Top" Width="115"/>
 
-        <Label x:Name="NgramSizeLabel" Content="Ngram Size" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="14,113,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="NgramSizeLabel" Foreground="White" Content="Ngram Size" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="14,113,0,0" VerticalAlignment="Top" Width="120"/>
 
         <TextBox x:Name="SegSizeInput" PreviewTextInput="NumberValidationTextBox" Text="{Binding SegmentSize}" HorizontalAlignment="Left" Height="30" Margin="150,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80">
             <TextBox.ToolTip>
@@ -59,7 +59,7 @@
             </TextBox.ToolTip>
         </TextBox>
 
-        <Label x:Name="LoadTextLabl_Copy" FontWeight="Bold" Content="Stop Words TextFile:"  HorizontalAlignment="Left" Height="35" Margin="20,251,0,0" VerticalAlignment="Top" Width="140">
+        <Label x:Name="LoadTextLabl_Copy" Foreground="White" FontWeight="Bold" Content="Stop Words TextFile:"  HorizontalAlignment="Left" Height="35" Margin="20,251,0,0" VerticalAlignment="Top" Width="140">
             <Label.Visibility>
                 <MultiBinding Converter="{StaticResource Converter}">
                     <Binding ElementName="Custom" Path="IsChecked" />
@@ -88,46 +88,46 @@
                 </MultiBinding>
             </Label.Visibility>
         </Label>
-          
-        <ComboBox x:Name="expander" ItemsSource="{Binding RunSelection}" SelectedItem ="{Binding ChoosenRun}"  HorizontalAlignment="Left" Height="25" Margin="363,368,0,0" VerticalAlignment="Top" Width="105" RenderTransformOrigin="0.81,0.143">
+
+        <ComboBox x:Name="expander" ItemsSource="{Binding RunSelection}" SelectedItem ="{Binding ChoosenRun}"  HorizontalAlignment="Left" Height="25" Margin="395,375,0,0" VerticalAlignment="Top" Width="105" RenderTransformOrigin="0.81,0.143">
             <ComboBox.ToolTip>
                 <ToolTip>
-                    <TextBlock>Select an algorithm to run </TextBlock>
+                    <TextBlock>Select an algorithm to run</TextBlock>
                 </ToolTip>
             </ComboBox.ToolTip>
         </ComboBox>
 
-        <Button x:Name="Run" IsEnabled="{Binding AnalyzeEnabled}" Content="Analyze Text" FontWeight="Bold"  Background="red" HorizontalAlignment="Left" Height="40" Margin="478,359,0,0" VerticalAlignment="Top" Width="90" Click="AnalyzeTextButton">
+        <Button x:Name="Run" IsEnabled="{Binding AnalyzeEnabled}" Content="Analyze Text" FontWeight="Bold"  Background="red" HorizontalAlignment="Left" Height="40" Margin="530,365,0,0" VerticalAlignment="Top" Width="90" Click="AnalyzeTextButton">
             <Button.ToolTip>
                 <ToolTip>
-                    <TextBlock>Runs the algorithm </TextBlock>
+                    <TextBlock>Runs the algorithm</TextBlock>
                 </ToolTip>
             </Button.ToolTip>
         </Button>
 
-        <TextBlock x:Name="InputSection" Foreground ="red" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Algorithm input Section" VerticalAlignment="Top" Margin="20,0,0,0"/>
-        <TextBlock x:Name="StopWordsSection" Foreground ="red" HorizontalAlignment="Left" Height="15" Margin="10,189,0,0" TextWrapping="Wrap" Text="StopWords Input Section" VerticalAlignment="Top" Width="150"/>
-        <Image x:Name="image" Source="/Images/MainPageImage.jpg" HorizontalAlignment="Left" Height="127" Margin="483,213,0,0" VerticalAlignment="Top" Width="98" RenderTransformOrigin="0.607,0.783"/>
+        <TextBlock x:Name="InputSection" TextDecorations="Underline" FontWeight="Bold"  Foreground ="Blue" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Algorithm input Section:" VerticalAlignment="Top" Margin="20,0,0,0"/>
+        <TextBlock x:Name="StopWordsSection" TextDecorations="Underline" Foreground ="Blue" FontWeight="Bold"  HorizontalAlignment="Left" Height="15" Margin="10,189,0,0" TextWrapping="Wrap" Text="StopWords Input Section:" VerticalAlignment="Top" Width="150"/>
+        <Image x:Name="image" Source="/Images/MainPageImage.jpg" HorizontalAlignment="Left" Height="142" Margin="485,190,0,0" VerticalAlignment="Top" Width="123" RenderTransformOrigin="0.607,0.783"/>
 
         <CheckBox x:Name="chkEnableSW" Content="CheckBox" HorizontalAlignment="Left" Height="18" Margin="17,166,0,0" VerticalAlignment="Top" Width="19"
                   IsChecked="{Binding StopWordsEnabledCheckBoxChecked}">
-                <CheckBox.ToolTip>
-                    <ToolTip>
-                        <TextBlock>Press here for enbling Stop Words filter on examination text</TextBlock>
-                    </ToolTip>
-                </CheckBox.ToolTip>            
+            <CheckBox.ToolTip>
+                <ToolTip>
+                    <TextBlock>Press here for enbling Stop Words filter on examination text</TextBlock>
+                </ToolTip>
+            </CheckBox.ToolTip>
         </CheckBox>
-        <Label x:Name="NgramSizeLabel_Copy" Content="Enable Stop Words Filter" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="33,160,0,0" VerticalAlignment="Top" Width="158" />
-        
-        <RadioButton x:Name="Academic" IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=1}" Content="Academic Stopword List" HorizontalAlignment="Left" Height="20" Margin="16,227,0,173" Width="155"
+        <Label x:Name="NgramSizeLabel_Copy" Foreground="White" Content="Enable Stop Words Filter" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="33,160,0,0" VerticalAlignment="Top" Width="158" />
+
+        <RadioButton x:Name="Academic" Foreground="White" IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=1}" Content="Academic Stopword List" HorizontalAlignment="Left" Height="20" Margin="16,227,0,173" Width="155"
           IsEnabled="{Binding ElementName=chkEnableSW, Path=IsChecked}" >
             <RadioButton.ToolTip>
                 <ToolTip>
-                    <TextBlock>A predefined list of academic words to remove from the examination text </TextBlock>
+                    <TextBlock>A predefined list of academic words to remove from the examination text</TextBlock>
                 </ToolTip>
             </RadioButton.ToolTip>
         </RadioButton>
-        <RadioButton x:Name="Literature"  IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=2}"  Content="Literature Stopwords List" HorizontalAlignment="Left" Height="20" Margin="171,227,0,173" Width="160" RenderTransformOrigin="2.158,-0.5"
+        <RadioButton x:Name="Literature" Foreground="White" IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=2}"  Content="Literature Stopwords List" HorizontalAlignment="Left" Height="20" Margin="171,227,0,173" Width="160" RenderTransformOrigin="2.158,-0.5"
           IsEnabled="{Binding ElementName=chkEnableSW, Path=IsChecked}" >
             <RadioButton.ToolTip>
                 <ToolTip>
@@ -135,7 +135,7 @@
                 </ToolTip>
             </RadioButton.ToolTip>
         </RadioButton>
-        <RadioButton x:Name="Custom"  IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=3}" Content="Custom StopWords List" HorizontalAlignment="Left" Height="20" Margin="326,227,0,173" Width="155" RenderTransformOrigin="2.158,-0.5"
+        <RadioButton x:Name="Custom" Foreground="White" IsChecked="{Binding StopWordsListChecked , Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=3}" Content="Custom StopWords List" HorizontalAlignment="Left" Height="20" Margin="326,227,0,173" Width="155" RenderTransformOrigin="2.158,-0.5"
           IsEnabled="{Binding ElementName=chkEnableSW, Path=IsChecked}" >
             <RadioButton.ToolTip>
                 <ToolTip>
@@ -149,7 +149,7 @@
           Visibility="{Binding Path=NgramSizeError, Converter={StaticResource BoolToVisConverter} }"/>
         <Label x:Name="PathToMainFile_Copy2" Content="Invalid! Ngram size must be less than Segment Size." Foreground="red"   HorizontalAlignment="Left" Height="29" Margin="233,117,0,0" VerticalAlignment="Top" Width="295" RenderTransformOrigin="0.476,0.2"
           Visibility="{Binding Path=NgramGreaterThanSegmentError, Converter={StaticResource BoolToVisConverter} }"/>
-        <Label x:Name="LoadTextLabl_Copy1" Content="Prefered Clusters Number:"  HorizontalAlignment="Left" Height="35" Margin="24,366,0,0" VerticalAlignment="Top" Width="150" Visibility="{Binding Path=ClusteredOrBothRunChecked, Converter={StaticResource BoolToVisConverter} }"/>
+        <Label x:Name="LoadTextLabl_Copy1" Foreground="White" Content="Prefered Clusters Number:"  HorizontalAlignment="Left" Height="35" Margin="24,366,0,0" VerticalAlignment="Top" Width="150" Visibility="{Binding Path=ClusteredOrBothRunChecked, Converter={StaticResource BoolToVisConverter} }"/>
         <ComboBox x:Name="expander_Copy" ItemsSource="{Binding PreferedClustersNumberSelection}" SelectedItem ="{Binding ChoosenClustersNumber}"  HorizontalAlignment="Left" Height="25" Margin="174,368,0,0" VerticalAlignment="Top" Width="147" RenderTransformOrigin="0.81,0.143" Visibility="{Binding Path=ClusteredOrBothRunChecked, Converter={StaticResource BoolToVisConverter} }">
             <ComboBox.ToolTip>
                 <ToolTip>

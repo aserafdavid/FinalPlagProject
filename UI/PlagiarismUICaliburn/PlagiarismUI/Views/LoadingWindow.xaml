@@ -5,42 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlagiarismUI.Views"
         xmlns:ViewModels="clr-namespace:PlagiarismUI.ViewModels" x:Class="PlagiarismUI.Views.LoadingWindow"
-        mc:Ignorable="d"
-        Title="LoadingWindow" Height="400" Width="600">
-    <Grid Background="DarkGray">
+        mc:Ignorable="d" Closing="OnWindowClosing"
+        Title="LoadingWindow" Height="450" Width="650">
+    <Grid Background="black">
 
-        <Ellipse Fill="{Binding BuldCFMsStepFinished}" HorizontalAlignment="Left" Height="65" Margin="410,42,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="{Binding BuildVocStepFinished}" HorizontalAlignment="Left" Height="65" Margin="310,42,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.533,0.462"/>
-        <Ellipse Fill="{Binding ExtractNgramsStepFinished}" HorizontalAlignment="Left" Height="65" Margin="210,42,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="{Binding ExamineResult}" HorizontalAlignment="Left" Height="65" Margin="493,139,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="{Binding DevideTextToSegStepFinished}" HorizontalAlignment="Left" Height="65" Margin="110,42,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="{Binding OmitStopWordsStepFinished}" HorizontalAlignment="Left" Height="65" Margin="10,42,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="{Binding CalcApproxMeasStepFinished}" HorizontalAlignment="Left" Height="65" Margin="393,139,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="{Binding CalcAQMeasureStepFinished}" HorizontalAlignment="Left" Height="65" Margin="293,139,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="{Binding BuildQsStepFinished}" HorizontalAlignment="Left" Height="65" Margin="193,139,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="{Binding BuildSPsStepFinished}" HorizontalAlignment="Left" Height="65" Margin="504,42,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75" />
+        <Ellipse Fill="{Binding BuldCFMsStepFinished}"  HorizontalAlignment="Left" Height="65" Margin="410,42,0,0" Stroke="white" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding BuildVocStepFinished}" HorizontalAlignment="Left" Height="65" Margin="310,42,0,0" Stroke="white" StrokeThickness="4" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.533,0.462"/>
+        <Ellipse Fill="{Binding ExtractNgramsStepFinished}" HorizontalAlignment="Left" Height="65" Margin="210,42,0,0" Stroke="white" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding ExamineResult}" HorizontalAlignment="Left" Height="65" Margin="493,139,0,0" Stroke="white" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding DevideTextToSegStepFinished}" HorizontalAlignment="Left" Height="65" Margin="110,42,0,0" Stroke="white" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding OmitStopWordsStepFinished}" HorizontalAlignment="Left" Height="65" Margin="10,42,0,0" Stroke="white" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding CalcApproxMeasStepFinished}" HorizontalAlignment="Left" Height="65" Margin="393,139,0,0" Stroke="white" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding CalcAQMeasureStepFinished}" HorizontalAlignment="Left" Height="65" Margin="293,139,0,0" Stroke="white" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding BuildQsStepFinished}" HorizontalAlignment="Left" Height="65" Margin="193,139,0,0" Stroke="white" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding BuildSPsStepFinished}" HorizontalAlignment="Left" Height="65" Margin="504,42,0,0" Stroke="white" StrokeThickness="4" VerticalAlignment="Top" Width="75" />
 
-        <TextBlock x:Name="textBlock1"  FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="41" Margin="122,61,0,0" TextWrapping="Wrap" Text="divide Text into Chunks" VerticalAlignment="Top" Width="60"/>
-        <TextBlock x:Name="textBlock1_Copy" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="31" Margin="230,61,0,0" TextWrapping="Wrap" Text="Extract NGrams" VerticalAlignment="Top" Width="55"/>
-        <TextBlock x:Name="textBlock" FontSize="10" FontWeight="Bold" HorizontalAlignment="Left" Height="31" Margin="20,61,0,0" TextWrapping="Wrap" Text="    Omit Stop Words" VerticalAlignment="Top" Width="55"/>
-        <TextBlock x:Name="textBlock1_Copy1" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="31" Margin="322,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" Text="    Build Dictionary"/>
-        <TextBlock x:Name="textBlock1_Copy2" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="31" Margin="430,61,0,0" TextWrapping="Wrap" Text="Build   CFM's" VerticalAlignment="Top" Width="38"/>
-        <TextBlock x:Name="textBlock1_Copy3" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="30" Margin="506,159,0,0" TextWrapping="Wrap" Text="Examine Results" VerticalAlignment="Top" Width="55"/>
-        <TextBlock x:Name="textBlock1_Copy4" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="42" Margin="410,152,0,0" TextWrapping="Wrap" Text="Calculate   Approx  Error" VerticalAlignment="Top" Width="55"/>
-        <TextBlock x:Name="textBlock1_Copy5" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="30" Margin="308,159,0,0" TextWrapping="Wrap" Text="Build TM measure" VerticalAlignment="Top" Width="55"/>
-        <TextBlock x:Name="textBlock1_Copy6" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="40" Margin="210,149,0,0" TextWrapping="Wrap" Text="    Build Transition          Matrices." VerticalAlignment="Top" Width="55"/>
-        <TextBlock x:Name="textBlock1_Copy7" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="25" Margin="530,62,0,0" TextWrapping="Wrap" Text="Build SP's" VerticalAlignment="Top" Width="34" RenderTransformOrigin="-1.545,0.25"/>
-        <Button x:Name="backFromLoading" Content="Back To Main Page" HorizontalAlignment="Left" Height="30" Margin="20,315,0,0" VerticalAlignment="Top" Width="105" Click="backFromLoading_Click"/>
+        <TextBlock x:Name="textBlock1"  Foreground="White" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="41" Margin="122,61,0,0" TextWrapping="Wrap" Text="divide Text into Chunks" VerticalAlignment="Top" Width="60"/>
+        <TextBlock x:Name="textBlock1_Copy"  Foreground="White" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="31" Margin="230,61,0,0" TextWrapping="Wrap" Text="Extract NGrams" VerticalAlignment="Top" Width="55"/>
+        <TextBlock x:Name="textBlock"  Foreground="White" FontSize="10" FontWeight="Bold" HorizontalAlignment="Left" Height="31" Margin="20,61,0,0" TextWrapping="Wrap" Text="    Omit Stop Words" VerticalAlignment="Top" Width="55"/>
+        <TextBlock x:Name="textBlock1_Copy1"  Foreground="White" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="31" Margin="322,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" Text="    Build Dictionary"/>
+        <TextBlock x:Name="textBlock1_Copy2"  Foreground="White" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="31" Margin="430,61,0,0" TextWrapping="Wrap" Text="Build   CFM's" VerticalAlignment="Top" Width="38"/>
+        <TextBlock x:Name="textBlock1_Copy3"  Foreground="White" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="30" Margin="506,159,0,0" TextWrapping="Wrap" Text="Examine Results" VerticalAlignment="Top" Width="55"/>
+        <TextBlock x:Name="textBlock1_Copy4"  Foreground="White" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="42" Margin="410,152,0,0" TextWrapping="Wrap" Text="Calculate   Approx  Error" VerticalAlignment="Top" Width="55"/>
+        <TextBlock x:Name="textBlock1_Copy5"  Foreground="White" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="30" Margin="308,159,0,0" TextWrapping="Wrap" Text="Build TM measure" VerticalAlignment="Top" Width="55"/>
+        <TextBlock x:Name="textBlock1_Copy6"  Foreground="White" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="40" Margin="210,149,0,0" TextWrapping="Wrap" Text="    Build Transition          Matrices." VerticalAlignment="Top" Width="55"/>
+        <TextBlock x:Name="textBlock1_Copy7"  Foreground="White" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="25" Margin="530,62,0,0" TextWrapping="Wrap" Text="Build SP's" VerticalAlignment="Top" Width="34" RenderTransformOrigin="-1.545,0.25"/>
+        <Button x:Name="backFromLoading" Content="Back To Main Page" HorizontalAlignment="Left" Height="30" Margin="15,365,0,0" VerticalAlignment="Top" Width="105" Click="backFromLoading_Click"/>
         <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" FontSize="18" Foreground="Blue"  FontWeight ="UltraBold"  Height="30" Margin="197,12,0,0" TextWrapping="Wrap" Text="Algorithm Stages" VerticalAlignment="Top" Width="170"/>
         <Line/>
-        <Button x:Name="ShowResults" Content="Show Results" IsEnabled="{Binding ShowResults}" FontWeight="Bold"  Background="red" HorizontalAlignment="Left" Height="50" Margin="435,310,0,0" VerticalAlignment="Top" Width="140" Click="ShowResults_Click"/>
+        <Button x:Name="ShowResults" Content="Show Results" IsEnabled="{Binding ShowResults}" FontWeight="Bold"  Background="red" HorizontalAlignment="Left" Height="50" Margin="485,355,0,0" VerticalAlignment="Top" Width="140" Click="ShowResults_Click"/>
         <TextBlock x:Name="textBlock2_Copy" HorizontalAlignment="Left" FontSize="18" Foreground="Red"  FontWeight ="UltraBold"  Height="30" Margin="15,158,0,0" TextWrapping="Wrap" Text="Dynamic Stages" VerticalAlignment="Top" Width="170"/>
         <TextBlock x:Name="textBlock2_Copy1" HorizontalAlignment="Left" FontSize="18" Foreground="Red"  FontWeight ="UltraBold"  Height="30" Margin="15,242,0,0" TextWrapping="Wrap" Text="Clustered Stages" VerticalAlignment="Top" Width="170"/>
-        <Ellipse Fill="{Binding ExamineCLResult}" HorizontalAlignment="Left" Height="65" Margin="393,224,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="{Binding ClusterizationFinished}" HorizontalAlignment="Left" Height="65" Margin="293,224,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <Ellipse Fill="{Binding EvmCreationFinished}" HorizontalAlignment="Left" Height="65" Margin="193,224,0,0" Stroke="Black" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
-        <TextBlock x:Name="textBlock1_Copy9" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="30" Margin="307,248,0,0" TextWrapping="Wrap" Text="Clustering" VerticalAlignment="Top" Width="55"/>
-        <TextBlock x:Name="textBlock1_Copy10" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="40" Margin="215,236,0,0" TextWrapping="Wrap" Text="Build EVM Matrix" VerticalAlignment="Top" Width="41"/>
-        <TextBlock x:Name="textBlock1_Copy8" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="30" Margin="411,243,0,0" TextWrapping="Wrap" Text="Examine Results" VerticalAlignment="Top" Width="55"/>
+        <Ellipse Fill="{Binding ExamineCLResult}" HorizontalAlignment="Left" Height="65" Margin="393,224,0,0" Stroke="white" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding ClusterizationFinished}" HorizontalAlignment="Left" Height="65" Margin="293,224,0,0" Stroke="white" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <Ellipse Fill="{Binding EvmCreationFinished}" HorizontalAlignment="Left" Height="65" Margin="193,224,0,0" Stroke="white" StrokeThickness="4" VerticalAlignment="Top" Width="75"/>
+        <TextBlock x:Name="textBlock1_Copy9"  Foreground="White" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="30" Margin="307,248,0,0" TextWrapping="Wrap" Text="Clustering" VerticalAlignment="Top" Width="55"/>
+        <TextBlock x:Name="textBlock1_Copy10"  Foreground="White" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="40" Margin="215,236,0,0" TextWrapping="Wrap" Text="Build EVM Matrix" VerticalAlignment="Top" Width="41"/>
+        <TextBlock x:Name="textBlock1_Copy8"   Foreground="White" FontWeight="Bold" FontSize="10" HorizontalAlignment="Left" Height="30" Margin="411,243,0,0" TextWrapping="Wrap" Text="Examine Results" VerticalAlignment="Top" Width="55"/>
     </Grid>
 </Window>
