@@ -261,6 +261,10 @@ namespace PlagiarismUI.ViewModels
 
         static Thread newPipe;
 
+        public Thread GetNewPipeThread()
+        {
+            return newPipe;
+        }
         public LoadingWindowViewModel()
         {
             newPipe = new Thread(ConnectLoadingPipe);

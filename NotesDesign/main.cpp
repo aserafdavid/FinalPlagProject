@@ -14,7 +14,7 @@
 using namespace std;
 using namespace arma;
 
-
+string ResultsVersionPath = "";
 
 Pipe p(0), L(1), Pipe_UpdateUI(2);
 
@@ -76,19 +76,21 @@ void TerminateIfNeeds(void)
 
 void BackgroundEngine(string argv)
 {
-
+	
 	path = argv;
-	string ext = "x64\\Debug\\PlagiarismDetection.exe";
+	//path = "D:\\RunPlag\\PlagiarismDetection.exe";
+	string ext = "PlagiarismDetection.exe";
 	if (path != ext &&
 		path.size() > ext.size() &&
 		path.substr(path.size() - ext.size()) == ext)
 		path = path.substr(0, path.size() - ext.size());
 
 	
-	if (Setinfrastructure(&path))
+	if (Setinfrastructure(path))
 	{
-		Global_PathToTempFiles = path;
-		cout << Global_PathToTempFiles;
+		ResultsVersionPath = path;
+		//Global_PathToTempFiles = path;
+		//cout << Global_PathToTempFiles;
 		CLogger::SetLogPath(path);
 		CText ct(fileNamePath, StopwordsNamePath, path, ChosenAprroachModel, segSize, NgramSize, PreferedClustersNumber);
 	}
@@ -156,9 +158,27 @@ void UpdateStates(pipe_out State)
 
 		case FinishLoadingStage:
 		{
+			//ResultsVersionPath
+
+
+			temp = new char[ResultsVersionPath.size() + 1];
+			strcpy(temp, ResultsVersionPath.c_str());
+
+			//DWORD nBufferLength = MAX_PATH;
+			//char szCurrentDirectory[MAX_PATH + 1];
+			//GetCurrentDirectory(nBufferLength, szCurrentDirectory);
+			//szCurrentDirectory[MAX_PATH + 1] = '\0';
+
 			temp = new char[path.size() + 1];
 			strcpy(temp, path.c_str());
+
+			//printf("-----------------david-------------\n");
+			//cout << "path=" << path << endl;
+			//cout << Global_PathForSending;
+			//printf("temp = %s", temp);
+			//printf("-----------------david-------------\n");
 			Pipe_UpdateUI.sendMessageToGraphics("FinishLoadingStage");
+			//cout << "Adir say: " << szCurrentDirectory << endl;
 			Pipe_UpdateUI.sendMessageToGraphics(temp);
 			Pipe_UpdateUI.getMessageFromGraphics();
 		}break;
@@ -188,8 +208,7 @@ int main(int argc, const char **argv) {
 	ShowWindow(hWnd, SW_HIDE);
 #endif // DEBUG
 
-
-
+	printf("%d %s", argc,argv[0]);
 	static bool FirstTimePipeInit = false;
 	bool CloseApp = false;
 	bool isOnLoadingStage = false;

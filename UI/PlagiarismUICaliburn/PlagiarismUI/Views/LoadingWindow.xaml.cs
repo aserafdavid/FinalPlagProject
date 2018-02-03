@@ -74,6 +74,9 @@ namespace PlagiarismUI.Views
             {
                 ConnectionManager.GetEnginePipe().sendEngineMove("QUIT");
                 ConnectionManager.GetEnginePipe().getEngineMessage();
+                var DC = this.DataContext as LoadingWindowViewModel;
+                DC.GetNewPipeThread().Abort();
+                
             }
 
             XClicked = true;
