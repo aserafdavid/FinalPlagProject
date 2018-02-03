@@ -540,6 +540,8 @@ void CText::SetApproximationErrorBetweenSegments(void)
 			double res = norm(T1*TMmeas - T2);
 			res /= norm(T1);
 			res /= pow(10, 12);/*Normalize Values*/
+			if (isnan(res))
+				res = 0;
 			mvDsSegments[i]->SetApproximationError(res);
 			// fill correct double vector with Approximation Errors
 			mmSegmentsApproximationError[i] = res;
