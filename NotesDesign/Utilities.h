@@ -26,7 +26,7 @@ namespace
 	//using namespace arma;
 	using namespace std;
 	static string Global_PathToTempFiles;
-
+	static string Global_PathForSending;
 	// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
 	//const std::string CurrentDateTime()
 	std::string CurrentDateTime()
@@ -85,9 +85,9 @@ namespace
 	}
 
 	/*remove to Setinfrastructure function */
-	static bool Setinfrastructure(string* TempFilesPath)
+	static bool Setinfrastructure(string& TempFilesPath)
 	{
-		string tempFiles = *TempFilesPath;
+		string tempFiles = TempFilesPath;
 		tempFiles.append("tempFiles");
 		//Remove temp directory before generate new files;
 		//_rmdir(tempFiles.c_str());
@@ -105,6 +105,7 @@ namespace
 		replace(versionPath.begin(), versionPath.end(), '-', '_');
 		replace(versionPath.begin(), versionPath.end(), '.', '-');
 
+		Global_PathForSending = versionPath;
 		//create all sub directories
 		if (!dirExists(versionPath))
 		{
@@ -140,7 +141,7 @@ namespace
 		//DeleteAllFilesInFolder("c:\\CFM's\\*.txt");
 		//DeleteAllFilesInFolder("c:\\CFM's\\*.txt");
 
-		*TempFilesPath = versionPath;
+		TempFilesPath = versionPath;
 		return true;
 	}
 
