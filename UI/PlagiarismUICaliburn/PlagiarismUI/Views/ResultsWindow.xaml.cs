@@ -96,9 +96,7 @@ namespace PlagiarismUI.Views
             
             if (ConnectionManager.AlgToRun == "Clustered" || ConnectionManager.AlgToRun == "BOTH")
             {
-                
                 LoadDSChart();
-
             }
             if (ConnectionManager.AlgToRun == "Dynamical" || ConnectionManager.AlgToRun == "BOTH")
             {
@@ -138,7 +136,8 @@ namespace PlagiarismUI.Views
                 Source[i] = new KeyValuePair<int, double>(DSstrings[i].Id, DSstrings[i].Data);
             }
             ((LineSeries)MyChart.Series[0]).ItemsSource = Source;
-         
+
+        
 
         }
 

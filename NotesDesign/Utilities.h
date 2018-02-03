@@ -134,6 +134,7 @@ namespace
 			!dirExists(versionPath + "//TM's") ||
 			!dirExists(versionPath + "//Results") )
 			return false;
+		cout << versionPath;
 
 		///*remove  last run files*/
 		//DeleteAllFilesInFolder("c:\\CFM's\\*.txt");

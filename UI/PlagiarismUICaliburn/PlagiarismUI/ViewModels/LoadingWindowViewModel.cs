@@ -21,6 +21,7 @@ namespace PlagiarismUI.ViewModels
         {
             ConnectionManager.ConnectEnginePipe();
             ConnectionManager.ConnectUIenginePipe();
+            
             while (true)//TODO change from true
             {
 
@@ -29,115 +30,206 @@ namespace PlagiarismUI.ViewModels
                 {
 
                     case "OmitStopWordsStepFinished":
-                        OmitStopWordsStepFinished = Brushes.Blue;
+                        OmitStopWordsStepFinished = Brushes.GreenYellow;
+                        OmitStopWordsStepFinishedText = Brushes.Black;
                         //ShowResults = true;
                         //return;
                         break;
                     case "DevideTextToSegStepFinished":
-                        OmitStopWordsStepFinished = Brushes.Blue;
-                        DevideTextToSegStepFinished = Brushes.Blue;
+                        OmitStopWordsStepFinished   = Brushes.GreenYellow;
+                        DevideTextToSegStepFinished = Brushes.GreenYellow;
+                        OmitStopWordsStepFinishedText = Brushes.Black;
+                        DevideTextToSegStepFinishedText = Brushes.Black;
                         break;
                     case "ExtractNgramsStepFinished":
-                        OmitStopWordsStepFinished = Brushes.Blue;
-                        DevideTextToSegStepFinished = Brushes.Blue;
-                        ExtractNgramsStepFinished = Brushes.Blue;
+                        OmitStopWordsStepFinished =   Brushes.GreenYellow;
+                        DevideTextToSegStepFinished = Brushes.GreenYellow;
+                        ExtractNgramsStepFinished =   Brushes.GreenYellow;
+                        OmitStopWordsStepFinishedText = Brushes.Black;
+                        DevideTextToSegStepFinishedText = Brushes.Black;
+                        ExtractNgramsStepFinishedText = Brushes.Black;
                         break;
                     case "BuildVocStepFinished":
-                        OmitStopWordsStepFinished = Brushes.Blue;
-                        DevideTextToSegStepFinished = Brushes.Blue;
-                        ExtractNgramsStepFinished = Brushes.Blue;
-                        BuildVocStepFinished = Brushes.Blue;
+                        OmitStopWordsStepFinished =   Brushes.GreenYellow;
+                        DevideTextToSegStepFinished = Brushes.GreenYellow;
+                        ExtractNgramsStepFinished =   Brushes.GreenYellow;
+                        BuildVocStepFinished =        Brushes.GreenYellow;
+                        OmitStopWordsStepFinishedText = Brushes.Black;
+                        DevideTextToSegStepFinishedText = Brushes.Black;
+                        ExtractNgramsStepFinishedText = Brushes.Black;
+                        BuildVocStepFinishedText = Brushes.Black;
                         break;
                     case "BuldCFMsStepFinished":
-                        OmitStopWordsStepFinished = Brushes.Blue;
-                        DevideTextToSegStepFinished = Brushes.Blue;
-                        ExtractNgramsStepFinished = Brushes.Blue;
-                        BuildVocStepFinished = Brushes.Blue;
-                        BuldCFMsStepFinished = Brushes.Blue;
+                        OmitStopWordsStepFinished = Brushes.GreenYellow;
+                        DevideTextToSegStepFinished = Brushes.GreenYellow;
+                        ExtractNgramsStepFinished = Brushes.GreenYellow;
+                        BuildVocStepFinished = Brushes.GreenYellow;
+                        BuldCFMsStepFinished = Brushes.GreenYellow;
+                        OmitStopWordsStepFinishedText = Brushes.Black;
+                        DevideTextToSegStepFinishedText = Brushes.Black;
+                        ExtractNgramsStepFinishedText = Brushes.Black;
+                        BuildVocStepFinishedText = Brushes.Black;
+                        BuldCFMsStepFinishedText = Brushes.Black;
                         break;
+
                     case "BuildSPsStepFinished":
-                        OmitStopWordsStepFinished = Brushes.Blue;
-                        DevideTextToSegStepFinished = Brushes.Blue;
-                        ExtractNgramsStepFinished = Brushes.Blue;
-                        BuildVocStepFinished = Brushes.Blue;
-                        BuldCFMsStepFinished = Brushes.Blue;
-                        BuildSPsStepFinished = Brushes.Blue;
+                        OmitStopWordsStepFinished = Brushes.GreenYellow;
+                        DevideTextToSegStepFinished = Brushes.GreenYellow;
+                        ExtractNgramsStepFinished = Brushes.GreenYellow;
+                        BuildVocStepFinished = Brushes.GreenYellow;
+                        BuldCFMsStepFinished = Brushes.GreenYellow;
+                        BuildSPsStepFinished = Brushes.GreenYellow;
+
+                        OmitStopWordsStepFinishedText = Brushes.Black;
+                        DevideTextToSegStepFinishedText = Brushes.Black;
+                        ExtractNgramsStepFinishedText = Brushes.Black;
+                        BuildVocStepFinishedText= Brushes.Black;
+                        BuldCFMsStepFinishedText= Brushes.Black;
+                        BuildSPsStepFinishedText= Brushes.Black;
                         break;
 
 
                     case "BuildQsStepFinished":
-                        OmitStopWordsStepFinished = Brushes.Blue;
-                        DevideTextToSegStepFinished = Brushes.Blue;
-                        ExtractNgramsStepFinished = Brushes.Blue;
-                        BuildVocStepFinished = Brushes.Blue;
-                        BuldCFMsStepFinished = Brushes.Blue;
-                        BuildSPsStepFinished = Brushes.Blue;
-                        BuildQsStepFinished = Brushes.Blue;
+                        OmitStopWordsStepFinished = Brushes.GreenYellow;
+                        DevideTextToSegStepFinished = Brushes.GreenYellow;
+                        ExtractNgramsStepFinished = Brushes.GreenYellow;
+                        BuildVocStepFinished = Brushes.GreenYellow;
+                        BuldCFMsStepFinished = Brushes.GreenYellow;
+                        BuildSPsStepFinished = Brushes.GreenYellow;
+                        BuildQsStepFinished = Brushes.GreenYellow;
+
+                        OmitStopWordsStepFinishedText = Brushes.Black;
+                        DevideTextToSegStepFinishedText = Brushes.Black;
+                        ExtractNgramsStepFinishedText = Brushes.Black;
+                        BuildVocStepFinishedText = Brushes.Black;
+                        BuldCFMsStepFinishedText = Brushes.Black;
+                        BuildSPsStepFinishedText = Brushes.Black;
+                        BuildQsStepFinishedText = Brushes.Black;
                         break;
+
                     case "CalcAQMeasureStepFinished":
-                        OmitStopWordsStepFinished = Brushes.Blue;
-                        DevideTextToSegStepFinished = Brushes.Blue;
-                        ExtractNgramsStepFinished = Brushes.Blue;
-                        BuildVocStepFinished = Brushes.Blue;
-                        BuldCFMsStepFinished = Brushes.Blue;
-                        BuildSPsStepFinished = Brushes.Blue;
-                        BuildQsStepFinished = Brushes.Blue;
-                        CalcAQMeasureStepFinished = Brushes.Blue;
+                        OmitStopWordsStepFinished = Brushes.GreenYellow;
+                        DevideTextToSegStepFinished = Brushes.GreenYellow;
+                        ExtractNgramsStepFinished = Brushes.GreenYellow;
+                        BuildVocStepFinished = Brushes.GreenYellow;
+                        BuldCFMsStepFinished = Brushes.GreenYellow;
+                        BuildSPsStepFinished = Brushes.GreenYellow;
+                        BuildQsStepFinished = Brushes.GreenYellow;
+                        CalcAQMeasureStepFinished = Brushes.GreenYellow;
+
+                        OmitStopWordsStepFinishedText = Brushes.Black;
+                        DevideTextToSegStepFinishedText = Brushes.Black;
+                        ExtractNgramsStepFinishedText = Brushes.Black;
+                        BuildVocStepFinishedText = Brushes.Black;
+                        BuldCFMsStepFinishedText = Brushes.Black;
+                        BuildSPsStepFinishedText = Brushes.Black;
+                        BuildQsStepFinishedText = Brushes.Black;
+                        CalcAQMeasureStepFinishedText = Brushes.Black;
+
                         break;
                     case "CalcApproxMeasStepFinished":
-                        OmitStopWordsStepFinished = Brushes.Blue;
-                        DevideTextToSegStepFinished = Brushes.Blue;
-                        ExtractNgramsStepFinished = Brushes.Blue;
-                        BuildVocStepFinished = Brushes.Blue;
-                        BuldCFMsStepFinished = Brushes.Blue;
-                        BuildSPsStepFinished = Brushes.Blue;
-                        BuildQsStepFinished = Brushes.Blue;
-                        CalcAQMeasureStepFinished = Brushes.Blue;
-                        CalcApproxMeasStepFinished = Brushes.Blue;
-                        break;
-                    case "ExamineResult":
-                        OmitStopWordsStepFinished = Brushes.Blue;
-                        DevideTextToSegStepFinished = Brushes.Blue;
-                        ExtractNgramsStepFinished = Brushes.Blue;
-                        BuildVocStepFinished = Brushes.Blue;
-                        BuldCFMsStepFinished = Brushes.Blue;
-                        BuildSPsStepFinished = Brushes.Blue;
-                        BuildQsStepFinished = Brushes.Blue;
-                        CalcAQMeasureStepFinished = Brushes.Blue;
-                        CalcApproxMeasStepFinished = Brushes.Blue;
-                        ExamineResult = Brushes.Blue;
+                        OmitStopWordsStepFinished = Brushes.GreenYellow;
+                        DevideTextToSegStepFinished = Brushes.GreenYellow;
+                        ExtractNgramsStepFinished = Brushes.GreenYellow;
+                        BuildVocStepFinished = Brushes.GreenYellow;
+                        BuldCFMsStepFinished = Brushes.GreenYellow;
+                        BuildSPsStepFinished = Brushes.GreenYellow;
+                        BuildQsStepFinished = Brushes.GreenYellow;
+                        CalcAQMeasureStepFinished = Brushes.GreenYellow;      
+                        CalcApproxMeasStepFinished = Brushes.GreenYellow;
+
+                        OmitStopWordsStepFinishedText = Brushes.Black;
+                        DevideTextToSegStepFinishedText = Brushes.Black;
+                        ExtractNgramsStepFinishedText = Brushes.Black;
+                        BuldCFMsStepFinishedText= Brushes.Black;
+                        BuildSPsStepFinishedText= Brushes.Black;
+                        BuildVocStepFinishedText = Brushes.Black;
+                        BuildQsStepFinishedText = Brushes.Black;
+                        CalcAQMeasureStepFinishedText = Brushes.Black;
+                        CalcApproxMeasStepFinishedText = Brushes.Black;
+                        break;                                                
+                    case "ExamineResult":                                     
+                        OmitStopWordsStepFinished = Brushes.GreenYellow;      
+                        DevideTextToSegStepFinished = Brushes.GreenYellow;    
+                        ExtractNgramsStepFinished = Brushes.GreenYellow;      
+                        BuildVocStepFinished =  Brushes.GreenYellow;           
+                        BuldCFMsStepFinished = Brushes.GreenYellow;           
+                        BuildSPsStepFinished = Brushes.GreenYellow;
+                        BuildQsStepFinished = Brushes.GreenYellow;
+                        CalcAQMeasureStepFinished = Brushes.GreenYellow;
+                        CalcApproxMeasStepFinished = Brushes.GreenYellow;
+                        ExamineResult = Brushes.GreenYellow;
+
+                        OmitStopWordsStepFinishedText = Brushes.Black;
+                        DevideTextToSegStepFinishedText = Brushes.Black;
+                        ExtractNgramsStepFinishedText = Brushes.Black;
+                        BuildVocStepFinishedText = Brushes.Black;
+                        BuldCFMsStepFinishedText = Brushes.Black;
+                        BuildSPsStepFinishedText = Brushes.Black;
+                        BuildQsStepFinishedText = Brushes.Black;
+                        CalcAQMeasureStepFinishedText = Brushes.Black;
+                        CalcApproxMeasStepFinishedText = Brushes.Black;
+                        ExamineResultText = Brushes.Black;
                         break;
 
 
                     case "EvmCreationFinished":
-                        OmitStopWordsStepFinished = Brushes.Blue;
-                        DevideTextToSegStepFinished = Brushes.Blue;
-                        ExtractNgramsStepFinished = Brushes.Blue;
-                        BuildVocStepFinished = Brushes.Blue;
-                        BuldCFMsStepFinished = Brushes.Blue;
-                        BuildSPsStepFinished = Brushes.Blue;
-                        EvmCreationFinished = Brushes.Blue;
+                        OmitStopWordsStepFinished = Brushes.GreenYellow;
+                        DevideTextToSegStepFinished = Brushes.GreenYellow;
+                        ExtractNgramsStepFinished = Brushes.GreenYellow;
+                        BuildVocStepFinished = Brushes.GreenYellow;
+                        BuldCFMsStepFinished = Brushes.GreenYellow;
+                        BuildSPsStepFinished = Brushes.GreenYellow;
+                        EvmCreationFinished = Brushes.GreenYellow;
+
+                        OmitStopWordsStepFinishedText = Brushes.Black;
+                        DevideTextToSegStepFinishedText = Brushes.Black;
+                        ExtractNgramsStepFinishedText = Brushes.Black;
+                        BuildVocStepFinishedText = Brushes.Black;
+                        BuldCFMsStepFinishedText = Brushes.Black;
+                        BuildSPsStepFinishedText = Brushes.Black;
+                        EvmCreationFinishedText = Brushes.Black;
                         break;
                     case "ClusterizationFinished":
-                        OmitStopWordsStepFinished = Brushes.Blue;
-                        DevideTextToSegStepFinished = Brushes.Blue;
-                        ExtractNgramsStepFinished = Brushes.Blue;
-                        BuildVocStepFinished = Brushes.Blue;
-                        BuldCFMsStepFinished = Brushes.Blue;
-                        BuildSPsStepFinished = Brushes.Blue;
-                        EvmCreationFinished = Brushes.Blue;
-                        ClusterizationFinished = Brushes.Blue;
+                        OmitStopWordsStepFinished = Brushes.GreenYellow;
+                        DevideTextToSegStepFinished = Brushes.GreenYellow;
+                        ExtractNgramsStepFinished = Brushes.GreenYellow;
+                        BuildVocStepFinished = Brushes.GreenYellow;
+                        BuldCFMsStepFinished = Brushes.GreenYellow;
+                        BuildSPsStepFinished = Brushes.GreenYellow;
+                        EvmCreationFinished = Brushes.GreenYellow;
+                        ClusterizationFinished = Brushes.GreenYellow;
+
+
+                        OmitStopWordsStepFinishedText = Brushes.Black;
+                        DevideTextToSegStepFinishedText = Brushes.Black;
+                        ExtractNgramsStepFinishedText = Brushes.Black;
+                        BuildVocStepFinishedText = Brushes.Black;
+                        BuldCFMsStepFinishedText = Brushes.Black;
+                        BuildSPsStepFinishedText = Brushes.Black;
+                        EvmCreationFinishedText = Brushes.Black;
+                        ClusterizationFinishedText = Brushes.Black;
                         break;
                     case "ExamineCLResult":
-                        OmitStopWordsStepFinished = Brushes.Blue;
-                        DevideTextToSegStepFinished = Brushes.Blue;
-                        ExtractNgramsStepFinished = Brushes.Blue;
-                        BuildVocStepFinished = Brushes.Blue;
-                        BuldCFMsStepFinished = Brushes.Blue;
-                        BuildSPsStepFinished = Brushes.Blue;
-                        EvmCreationFinished = Brushes.Blue;
-                        ClusterizationFinished = Brushes.Blue;
-                        ExamineCLResult = Brushes.Blue;
+                        OmitStopWordsStepFinished = Brushes.GreenYellow;
+                        DevideTextToSegStepFinished = Brushes.GreenYellow;
+                        ExtractNgramsStepFinished = Brushes.GreenYellow;
+                        BuildVocStepFinished = Brushes.GreenYellow;
+                        BuldCFMsStepFinished = Brushes.GreenYellow;
+                        BuildSPsStepFinished = Brushes.GreenYellow;
+                        EvmCreationFinished = Brushes.GreenYellow;
+                        ClusterizationFinished = Brushes.GreenYellow;
+                        ExamineCLResult = Brushes.GreenYellow;
+
+                        OmitStopWordsStepFinishedText = Brushes.Black;
+                        DevideTextToSegStepFinishedText = Brushes.Black;
+                        ExtractNgramsStepFinishedText = Brushes.Black;
+                        BuildVocStepFinishedText = Brushes.Black;
+                        BuldCFMsStepFinishedText = Brushes.Black;
+                        BuildSPsStepFinishedText = Brushes.Black;
+                        EvmCreationFinishedText = Brushes.Black;
+                        ClusterizationFinishedText = Brushes.Black;
+                        ExamineCLResultText = Brushes.Black;
                         break;
 
 
@@ -178,22 +270,38 @@ namespace PlagiarismUI.ViewModels
 
 
         }
+        private Brush _OmitStopWordsStepFinishedText = Brushes.White;
+        private Brush _DevideTextToSegStepFinishedText = Brushes.White;
+        private Brush _ExtractNgramsStepFinishedText = Brushes.White;
+        private Brush _BuildVocStepFinishedText = Brushes.White;
+        private Brush _BuldCFMsStepFinishedText = Brushes.White;
+        private Brush _BuildSPsStepFinishedText = Brushes.White;
 
-        private Brush _OmitStopWordsStepFinished = Brushes.White;
-        private Brush _DevideTextToSegStepFinished = Brushes.White;
-        private Brush _ExtractNgramsStepFinished = Brushes.White;
-        private Brush _BuildVocStepFinished = Brushes.White;
-        private Brush _BuldCFMsStepFinished = Brushes.White;
-        private Brush _BuildSPsStepFinished = Brushes.White;
+        private Brush _BuildQsStepFinishedText = Brushes.White;
+        private Brush _CalcAQMeasureStepFinishedText = Brushes.White;
+        private Brush _CalcApproxMeasStepFinishedText = Brushes.White;
+        private Brush _ExamineResultText = Brushes.White;
 
-        private Brush _BuildQsStepFinished = Brushes.White;
-        private Brush _CalcAQMeasureStepFinished = Brushes.White;
-        private Brush _CalcApproxMeasStepFinished = Brushes.White;
-        private Brush _ExamineResult = Brushes.White;
+        private Brush _EvmCreationFinishedText = Brushes.White;
+        private Brush _ClusterizationFinishedText = Brushes.White;
+        private Brush _ExamineCLResultText = Brushes.White;
 
-        private Brush _EvmCreationFinished = Brushes.White;
-        private Brush _ClusterizationFinished = Brushes.White;
-        private Brush _ExamineCLResult = Brushes.White;
+        //GreenYellow
+        private Brush _OmitStopWordsStepFinished = Brushes.Black;
+        private Brush _DevideTextToSegStepFinished = Brushes.Black;
+        private Brush _ExtractNgramsStepFinished = Brushes.Black;
+        private Brush _BuildVocStepFinished = Brushes.Black;
+        private Brush _BuldCFMsStepFinished = Brushes.Black;
+        private Brush _BuildSPsStepFinished = Brushes.Black;
+
+        private Brush _BuildQsStepFinished = Brushes.Black;
+        private Brush _CalcAQMeasureStepFinished = Brushes.Black;
+        private Brush _CalcApproxMeasStepFinished = Brushes.Black;
+        private Brush _ExamineResult = Brushes.Black;
+
+        private Brush _EvmCreationFinished = Brushes.Black;
+        private Brush _ClusterizationFinished = Brushes.Black;
+        private Brush _ExamineCLResult = Brushes.Black;
 
         private bool _ShowResults = false;
 
@@ -225,6 +333,18 @@ namespace PlagiarismUI.ViewModels
                 RaisePropertyChanged("EvmCreationFinished");
             }
         }
+        public Brush EvmCreationFinishedText
+        {
+            get
+            {
+                return _EvmCreationFinishedText;
+            }
+            set
+            {
+                _EvmCreationFinishedText = value;
+                RaisePropertyChanged("EvmCreationFinishedText");
+            }
+        }
         public Brush ClusterizationFinished
         {
             get
@@ -235,6 +355,18 @@ namespace PlagiarismUI.ViewModels
             {
                 _ClusterizationFinished = value;
                 RaisePropertyChanged("ClusterizationFinished");
+            }
+        }
+        public Brush ClusterizationFinishedText
+        {
+            get
+            {
+                return _ClusterizationFinishedText;
+            }
+            set
+            {
+                _ClusterizationFinishedText = value;
+                RaisePropertyChanged("ClusterizationFinishedText");
             }
         }
         public Brush ExamineCLResult
@@ -249,6 +381,18 @@ namespace PlagiarismUI.ViewModels
                 RaisePropertyChanged("ExamineCLResult");
             }
         }
+        public Brush ExamineCLResultText
+        {
+            get
+            {
+                return _ExamineCLResultText;
+            }
+            set
+            {
+                _ExamineCLResultText = value;
+                RaisePropertyChanged("ExamineCLResultText");
+            }
+        }
         public Brush OmitStopWordsStepFinished
         {
             get
@@ -259,6 +403,18 @@ namespace PlagiarismUI.ViewModels
             {
                 _OmitStopWordsStepFinished = value;
                 RaisePropertyChanged("OmitStopWordsStepFinished");
+            }
+        }
+        public Brush OmitStopWordsStepFinishedText
+        {
+            get
+            {
+                return _OmitStopWordsStepFinishedText;
+            }
+            set
+            {
+                _OmitStopWordsStepFinishedText = value;
+                RaisePropertyChanged("OmitStopWordsStepFinishedText");
             }
         }
         public Brush BuldCFMsStepFinished
@@ -273,6 +429,18 @@ namespace PlagiarismUI.ViewModels
                 RaisePropertyChanged("BuldCFMsStepFinished");
             }
         }
+        public Brush BuldCFMsStepFinishedText
+        {
+            get
+            {
+                return _BuldCFMsStepFinishedText;
+            }
+            set
+            {
+                _BuldCFMsStepFinishedText = value;
+                RaisePropertyChanged("BuldCFMsStepFinishedText");
+            }
+        }
         public Brush ExtractNgramsStepFinished
         {
             get
@@ -283,6 +451,18 @@ namespace PlagiarismUI.ViewModels
             {
                 _ExtractNgramsStepFinished = value;
                 RaisePropertyChanged("ExtractNgramsStepFinished");
+            }
+        }
+        public Brush ExtractNgramsStepFinishedText
+        {
+            get
+            {
+                return _ExtractNgramsStepFinishedText;
+            }
+            set
+            {
+                _ExtractNgramsStepFinishedText = value;
+                RaisePropertyChanged("ExtractNgramsStepFinishedText");
             }
         }
         public Brush ExamineResult
@@ -297,6 +477,18 @@ namespace PlagiarismUI.ViewModels
                 RaisePropertyChanged("ExamineResult");
             }
         }
+        public Brush ExamineResultText
+        {
+            get
+            {
+                return _ExamineResultText;
+            }
+            set
+            {
+                _ExamineResultText = value;
+                RaisePropertyChanged("ExamineResultText");
+            }
+        }
         public Brush DevideTextToSegStepFinished
         {
             get
@@ -307,6 +499,18 @@ namespace PlagiarismUI.ViewModels
             {
                 _DevideTextToSegStepFinished = value;
                 RaisePropertyChanged("DevideTextToSegStepFinished");
+            }
+        }
+        public Brush DevideTextToSegStepFinishedText
+        {
+            get
+            {
+                return _DevideTextToSegStepFinishedText;
+            }
+            set
+            {
+                _DevideTextToSegStepFinishedText = value;
+                RaisePropertyChanged("DevideTextToSegStepFinishedText");
             }
         }
         public Brush CalcApproxMeasStepFinished
@@ -321,6 +525,18 @@ namespace PlagiarismUI.ViewModels
                 RaisePropertyChanged("CalcApproxMeasStepFinished");
             }
         }
+        public Brush CalcApproxMeasStepFinishedText
+        {
+            get
+            {
+                return _CalcApproxMeasStepFinishedText;
+            }
+            set
+            {
+                _CalcApproxMeasStepFinishedText = value;
+                RaisePropertyChanged("CalcApproxMeasStepFinishedText");
+            }
+        }
         public Brush BuildSPsStepFinished
         {
             get
@@ -331,6 +547,19 @@ namespace PlagiarismUI.ViewModels
             {
                 _BuildSPsStepFinished = value;
                 RaisePropertyChanged("BuildSPsStepFinished");
+            }
+        }
+
+        public Brush BuildSPsStepFinishedText
+        {
+            get
+            {
+                return _BuildSPsStepFinishedText;
+            }
+            set
+            {
+                _BuildSPsStepFinishedText = value;
+                RaisePropertyChanged("BuildSPsStepFinishedText");
             }
         }
         public Brush BuildQsStepFinished
@@ -345,6 +574,18 @@ namespace PlagiarismUI.ViewModels
                 RaisePropertyChanged("BuildQsStepFinished");
             }
         }
+        public Brush BuildQsStepFinishedText
+        {
+            get
+            {
+                return _BuildQsStepFinishedText;
+            }
+            set
+            {
+                _BuildQsStepFinishedText = value;
+                RaisePropertyChanged("BuildQsStepFinishedText");
+            }
+        }
         public Brush CalcAQMeasureStepFinished
         {
             get
@@ -357,6 +598,18 @@ namespace PlagiarismUI.ViewModels
                 RaisePropertyChanged("CalcAQMeasureStepFinished");
             }
         }
+        public Brush CalcAQMeasureStepFinishedText
+        {
+            get
+            {
+                return _CalcAQMeasureStepFinishedText;
+            }
+            set
+            {
+                _CalcAQMeasureStepFinishedText = value;
+                RaisePropertyChanged("CalcAQMeasureStepFinishedText");
+            }
+        }
         public Brush BuildVocStepFinished
         {
             get
@@ -367,6 +620,18 @@ namespace PlagiarismUI.ViewModels
             {
                 _BuildVocStepFinished = value;
                 RaisePropertyChanged("BuildVocStepFinished");
+            }
+        }
+        public Brush BuildVocStepFinishedText
+        {
+            get
+            {
+                return _BuildVocStepFinishedText;
+            }
+            set
+            {
+                _BuildVocStepFinishedText = value;
+                RaisePropertyChanged("BuildVocStepFinishedText");
             }
         }
 

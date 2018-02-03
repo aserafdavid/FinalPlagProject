@@ -17,17 +17,23 @@
                 <Grid>
 
                     <DVC:Chart  Name="MyChart"  LegendTitle="Mid"   Margin="242,-30,0,47" Background="black" Foreground="white" Height="380" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="385">
+                        <DVC:Chart.Axes>
+                            <DVC:LinearAxis Orientation="Y" Title="Normalize Approximation Error"/>
+                            <DVC:LinearAxis Orientation="X" Title="Segment Number"/>
+                        </DVC:Chart.Axes>
                         <DVC:Chart.LegendStyle>
-                            <Style TargetType="Control">
+                            <Style TargetType="Control" >
                                 <Setter Property="Width" Value="0"/>
                                 <Setter Property="Height" Value="0"/>
                             </Style>
                         </DVC:Chart.LegendStyle>
                         <DVC:Chart.Series  >
-                            <DVC:LineSeries Foreground="white"  IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}" RenderTransformOrigin="0.547,0.461" Margin="0,-15,0,-17">
+                            <DVC:LineSeries Title="dsdsds" Foreground="white"  IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}" RenderTransformOrigin="0.547,0.461" Margin="0,-15,0,-17">
 
                             </DVC:LineSeries>
+
                         </DVC:Chart.Series>
+
                     </DVC:Chart>
                     <!--<Frame x:Name="frame" BorderThickness="10"  BorderBrush="Black" FontWeight="Bold" Content="Algorithm Details:" Margin="-3,0,392,102"/>-->
                     <Button x:Name="button" Content="Back To Main Window" HorizontalAlignment="Left" Height="45" Margin="12,330,0,0" VerticalAlignment="Top" Width="140" Click="BackToMain"/>

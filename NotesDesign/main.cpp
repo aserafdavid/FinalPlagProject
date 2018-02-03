@@ -88,6 +88,7 @@ void BackgroundEngine(string argv)
 	if (Setinfrastructure(&path))
 	{
 		Global_PathToTempFiles = path;
+		cout << Global_PathToTempFiles;
 		CLogger::SetLogPath(path);
 		CText ct(fileNamePath, StopwordsNamePath, path, ChosenAprroachModel, segSize, NgramSize, PreferedClustersNumber);
 	}
