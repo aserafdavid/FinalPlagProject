@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace PlagiarismUI
 {
@@ -32,22 +33,28 @@ namespace PlagiarismUI
         private bool _NgramGreaterThanSegmentError = false; 
         private bool _StopWordsEnabledCheckBoxChecked = true;
         private bool _ClusteredOrBothRunChecked = false;
-
-
+        private Brush _ExaminationLabelColor = Brushes.Red;
+        private Brush _ExaminationStopWordsLabelColor = Brushes.Red;
         #endregion
-
-        //public void save()
-        //{
-        //    saveData sd = new saveData();
-        //    sd.NGramSize = NgramSize;
-        //    sd.segSize = SegmentSize;
-        //    sd.TextName = PathToMainInputFile.Substring(PathToMainInputFile.LastIndexOf("/"));
-        //    sd.Language = ChoosenLanguage;
-        //}
 
 
         #region Properties
         /*Properties*/
+        public Brush ExaminationLabelColor
+        {
+            get { return _ExaminationLabelColor; }
+            set { _ExaminationLabelColor = value; RaisePropertyChanged("ExaminationLabelColor"); }
+        }
+        public Brush ExaminationStopWordsLabelColor
+        {
+            get { return _ExaminationStopWordsLabelColor; }
+            set { _ExaminationStopWordsLabelColor = value; RaisePropertyChanged("ExaminationStopWordsLabelColor"); }
+        }
+
+
+
+
+
         public bool AnalyzeEnabled
         {
             get { return _AnalyzeEnabled; }

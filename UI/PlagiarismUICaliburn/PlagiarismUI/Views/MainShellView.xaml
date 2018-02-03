@@ -38,7 +38,7 @@
                 </ToolTip>
             </Button.ToolTip>
         </Button>
-        <Label x:Name="PathToMainFile" Content="{Binding PathToMainInputFile}" Foreground="red"   HorizontalAlignment="Left" Height="25" Margin="16,46,0,0" VerticalAlignment="Top" Width="459" RenderTransformOrigin="0.476,0.2"/>
+        <Label x:Name="PathToMainFile" Content="{Binding PathToMainInputFile}" Foreground="{Binding ExaminationLabelColor}"   HorizontalAlignment="Left" Height="25" Margin="16,46,0,0" VerticalAlignment="Top" Width="459" RenderTransformOrigin="0.476,0.2"/>
         <Label x:Name="SegSizeLabel" Foreground="White" Content="Segment Size"  FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="15,72,0,0" VerticalAlignment="Top" Width="115"/>
 
         <Label x:Name="NgramSizeLabel" Foreground="White" Content="Ngram Size" FontWeight="Bold" HorizontalAlignment="Left" Height="30" Margin="14,113,0,0" VerticalAlignment="Top" Width="120"/>
@@ -80,7 +80,7 @@
                 </ToolTip>
             </Button.ToolTip>
         </Button>
-        <Label x:Name="PathToStopWordsFile" Content="{Binding PathToStopWordsFile}" Foreground="red"   HorizontalAlignment="Left" Height="25" Margin="20,278,0,0" VerticalAlignment="Top" Width="448" RenderTransformOrigin="0.476,0.2">
+        <Label x:Name="PathToStopWordsFile" Content="{Binding PathToStopWordsFile}" Foreground="{Binding ExaminationStopWordsLabelColor}"   HorizontalAlignment="Left" Height="25" Margin="20,278,0,0" VerticalAlignment="Top" Width="448" RenderTransformOrigin="0.476,0.2">
             <Label.Visibility>
                 <MultiBinding Converter="{StaticResource Converter}">
                     <Binding ElementName="Custom" Path="IsChecked" />
@@ -97,7 +97,7 @@
             </ComboBox.ToolTip>
         </ComboBox>
 
-        <Button x:Name="Run" IsEnabled="{Binding AnalyzeEnabled}" Content="Analyze Text" FontWeight="Bold"  Background="red" HorizontalAlignment="Left" Height="40" Margin="530,365,0,0" VerticalAlignment="Top" Width="90" Click="AnalyzeTextButton">
+        <Button x:Name="Run" IsEnabled="{Binding AnalyzeEnabled}" Content="Analyze Text" FontWeight="Bold"  Background="GreenYellow" HorizontalAlignment="Left" Height="40" Margin="530,365,0,0" VerticalAlignment="Top" Width="90" Click="AnalyzeTextButton">
             <Button.ToolTip>
                 <ToolTip>
                     <TextBlock>Runs the algorithm</TextBlock>
@@ -105,8 +105,8 @@
             </Button.ToolTip>
         </Button>
 
-        <TextBlock x:Name="InputSection" TextDecorations="Underline" FontWeight="Bold"  Foreground ="Blue" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Algorithm input Section:" VerticalAlignment="Top" Margin="20,0,0,0"/>
-        <TextBlock x:Name="StopWordsSection" TextDecorations="Underline" Foreground ="Blue" FontWeight="Bold"  HorizontalAlignment="Left" Height="15" Margin="10,189,0,0" TextWrapping="Wrap" Text="StopWords Input Section:" VerticalAlignment="Top" Width="150"/>
+        <TextBlock x:Name="InputSection" TextDecorations="Underline" FontWeight="Bold"  Foreground ="GreenYellow" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Algorithm input Section:" VerticalAlignment="Top" Margin="20,0,0,0"/>
+        <TextBlock x:Name="StopWordsSection" TextDecorations="Underline" Foreground ="GreenYellow" FontWeight="Bold"  HorizontalAlignment="Left" Height="15" Margin="10,189,0,0" TextWrapping="Wrap" Text="StopWords Input Section:" VerticalAlignment="Top" Width="150"/>
         <Image x:Name="image" Source="/Images/MainPageImage.jpg" HorizontalAlignment="Left" Height="142" Margin="485,190,0,0" VerticalAlignment="Top" Width="123" RenderTransformOrigin="0.607,0.783"/>
 
         <CheckBox x:Name="chkEnableSW" Content="CheckBox" HorizontalAlignment="Left" Height="18" Margin="17,166,0,0" VerticalAlignment="Top" Width="19"

@@ -6,6 +6,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
+using System.Windows.Media;
+using System.IO;
+
 namespace PlagiarismUI
 {
     /// <summary>
@@ -50,7 +53,27 @@ namespace PlagiarismUI
                 MessageBox.Show("Please Insert StopWords List File input or Choose an existing one \n Note: you can run algorithm without omitting stop words by unchecking the StopWords CheckBox", "Invalid input", MessageBoxButton.OK);
                 res = false;
             }
-            if (res)
+            StreamReader sr = new StreamReader(DC.PathToMainInputFile);
+            string line = sr.ReadLine();
+            int len = 0;
+            int required = int.Parse(DC.SegmentSize) * 2;
+            bool ValidSegSize = false; 
+            while (line != null && ValidSegSize == false)
+            {
+                len += line.Length;
+                if (len > required)
+                    ValidSegSize = true;
+
+               line = sr.ReadLine();
+            }
+            sr.Close();
+            if(!ValidSegSize)
+            {
+                MessageBox.Show("File should be at least twice bigger then seg Size", "Invalid input", MessageBoxButton.OK);
+                res = false;
+            }
+
+            if (res )
             {
                 
               
@@ -132,14 +155,29 @@ namespace PlagiarismUI
             // Get the selected file name and display in a TextBox 
             if (result == true)
             {
+
                 // Open document 
                 string filename = dlg.FileName;
+
+                if (filename.Substring(filename.Length - 4) != ".txt")
+                {
+
+                    MessageBox.Show("Please Choose a text File", "Invalid input", MessageBoxButton.OK);
+                    return;
+                }
                 var DC = this.DataContext as MainShellViewModel;
+
                 if ((sender as Button).Name == "FileBrowseStopWordsButton")
+                {
                     DC.PathToStopWordsFile = filename;
+                    DC.ExaminationStopWordsLabelColor = Brushes.YellowGreen;
+                }
                 else
+                {
                     DC.PathToMainInputFile = filename;
-               
+                    DC.ExaminationLabelColor = Brushes.YellowGreen;
+
+                }
             }
         }
 

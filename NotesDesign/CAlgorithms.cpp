@@ -6,6 +6,9 @@
 
 //using namespace Rcpp;
 
+
+
+
 /*The QR Algorithms
 input: NxN Matrix
 output: NxN after QR decomposition

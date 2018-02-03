@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <thread>
 #include "main.h"
+#include <locale>
 
 CText::CText(string InputFileName, string stopWordFilePATH,string PathToTempFile, AprroachModel Aprroach,
 				int SegmentSize, int NgramSize, int ClusterNumberRequested)
@@ -187,6 +188,22 @@ CText::~CText()
 	//CLogger::GetLogger()->Log(Err.GetErrMsg());
 }
 
+void ReplaceStringInPlace(std::string& subject, const std::string& search,
+                          const std::string& replace) {
+    size_t pos = 0;
+	string tempSubject = subject;
+
+	
+	std::transform(tempSubject.begin(), tempSubject.end(), tempSubject.begin(), ::tolower);
+
+    while((pos = tempSubject.find(search, pos)) != std::string::npos) {
+         subject.replace(pos, search.length(), replace);
+		 tempSubject.replace(pos, search.length(), replace);
+         pos += replace.length();
+    }
+}
+
+
 /*RemoveStopWordList:
 * The function using :
 *       mvStopWordList-contains stopwords List that have been readed from stopwords input file.
@@ -226,12 +243,15 @@ void CText::RemoveStopWordList(void)
 			}
 			while (!readStream.eof())
 			{
+
 				std::getline(readStream, lineData);
 				if (!lineData.empty())
 				{
 					for (int i = 0; i < mvStopWordList.size(); i++)
 					{
-						removeSubstrs(lineData, mvStopWordList[i]);
+						string res;
+						ReplaceStringInPlace(lineData, mvStopWordList[i], " ");
+						
 					}
 					writeStream << lineData << endl;
 				}
@@ -522,6 +542,7 @@ void CText::SetApproximationErrorBetweenSegments(void)
 			T2.load(mvDsSegments[i+1]->GetSegmentTmFileName());
 			double res = norm(T1*TMmeas - T2);
 			res /= norm(T1);
+			res /= pow(10, 12);/*Normalize Values*/
 			mvDsSegments[i]->SetApproximationError(res);
 			// fill correct double vector with Approximation Errors
 			mmSegmentsApproximationError[i] = res;
