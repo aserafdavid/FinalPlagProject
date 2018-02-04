@@ -132,24 +132,54 @@ void CText::BuildSegmentCFMandSPThreadCL()
 	}
 }
 
+string ExePath() {
+	char buffer[MAX_PATH];
+	GetModuleFileName(NULL, buffer, MAX_PATH);
+	string::size_type pos = string(buffer).find_last_of("\\/");
+	return string(buffer).substr(0, pos);
+}
+
 void CText::readStopWordFile(void)
 {
 	ifstream StopWordFile;
-	
 	if (!mfInputFile.empty() && mfStopWordFile!="EMPTY")
 	{
+		
 		string path = mPathToTempFiles;
 		string ext = "tempFiles";
+		string extra = "PlagiarismDetection.exe";
 		path = path.substr(0, path.size() - 30);
+		
+#ifndef RELEASE
+		string StopWordsPath = ExePath();
+		
+
+		StopWordsPath = StopWordsPath.substr(0, StopWordsPath.size() - extra.size());
+		//mfStopWordFile = StopWordsPath
 
 		if (mfStopWordFile == "ACADEMIC")
 		{
-			path.append("\\PlagiarismDetection\\StopWordsAcademic.txt");
+			StopWordsPath.append("\\StopWords\\StopWordsAcademic.txt");
+			StopWordFile.open(StopWordsPath);
+		}
+		else if (mfStopWordFile == "LITERATURE")
+		{
+			StopWordsPath.append("\\StopWords\\StopWordsLitrearture.txt");
+			StopWordFile.open(StopWordsPath);
+		}
+		else
+		{
+			StopWordFile.open(mfStopWordFile);
+		}
+#else
+		if (mfStopWordFile == "ACADEMIC")
+		{
+			path.append("\\StopWordsAcademic.txt");
 			StopWordFile.open(path);
 		}
 		else if (mfStopWordFile == "LITERATURE")
 		{
-			path.append("\\PlagiarismDetection\\StopWordsLitrearture.txt");
+			path.append("\\StopWordsLitrearture.txt");
 			StopWordFile.open(path);
 		}
 		else
@@ -157,8 +187,13 @@ void CText::readStopWordFile(void)
 			StopWordFile.open(mfStopWordFile);
 		}
 
+
+#endif
+
+
 		if (!StopWordFile.is_open())
 		{
+
 			CLogger::GetLogger()->Log("Error While trying ot read stopWords list");
 			exit(1);
 		}

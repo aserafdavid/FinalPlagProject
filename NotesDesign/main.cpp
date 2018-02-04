@@ -9,7 +9,7 @@
 #define _WIN32_WINNT 0x0500
 
 #define DEBUG
-
+#define RELEASE
 
 using namespace std;
 using namespace arma;
@@ -203,7 +203,7 @@ void UpdateStates(pipe_out State)
 
 int main(int argc, const char **argv) {
 
-#ifndef DEBUG
+#ifdef DEBUG
 	HWND hWnd = GetConsoleWindow();
 	ShowWindow(hWnd, SW_HIDE);
 #endif // DEBUG

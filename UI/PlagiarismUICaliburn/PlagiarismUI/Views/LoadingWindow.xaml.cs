@@ -30,11 +30,6 @@ namespace PlagiarismUI.Views
 
         private void backFromLoading_Click(object sender, EventArgs e)
         {
-            
-
-            this.Close();
-            
-
             //this.Hide();
             var DC = this.DataContext as LoadingWindowViewModel;
             ConnectionManager.GetEnginePipe().sendEngineMove("CANCELRUN");
