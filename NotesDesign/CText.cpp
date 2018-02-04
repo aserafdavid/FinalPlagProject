@@ -155,7 +155,7 @@ void CText::readStopWordFile(void)
 		
 
 		StopWordsPath = StopWordsPath.substr(0, StopWordsPath.size() - extra.size());
-		//mfStopWordFile = StopWordsPath
+
 
 		if (mfStopWordFile == "ACADEMIC")
 		{

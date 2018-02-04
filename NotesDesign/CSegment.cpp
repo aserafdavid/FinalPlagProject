@@ -9,8 +9,7 @@
 CSegment::CSegment(const CSegment & src)
 {
 	try {
-		//CError Err(""); Err.AddID("CSegment", __FUNCTION__);
-		//CLogger::GetLogger()->Log(Err.GetErrMsg());
+
 
 		this->miSegSize = src.miSegSize;
 		this->msSegmentData = src.msSegmentData;
@@ -28,14 +27,10 @@ CSegment::CSegment(const CSegment & src)
 //1) Create Ngrams From Segment according to NgramSize , update vDictionary accordingly.
 //2) finnaly Save vSegmentNgrams to mfSegmentNgramsfile 
 CSegment::CSegment(string& SegmentData, int NgramSize, string pathTempFiles, vector<string>& vDictionary)
-//: msSegmentData(SegmentData)
 {
 
 	try {
-		//CError Err(""); Err.AddID("CText", __FUNCTION__);
-		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
-		/********************************/
 		static int counter = 0;
 		miSegmentNumber = counter++;
 		miSegSize = SegmentData.size();
@@ -60,14 +55,11 @@ CSegment::CSegment(string& SegmentData, int NgramSize, string pathTempFiles, vec
 			jBlockOffset++;
 
 		}
-		//CLogger::GetLogger()->Log("Block were Splited into Ngrams - createAnagramMatrix() Finished Succesfully");
 		mfSegmentNgramsfilepath = pathTempFiles;
-		//mPathToTempFiles.append("NgramFromSeg" + std::to_string(miSegmentNumber));
 		pathTempFiles.append("\\SegNgrams\\NgramFromSeg" + std::to_string(miSegmentNumber) +".txt");
 		mfSegmentNgramsfile.open(pathTempFiles);
 
 		SaveNgramDataToFile();
-		/****************************/
 	}
 	catch (CError& Err) {
 		Err.AddID("CSegment", __FUNCTION__);
@@ -114,8 +106,6 @@ CSegment & CSegment::getCSegment(void)
 
 CSegment::~CSegment()
 {
-	//CError Err(""); Err.AddID("CText", __FUNCTION__);
-	//CLogger::GetLogger()->Log(Err.GetErrMsg());
 	cout << "dss" << miSegmentNumber << " ";
 }
 
@@ -125,8 +115,6 @@ CSegment::~CSegment()
 void CSegment::BuildSegmentCFMandSP(const vector<string>& vDictionary)
 {
 	try {
-		//CError Err(""); Err.AddID("CSegment", __FUNCTION__);
-		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		arma::mat segCFM(vDictionary.size(), mvSegmentNgrams.size());
 		segCFM.fill(0);
@@ -169,8 +157,6 @@ void CSegment::BuildSegmentCFMandSP(const vector<string>& vDictionary)
 string CSegment::GetSegmentSPfileName(void)
 {
 	try {
-		//CError Err(""); Err.AddID("CSegment", __FUNCTION__);
-		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		return mfSegmentSPfileName;
 	}
@@ -184,8 +170,6 @@ string CSegment::GetSegmentSPfileName(void)
 string CSegment::GetSegmentData(void)
 {
 	try {
-		//CError Err(""); Err.AddID("CSegment", __FUNCTION__);
-		//CLogger::GetLogger()->Log(Err.GetErrMsg());
 
 		return msSegmentData;
 	}

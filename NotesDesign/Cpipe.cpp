@@ -24,13 +24,11 @@ void Pipe::Test()
 	char msgToGraphics[1024];
 
 
-											  // get message from graphics
 	string msgFromGraphics = p.getMessageFromGraphics();
 
 	while (msgFromGraphics != "quit")
 	{
 
-		// YOUR CODE
 		strcpy_s(msgToGraphics, "YOUR CODE"); // msgToGraphics should contain the result of the operation
 											  // return result to graphics		
 		p.sendMessageToGraphics(msgToGraphics);

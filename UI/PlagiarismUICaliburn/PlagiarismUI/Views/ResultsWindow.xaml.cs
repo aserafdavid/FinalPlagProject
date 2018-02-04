@@ -54,28 +54,6 @@ namespace PlagiarismUI.Views
 
         public ResultsWindow(Window mainWindow, string ResultPATH)
         {
-            //ResultPATH = "D:\\RunPlag\\Engine\\\\tempFiles\\2018_02_03-19_29_05";
-            //string FixedPath = Directory.GetCurrentDirectory()+"\\"+ ResultPATH;        
-            //int i = FixedPath.IndexOf("\\\\");
-            //string last = FixedPath.Substring(i+1);
-            //string first = FixedPath.Substring(0, i );
-            //string PATH = first + last;
-            //System.Windows.MessageBox.Show(PATH + "David After", "Invalid input", MessageBoxButton.OK);
-            //char[] str = new char[FixedPath.Length];
-            //char[] str2 = new char[FixedPath.Length];
-            //str = FixedPath.ToCharArray();
-            //for (int i =0;i< FixedPath.Length-1;i++)
-            //{
-            //    if(str[i] == '\\' && str[i+1] == '\\')
-            //    {
-            //        continue;
-            //    }
-            //    str2[i] = str[i];
-            //}
-            //FixedPath = new string(str2);
-            //ResultPATH = PATH;
-
-            System.Windows.MessageBox.Show(ResultPATH + "-AdirBeforeResults", "Invalid input", MessageBoxButton.OK);
 
             string FilePath = ResultPATH;
             int clusterdCounter = 0;
@@ -86,17 +64,15 @@ namespace PlagiarismUI.Views
 
 
                 FilePath += "\\Results\\CL_Results.txt";
-                //System.Windows.MessageBox.Show(FilePath, "Invalid input", 
-                //Button.OK);
+
                 if (!File.Exists(FilePath))
                 {
-                    //System.Windows.MessageBox.Show("Can't load CL_Results.txt", "Invalid input", MessageBoxButton.OK);                  
+                                   
                     this.BackToMain();
 
                 }
 
                 StreamReader sr = new StreamReader(FilePath);
-                //System.Windows.MessageBox.Show("after Streamreader Creation", "Invalid input", MessageBoxButton.OK);
                 string line = sr.ReadLine();
                 while (line != null && line.Length > 2)
                 {
@@ -131,13 +107,11 @@ namespace PlagiarismUI.Views
             
             if (ConnectionManager.AlgToRun == "Clustered" || ConnectionManager.AlgToRun == "BOTH")
             {
-                //System.Windows.MessageBox.Show(PATH + "LoadDSChart", "Invalid input", MessageBoxButton.OK);
 
                 LoadDSChart();
             }
             if (ConnectionManager.AlgToRun == "Dynamical" || ConnectionManager.AlgToRun == "BOTH")
             {
-                //System.Windows.MessageBox.Show(PATH + "LoadLineChartData", "Invalid input", MessageBoxButton.OK);
       
                 LoadLineChartData(ResultPATH);
             }
@@ -147,10 +121,7 @@ namespace PlagiarismUI.Views
         private void LoadLineChartData(string ResultPATH)
         {
             string FilePath = ResultPATH;
-            //System.Windows.MessageBox.Show(FilePath, "Invalid input", MessageBoxButton.OK);
-            //  string  FilePath = "D:\\finalProjectPlagiarism\\tempFiles\\2018_01_28-22_08_34\\Results";
             FilePath += "\\Results\\DS_Results.txt";
-            //System.Windows.MessageBox.Show(FilePath, "Invalid input", MessageBoxButton.OK);
             if (!File.Exists(FilePath))
             {
                 System.Windows.MessageBox.Show("Can't load DS_Results.txt", "Invalid input", MessageBoxButton.OK);

@@ -4,10 +4,6 @@
 #include <R.h>
 #include <math.h>
 
-//using namespace Rcpp;
-
-
-
 
 /*The QR Algorithms
 input: NxN Matrix

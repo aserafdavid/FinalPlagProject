@@ -2,7 +2,6 @@
 #include <armadillo>
 #include "main.h"
 #include "CText.h"
-//#include "CAlgorithms.h"
 #include <thread> 
 #include <mutex>
 #include <condition_variable>
